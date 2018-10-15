@@ -1,0 +1,33 @@
+{
+  "name": "recombee-js-api-client",
+  "authors": [
+    "Ondrej Fiedler <ondrej.fiedler@recombee.com> (https://www.recombee.com/)"
+  ],
+  "description": "Client-side js library for easy use of the Recombee recommendation API",
+  "main": "./src/index.js",
+  "keywords": [
+    "recombee",
+    "recommendation engine",
+    "recommender engine",
+    "recommender as a service",
+    "machine learning",
+    "API",
+    "SDK"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Recombee/js-api-client#readme",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "examples"
+  ],
+  "devDependencies": {
+    "qunit": "^2.7.0"
+  },
+  "dependencies": {
+    "jsSHA": "jssha#^2.3.1"
+  }
+}
