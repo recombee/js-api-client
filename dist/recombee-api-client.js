@@ -250,14 +250,15 @@ exports.ApiClient = __webpack_require__(6).ApiClient;
 exports.ApiError = __webpack_require__(1).ApiError;
 exports.ResponseError = __webpack_require__(2).ResponseError;
 exports.TimeoutError = __webpack_require__(3).TimeoutError;
-exports.AddDetailView = __webpack_require__(10).AddDetailView;
-exports.AddPurchase = __webpack_require__(11).AddPurchase;
-exports.AddRating = __webpack_require__(12).AddRating;
-exports.AddCartAddition = __webpack_require__(13).AddCartAddition;
-exports.AddBookmark = __webpack_require__(14).AddBookmark;
-exports.SetViewPortion = __webpack_require__(15).SetViewPortion;
-exports.RecommendItemsToUser = __webpack_require__(16).RecommendItemsToUser;
-exports.RecommendItemsToItem = __webpack_require__(17).RecommendItemsToItem;
+exports.MergeUsers = __webpack_require__(10).MergeUsers;
+exports.AddDetailView = __webpack_require__(11).AddDetailView;
+exports.AddPurchase = __webpack_require__(12).AddPurchase;
+exports.AddRating = __webpack_require__(13).AddRating;
+exports.AddCartAddition = __webpack_require__(14).AddCartAddition;
+exports.AddBookmark = __webpack_require__(15).AddBookmark;
+exports.SetViewPortion = __webpack_require__(16).SetViewPortion;
+exports.RecommendItemsToUser = __webpack_require__(17).RecommendItemsToUser;
+exports.RecommendItemsToItem = __webpack_require__(18).RecommendItemsToItem;
 
 /***/ }),
 /* 6 */
@@ -639,6 +640,78 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var rqs = __webpack_require__(0);
 
 /**
+ * Merges interactions (purchases, ratings, bookmarks, detail views ...) of two different users under a single user ID. This is especially useful for online e-commerce applications working with anonymous users identified by unique tokens such as the session ID. In such applications, it may often happen that a user owns a persistent account, yet accesses the system anonymously while, e.g., putting items into a shopping cart. At some point in time, such as when the user wishes to confirm the purchase, (s)he logs into the system using his/her username and password. The interactions made under anonymous session ID then become connected with the persistent account, and merging these two together becomes desirable.
+ * Merging happens between two users referred to as the *target* and the *source*. After the merge, all the interactions of the source user are attributed to the target user, and the source user is **deleted**.
+ */
+
+var MergeUsers = function (_rqs$Request) {
+  _inherits(MergeUsers, _rqs$Request);
+
+  /**
+   * Construct the request
+   * @param {string} targetUserId - ID of the targer user.
+   * @param {string} sourceUserId - ID of the source user.
+   * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
+   * - Allowed parameters:
+   *     - *cascadeCreate*
+   *         - Type: boolean
+   *         - Description: Sets whether the user *targetUserId* should be created if not present in the database.
+   */
+  function MergeUsers(targetUserId, sourceUserId, optional) {
+    _classCallCheck(this, MergeUsers);
+
+    var _this = _possibleConstructorReturn(this, (MergeUsers.__proto__ || Object.getPrototypeOf(MergeUsers)).call(this, 'PUT', '/users/' + encodeURIComponent(targetUserId) + '/merge/' + encodeURIComponent(sourceUserId), 30000, false));
+
+    _this.targetUserId = targetUserId;
+    _this.sourceUserId = sourceUserId;
+    optional = optional || {};
+    _this.cascadeCreate = optional.cascadeCreate;
+    return _this;
+  }
+
+  /**
+   * Get body parameters
+   * @return {Object} The values of body parameters (name of parameter: value of the parameter)
+   */
+
+
+  _createClass(MergeUsers, [{
+    key: 'bodyParameters',
+    value: function bodyParameters() {
+      var params = {};
+
+      params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
+      return params;
+    }
+  }]);
+
+  return MergeUsers;
+}(rqs.Request);
+
+exports.MergeUsers = MergeUsers;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ This file is auto-generated, do not edit
+*/
+
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var rqs = __webpack_require__(0);
+
+/**
  * Adds a detail view of a given item made by a given user.
  */
 
@@ -711,7 +784,7 @@ var AddDetailView = function (_rqs$Request) {
 exports.AddDetailView = AddDetailView;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -816,7 +889,7 @@ var AddPurchase = function (_rqs$Request) {
 exports.AddPurchase = AddPurchase;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -906,7 +979,7 @@ var AddRating = function (_rqs$Request) {
 exports.AddRating = AddRating;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1005,7 +1078,7 @@ var AddCartAddition = function (_rqs$Request) {
 exports.AddCartAddition = AddCartAddition;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1092,7 +1165,7 @@ var AddBookmark = function (_rqs$Request) {
 exports.AddBookmark = AddBookmark;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1189,7 +1262,7 @@ var SetViewPortion = function (_rqs$Request) {
 exports.SetViewPortion = SetViewPortion;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1212,6 +1285,7 @@ var rqs = __webpack_require__(0);
 /**
  * Based on user's past interactions (purchases, ratings, etc.) with the items, recommends top-N items that are most likely to be of high value for a given user.
  * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
+ * The returned items are sorted by relevancy (first item being the most relevant).
  */
 
 var RecommendItemsToUser = function (_rqs$Request) {
@@ -1374,7 +1448,7 @@ var RecommendItemsToUser = function (_rqs$Request) {
 exports.RecommendItemsToUser = RecommendItemsToUser;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1397,6 +1471,7 @@ var rqs = __webpack_require__(0);
 /**
  * Recommends set of items that are somehow related to one given item, *X*. Typical scenario  is when user *A* is viewing *X*. Then you may display items to the user that he might be also interested in. Recommend items to item request gives you Top-N such items, optionally taking the target user *A* into account.
  * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
+ * The returned items are sorted by relevancy (first item being the most relevant).
  */
 
 var RecommendItemsToItem = function (_rqs$Request) {

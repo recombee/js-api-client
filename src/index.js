@@ -7,6 +7,7 @@ exports.ApiClient = require("./api-client").ApiClient;
 exports.ApiError = require("./errors/api-error").ApiError;
 exports.ResponseError = require("./errors/response-error").ResponseError;
 exports.TimeoutError = require("./errors/timeout-error").TimeoutError;
+exports.MergeUsers = require("./requests/merge-users").MergeUsers;
 exports.AddDetailView = require("./requests/add-detail-view").AddDetailView;
 exports.AddPurchase = require("./requests/add-purchase").AddPurchase;
 exports.AddRating = require("./requests/add-rating").AddRating;

@@ -15,7 +15,7 @@ The library is [UMD](https://github.com/umdjs/umd) compatible.
 You can download [recombee-api-client.min.js](./dist/recombee-api-client.min.js) and host it at your site, or use a CDN such as [jsDelivr](https://www.jsdelivr.com/) CDN:
 
 ```js
-<script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@2.2.0/dist/recombee-api-client.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@2.2.1/dist/recombee-api-client.min.js"></script>
 ```
 
 ### npm
@@ -147,7 +147,7 @@ Let's assume we want to show recommendations at product page of pants `product-2
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@2.2.0/dist/recombee-api-client.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@2.2.1/dist/recombee-api-client.min.js"></script>
 
     <script type="text/javascript">
 

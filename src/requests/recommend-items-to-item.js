@@ -8,6 +8,7 @@ const rqs = require("./request");
 /**
  * Recommends set of items that are somehow related to one given item, *X*. Typical scenario  is when user *A* is viewing *X*. Then you may display items to the user that he might be also interested in. Recommend items to item request gives you Top-N such items, optionally taking the target user *A* into account.
  * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
+ * The returned items are sorted by relevancy (first item being the most relevant).
  */
 class RecommendItemsToItem extends rqs.Request {
 
