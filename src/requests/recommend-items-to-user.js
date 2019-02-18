@@ -101,6 +101,9 @@ class RecommendItemsToUser extends rqs.Request {
    *     - *expertSettings*
    *         - Type: 
    *         - Description: Dictionary of custom options.
+   *     - *returnAbGroup*
+   *         - Type: boolean
+   *         - Description: If there is a custom AB-testing running, return name of group to which the request belongs.
    */
   constructor(userId, count, optional) {
     super('POST', `/recomms/users/${encodeURIComponent(userId)}/items/`, 9000, false);
@@ -118,6 +121,7 @@ class RecommendItemsToUser extends rqs.Request {
     this.rotationRate = optional.rotationRate;
     this.rotationTime = optional.rotationTime;
     this.expertSettings = optional.expertSettings;
+    this.returnAbGroup = optional.returnAbGroup;
   }
 
   /**
@@ -160,6 +164,9 @@ class RecommendItemsToUser extends rqs.Request {
 
     if(this.expertSettings !== undefined)
       params.expertSettings = this.expertSettings;
+
+    if(this.returnAbGroup !== undefined)
+      params.returnAbGroup = this.returnAbGroup;
 
     params.cascadeCreate = (this.cascadeCreate !== undefined) ? this.cascadeCreate : true;
     return params;

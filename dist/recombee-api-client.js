@@ -736,6 +736,9 @@ var AddDetailView = function (_rqs$Request) {
    *     - *recommId*
    *         - Type: string
    *         - Description: If this detail view is based on a recommendation request, `recommId` is the id of the clicked recommendation.
+   *     - *additionalData*
+   *         - Type: 
+   *         - Description: A dictionary of additional data for the interaction.
    */
   function AddDetailView(userId, itemId, optional) {
     _classCallCheck(this, AddDetailView);
@@ -749,6 +752,7 @@ var AddDetailView = function (_rqs$Request) {
     _this.duration = optional.duration;
     _this.cascadeCreate = optional.cascadeCreate;
     _this.recommId = optional.recommId;
+    _this.additionalData = optional.additionalData;
     return _this;
   }
 
@@ -772,6 +776,8 @@ var AddDetailView = function (_rqs$Request) {
       if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
 
       if (this.recommId !== undefined) params.recommId = this.recommId;
+
+      if (this.additionalData !== undefined) params.additionalData = this.additionalData;
 
       params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
       return params;
@@ -835,6 +841,9 @@ var AddPurchase = function (_rqs$Request) {
    *     - *recommId*
    *         - Type: string
    *         - Description: If this purchase is based on a recommendation request, `recommId` is the id of the clicked recommendation.
+   *     - *additionalData*
+   *         - Type: 
+   *         - Description: A dictionary of additional data for the interaction.
    */
   function AddPurchase(userId, itemId, optional) {
     _classCallCheck(this, AddPurchase);
@@ -850,6 +859,7 @@ var AddPurchase = function (_rqs$Request) {
     _this.price = optional.price;
     _this.profit = optional.profit;
     _this.recommId = optional.recommId;
+    _this.additionalData = optional.additionalData;
     return _this;
   }
 
@@ -877,6 +887,8 @@ var AddPurchase = function (_rqs$Request) {
       if (this.profit !== undefined) params.profit = this.profit;
 
       if (this.recommId !== undefined) params.recommId = this.recommId;
+
+      if (this.additionalData !== undefined) params.additionalData = this.additionalData;
 
       params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
       return params;
@@ -932,6 +944,9 @@ var AddRating = function (_rqs$Request) {
    *     - *recommId*
    *         - Type: string
    *         - Description: If this rating is based on a recommendation request, `recommId` is the id of the clicked recommendation.
+   *     - *additionalData*
+   *         - Type: 
+   *         - Description: A dictionary of additional data for the interaction.
    */
   function AddRating(userId, itemId, rating, optional) {
     _classCallCheck(this, AddRating);
@@ -945,6 +960,7 @@ var AddRating = function (_rqs$Request) {
     _this.timestamp = optional.timestamp;
     _this.cascadeCreate = optional.cascadeCreate;
     _this.recommId = optional.recommId;
+    _this.additionalData = optional.additionalData;
     return _this;
   }
 
@@ -967,6 +983,8 @@ var AddRating = function (_rqs$Request) {
       if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
 
       if (this.recommId !== undefined) params.recommId = this.recommId;
+
+      if (this.additionalData !== undefined) params.additionalData = this.additionalData;
 
       params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
       return params;
@@ -1027,6 +1045,9 @@ var AddCartAddition = function (_rqs$Request) {
    *     - *recommId*
    *         - Type: string
    *         - Description: If this cart addition is based on a recommendation request, `recommId` is the id of the clicked recommendation.
+   *     - *additionalData*
+   *         - Type: 
+   *         - Description: A dictionary of additional data for the interaction.
    */
   function AddCartAddition(userId, itemId, optional) {
     _classCallCheck(this, AddCartAddition);
@@ -1041,6 +1062,7 @@ var AddCartAddition = function (_rqs$Request) {
     _this.amount = optional.amount;
     _this.price = optional.price;
     _this.recommId = optional.recommId;
+    _this.additionalData = optional.additionalData;
     return _this;
   }
 
@@ -1066,6 +1088,8 @@ var AddCartAddition = function (_rqs$Request) {
       if (this.price !== undefined) params.price = this.price;
 
       if (this.recommId !== undefined) params.recommId = this.recommId;
+
+      if (this.additionalData !== undefined) params.additionalData = this.additionalData;
 
       params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
       return params;
@@ -1120,6 +1144,9 @@ var AddBookmark = function (_rqs$Request) {
    *     - *recommId*
    *         - Type: string
    *         - Description: If this bookmark is based on a recommendation request, `recommId` is the id of the clicked recommendation.
+   *     - *additionalData*
+   *         - Type: 
+   *         - Description: A dictionary of additional data for the interaction.
    */
   function AddBookmark(userId, itemId, optional) {
     _classCallCheck(this, AddBookmark);
@@ -1132,6 +1159,7 @@ var AddBookmark = function (_rqs$Request) {
     _this.timestamp = optional.timestamp;
     _this.cascadeCreate = optional.cascadeCreate;
     _this.recommId = optional.recommId;
+    _this.additionalData = optional.additionalData;
     return _this;
   }
 
@@ -1153,6 +1181,8 @@ var AddBookmark = function (_rqs$Request) {
       if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
 
       if (this.recommId !== undefined) params.recommId = this.recommId;
+
+      if (this.additionalData !== undefined) params.additionalData = this.additionalData;
 
       params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
       return params;
@@ -1212,6 +1242,9 @@ var SetViewPortion = function (_rqs$Request) {
    *     - *recommId*
    *         - Type: string
    *         - Description: If this view portion is based on a recommendation request, `recommId` is the id of the clicked recommendation.
+   *     - *additionalData*
+   *         - Type: 
+   *         - Description: A dictionary of additional data for the interaction.
    */
   function SetViewPortion(userId, itemId, portion, optional) {
     _classCallCheck(this, SetViewPortion);
@@ -1226,6 +1259,7 @@ var SetViewPortion = function (_rqs$Request) {
     _this.timestamp = optional.timestamp;
     _this.cascadeCreate = optional.cascadeCreate;
     _this.recommId = optional.recommId;
+    _this.additionalData = optional.additionalData;
     return _this;
   }
 
@@ -1250,6 +1284,8 @@ var SetViewPortion = function (_rqs$Request) {
       if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
 
       if (this.recommId !== undefined) params.recommId = this.recommId;
+
+      if (this.additionalData !== undefined) params.additionalData = this.additionalData;
 
       params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
       return params;
@@ -1380,6 +1416,9 @@ var RecommendItemsToUser = function (_rqs$Request) {
    *     - *expertSettings*
    *         - Type: 
    *         - Description: Dictionary of custom options.
+   *     - *returnAbGroup*
+   *         - Type: boolean
+   *         - Description: If there is a custom AB-testing running, return name of group to which the request belongs.
    */
   function RecommendItemsToUser(userId, count, optional) {
     _classCallCheck(this, RecommendItemsToUser);
@@ -1400,6 +1439,7 @@ var RecommendItemsToUser = function (_rqs$Request) {
     _this.rotationRate = optional.rotationRate;
     _this.rotationTime = optional.rotationTime;
     _this.expertSettings = optional.expertSettings;
+    _this.returnAbGroup = optional.returnAbGroup;
     return _this;
   }
 
@@ -1436,6 +1476,8 @@ var RecommendItemsToUser = function (_rqs$Request) {
       if (this.rotationTime !== undefined) params.rotationTime = this.rotationTime;
 
       if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
+
+      if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
 
       params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
       return params;
@@ -1582,6 +1624,9 @@ var RecommendItemsToItem = function (_rqs$Request) {
    *     - *expertSettings*
    *         - Type: 
    *         - Description: Dictionary of custom options.
+   *     - *returnAbGroup*
+   *         - Type: boolean
+   *         - Description: If there is a custom AB-testing running, return name of group to which the request belongs.
    */
   function RecommendItemsToItem(itemId, targetUserId, count, optional) {
     _classCallCheck(this, RecommendItemsToItem);
@@ -1604,6 +1649,7 @@ var RecommendItemsToItem = function (_rqs$Request) {
     _this.rotationRate = optional.rotationRate;
     _this.rotationTime = optional.rotationTime;
     _this.expertSettings = optional.expertSettings;
+    _this.returnAbGroup = optional.returnAbGroup;
     return _this;
   }
 
@@ -1643,6 +1689,8 @@ var RecommendItemsToItem = function (_rqs$Request) {
       if (this.rotationTime !== undefined) params.rotationTime = this.rotationTime;
 
       if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
+
+      if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
 
       params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
       return params;
