@@ -1345,6 +1345,11 @@ var RecommendItemsToUser = function (_rqs$Request) {
    *     - *scenario*
    *         - Type: string
    *         - Description: Scenario defines a particular application of recommendations. It can be for example "homepage", "cart" or "emailing". You can see each scenario in the UI separately, so you can check how well each application performs. The AI which optimizes models in order to get the best results may optimize different scenarios separately, or even use different models in each of the scenarios.
+   *     - *logic*
+   *         - Type: string|
+   *         - Description: Logic specifies particular behavior of the recommendation models. You can pick tailored logic for your domain (e-commerce, multimedia, fashion ...) and use case.
+   * See [this section](https://docs.recombee.com/recommendation_logic.html) for list of available logics and other details.
+   * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
    *     - *returnProperties*
    *         - Type: boolean
    *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used for easy displaying of the recommended items to the user. 
@@ -1432,6 +1437,7 @@ var RecommendItemsToUser = function (_rqs$Request) {
     _this.booster = optional.booster;
     _this.cascadeCreate = optional.cascadeCreate;
     _this.scenario = optional.scenario;
+    _this.logic = optional.logic;
     _this.returnProperties = optional.returnProperties;
     _this.includedProperties = optional.includedProperties;
     _this.diversity = optional.diversity;
@@ -1462,6 +1468,8 @@ var RecommendItemsToUser = function (_rqs$Request) {
       if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
 
       if (this.scenario !== undefined) params.scenario = this.scenario;
+
+      if (this.logic !== undefined) params.logic = this.logic;
 
       if (this.returnProperties !== undefined) params.returnProperties = this.returnProperties;
 
@@ -1538,9 +1546,6 @@ var RecommendItemsToItem = function (_rqs$Request) {
    * @param {number} count - Number of items to be recommended (N for the top-N recommendation).
    * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
    * - Allowed parameters:
-   *     - *userImpact*
-   *         - Type: number
-   *         - Description: If *targetUserId* parameter is present, the recommendations are biased towards the user given. Using *userImpact*, you may control this bias. For an extreme case of `userImpact=0.0`, the interactions made by the user are not taken into account at all (with the exception of history-based blacklisting), for `userImpact=1.0`, you'll get user-based recommendation. The default value is `0`.
    *     - *filter*
    *         - Type: string
    *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to filter recommended items based on the values of their attributes.
@@ -1553,6 +1558,11 @@ var RecommendItemsToItem = function (_rqs$Request) {
    *     - *scenario*
    *         - Type: string
    *         - Description: Scenario defines a particular application of recommendations. It can be for example "homepage", "cart" or "emailing". You can see each scenario in the UI separately, so you can check how well each application performs. The AI which optimizes models in order to get the best results may optimize different scenarios separately, or even use different models in each of the scenarios.
+   *     - *logic*
+   *         - Type: string|
+   *         - Description: Logic specifies particular behavior of the recommendation models. You can pick tailored logic for your domain (e-commerce, multimedia, fashion ...) and use case.
+   * See [this section](https://docs.recombee.com/recommendation_logic.html) for list of available logics and other details.
+   * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
    *     - *returnProperties*
    *         - Type: boolean
    *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used for easy displaying of the recommended items to the user. 
@@ -1609,6 +1619,9 @@ var RecommendItemsToItem = function (_rqs$Request) {
    *       ]
    *   }
    * ```
+   *     - *userImpact*
+   *         - Type: number
+   *         - Description: **Expert option** If *targetUserId* parameter is present, the recommendations are biased towards the given user. Using *userImpact*, you may control this bias. For an extreme case of `userImpact=0.0`, the interactions made by the user are not taken into account at all (with the exception of history-based blacklisting), for `userImpact=1.0`, you'll get user-based recommendation. The default value is `0`.
    *     - *diversity*
    *         - Type: number
    *         - Description: **Expert option** Real number from [0.0, 1.0] which determines how much mutually dissimilar should the recommended items be. The default value is 0.0, i.e., no diversification. Value 1.0 means maximal diversification.
@@ -1637,13 +1650,14 @@ var RecommendItemsToItem = function (_rqs$Request) {
     _this.targetUserId = targetUserId;
     _this.count = count;
     optional = optional || {};
-    _this.userImpact = optional.userImpact;
     _this.filter = optional.filter;
     _this.booster = optional.booster;
     _this.cascadeCreate = optional.cascadeCreate;
     _this.scenario = optional.scenario;
+    _this.logic = optional.logic;
     _this.returnProperties = optional.returnProperties;
     _this.includedProperties = optional.includedProperties;
+    _this.userImpact = optional.userImpact;
     _this.diversity = optional.diversity;
     _this.minRelevance = optional.minRelevance;
     _this.rotationRate = optional.rotationRate;
@@ -1666,8 +1680,6 @@ var RecommendItemsToItem = function (_rqs$Request) {
       params.targetUserId = this.targetUserId;
       params.count = this.count;
 
-      if (this.userImpact !== undefined) params.userImpact = this.userImpact;
-
       if (this.filter !== undefined) params.filter = this.filter;
 
       if (this.booster !== undefined) params.booster = this.booster;
@@ -1676,9 +1688,13 @@ var RecommendItemsToItem = function (_rqs$Request) {
 
       if (this.scenario !== undefined) params.scenario = this.scenario;
 
+      if (this.logic !== undefined) params.logic = this.logic;
+
       if (this.returnProperties !== undefined) params.returnProperties = this.returnProperties;
 
       if (this.includedProperties !== undefined) params.includedProperties = this.includedProperties;
+
+      if (this.userImpact !== undefined) params.userImpact = this.userImpact;
 
       if (this.diversity !== undefined) params.diversity = this.diversity;
 
