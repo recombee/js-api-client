@@ -123,3 +123,7 @@ QUnit.test("RecommendItemsToUser test", function( assert ) {
 QUnit.test("RecommendItemsToItem test", function( assert ) {
     testRecommendations(assert, new recombee.RecommendItemsToItem('item-1', 'user-1', 5));
 });
+
+QUnit.test("SearchItems test", function( assert ) {
+    testRecommendations(assert, new recombee.SearchItems('user-1', 'computer', 5));
+});

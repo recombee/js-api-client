@@ -31,23 +31,14 @@ class RecommendItemsToItem extends rqs.Request {
    * @param {number} count - Number of items to be recommended (N for the top-N recommendation).
    * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
    * - Allowed parameters:
-   *     - *filter*
+   *     - *scenario*
    *         - Type: string
-   *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to filter recommended items based on the values of their attributes.
-   *     - *booster*
-   *         - Type: string
-   *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some items based on the values of their attributes.
+   *         - Description: Scenario defines a particular application of recommendations. It can be for example "homepage", "cart" or "emailing".
+   * You can set various settings to the [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com). You can also see performance of each scenario in the Admin UI separately, so you can check how well each application performs.
+   * The AI which optimizes models in order to get the best results may optimize different scenarios separately, or even use different models in each of the scenarios.
    *     - *cascadeCreate*
    *         - Type: boolean
    *         - Description: If item of given *itemId* or user of given *targetUserId* doesn't exist in the database, it creates the missing entity/entities and returns some (non-personalized) recommendations. This allows for example rotations in the following recommendations for the user of given *targetUserId*, as the user will be already known to the system.
-   *     - *scenario*
-   *         - Type: string
-   *         - Description: Scenario defines a particular application of recommendations. It can be for example "homepage", "cart" or "emailing". You can see each scenario in the UI separately, so you can check how well each application performs. The AI which optimizes models in order to get the best results may optimize different scenarios separately, or even use different models in each of the scenarios.
-   *     - *logic*
-   *         - Type: string|
-   *         - Description: Logic specifies particular behavior of the recommendation models. You can pick tailored logic for your domain (e-commerce, multimedia, fashion ...) and use case.
-   * See [this section](https://docs.recombee.com/recommendation_logic.html) for list of available logics and other details.
-   * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
    *     - *returnProperties*
    *         - Type: boolean
    *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used for easy displaying of the recommended items to the user. 
@@ -104,6 +95,20 @@ class RecommendItemsToItem extends rqs.Request {
    *       ]
    *   }
    * ```
+   *     - *filter*
+   *         - Type: string
+   *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to filter recommended items based on the values of their attributes.
+   * Filters can be also assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   *     - *booster*
+   *         - Type: string
+   *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some items based on the values of their attributes.
+   * Boosters can be also assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   *     - *logic*
+   *         - Type: string|
+   *         - Description: Logic specifies particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
+   * See [this section](https://docs.recombee.com/recommendation_logics.html) for list of available logics and other details.
+   * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
+   * Logic can be also set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *userImpact*
    *         - Type: number
    *         - Description: **Expert option** If *targetUserId* parameter is present, the recommendations are biased towards the given user. Using *userImpact*, you may control this bias. For an extreme case of `userImpact=0.0`, the interactions made by the user are not taken into account at all (with the exception of history-based blacklisting), for `userImpact=1.0`, you'll get user-based recommendation. The default value is `0`.
@@ -132,13 +137,13 @@ class RecommendItemsToItem extends rqs.Request {
     this.targetUserId = targetUserId;
     this.count = count;
     optional = optional || {};
-    this.filter = optional.filter;
-    this.booster = optional.booster;
-    this.cascadeCreate = optional.cascadeCreate;
     this.scenario = optional.scenario;
-    this.logic = optional.logic;
+    this.cascadeCreate = optional.cascadeCreate;
     this.returnProperties = optional.returnProperties;
     this.includedProperties = optional.includedProperties;
+    this.filter = optional.filter;
+    this.booster = optional.booster;
+    this.logic = optional.logic;
     this.userImpact = optional.userImpact;
     this.diversity = optional.diversity;
     this.minRelevance = optional.minRelevance;
@@ -157,26 +162,26 @@ class RecommendItemsToItem extends rqs.Request {
     params.targetUserId = this.targetUserId;
     params.count = this.count;
 
-    if(this.filter !== undefined)
-      params.filter = this.filter;
-
-    if(this.booster !== undefined)
-      params.booster = this.booster;
-
-    if(this.cascadeCreate !== undefined)
-      params.cascadeCreate = this.cascadeCreate;
-
     if(this.scenario !== undefined)
       params.scenario = this.scenario;
 
-    if(this.logic !== undefined)
-      params.logic = this.logic;
+    if(this.cascadeCreate !== undefined)
+      params.cascadeCreate = this.cascadeCreate;
 
     if(this.returnProperties !== undefined)
       params.returnProperties = this.returnProperties;
 
     if(this.includedProperties !== undefined)
       params.includedProperties = this.includedProperties;
+
+    if(this.filter !== undefined)
+      params.filter = this.filter;
+
+    if(this.booster !== undefined)
+      params.booster = this.booster;
+
+    if(this.logic !== undefined)
+      params.logic = this.logic;
 
     if(this.userImpact !== undefined)
       params.userImpact = this.userImpact;

@@ -15,7 +15,7 @@ The library is [UMD](https://github.com/umdjs/umd) compatible.
 You can download [recombee-api-client.min.js](./dist/recombee-api-client.min.js) and host it at your site, or use a CDN such as [jsDelivr](https://www.jsdelivr.com/) CDN:
 
 ```js
-<script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@2.4.0/dist/recombee-api-client.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@3.0.0/dist/recombee-api-client.min.js"></script>
 ```
 
 ### npm
@@ -83,7 +83,6 @@ var callback  = function (err, res) {
 client.send(new recombee.RecommendItemsToUser('user-13434', 5), callback);
 ```
 
-
 #### Promise
 
 ```javascript
@@ -96,7 +95,31 @@ client.send(new recombee.RecommendItemsToItem('item-356', 'user-13434', 5))
   console.log(error);
   // use fallback ...
 });
+```
 
+### Personalized search
+
+[Personalized full-text search](https://docs.recombee.com/api.html#search-items) is requested in the same way as recommendations.
+
+#### Callback
+
+```javascript
+var searchQuery = ' ... search query from search field ....';
+client.send(new recombee.SearchItems('user-13434', searchQuery, 5), callback);
+```
+
+#### Promise
+
+```javascript
+var searchQuery = ' ... search query from search field ....';
+client.send(new recombee.SearchItems('user-13434', searchQuery, 5))
+.then(function(res) {
+  console.log(res.recomms);
+})
+.catch(function(error) {
+  console.log(error);
+  // use fallback ...
+});
 ```
 
 #### Optional parameters
@@ -147,7 +170,7 @@ Let's assume we want to show recommendations at product page of pants `product-2
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@2.4.0/dist/recombee-api-client.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@3.0.0/dist/recombee-api-client.min.js"></script>
 
     <script type="text/javascript">
 
