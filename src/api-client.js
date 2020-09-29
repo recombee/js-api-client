@@ -18,7 +18,7 @@ class ApiClient {
       this.databaseId = databaseId;
       this.publicToken = publicToken;
       this.options = options || {};
-      this.baseUri = this.options.baseUri || process.env.RAPI_URI || 'client-rapi.recombee.com';
+      this.baseUri = this.options.baseUri || 'client-rapi.recombee.com';
       this.useHttps = ('useHttps' in this.options) ? this.options.useHttps : true;
       this.async = ('async' in this.options) ? this.options.async : true;
   }

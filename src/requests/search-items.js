@@ -10,7 +10,7 @@ const rqs = require("./request");
  * All the string and set item properties are indexed by the search engine.
  * This endpoint should be used in a search box at your website/app. It can be called multiple times as the user is typing the query in order to get the most viable suggestions based on current state of the query, or once after submitting the whole query. 
  * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
- * The returned items are sorted by relevancy (first item being the most relevant).
+ * The returned items are sorted by relevance (first item being the most relevant).
  */
 class SearchItems extends rqs.Request {
 
