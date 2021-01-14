@@ -63,7 +63,8 @@ QUnit.test("AddRating test", function( assert ) {
 });
 
 QUnit.test("SetViewPortion test", function( assert ) {
-    testInteraction(assert, new recombee.SetViewPortion('user-1', 'item-1', 0.1));
+    testInteractionPromise(assert, new recombee.SetViewPortion(Math.random().toString(36).substring(7), 'item-1', 0.1));
+    testInteractionCallback(assert, new recombee.SetViewPortion(Math.random().toString(36).substring(7), 'item-1', 0.1));
 });
 
 
@@ -126,4 +127,15 @@ QUnit.test("RecommendItemsToItem test", function( assert ) {
 
 QUnit.test("SearchItems test", function( assert ) {
     testRecommendations(assert, new recombee.SearchItems('user-1', 'computer', 5));
+});
+
+QUnit.test("RecommendNextItems test", function( assert ) {
+  assert.timeout(3000);
+  var done = assert.async();
+    var client = createClient();
+    client.send(new recombee.RecommendItemsToUser('user-1', 5, {'returnProperties': true}))
+    .then(function(res) {
+      testRecommendations(assert, new recombee.RecommendNextItems(res.recommId, 5));
+      done();
+    });
 });

@@ -143,8 +143,8 @@ const ae = __webpack_require__(1);
 class ResponseError extends ae.ApiError {
   /**
    * Create the exception
-   * @param {Request} request - ID of the item which will be modified
-   * @param {number} statusCode - The values for the individual properties
+   * @param {Request} request - Request which caused the exception
+   * @param {number} statusCode - The returned status code
    * @param {string} message - Error message from the API
    */
   constructor(request, statusCode, message) {
@@ -212,7 +212,8 @@ exports.AddBookmark = __webpack_require__(14).AddBookmark;
 exports.SetViewPortion = __webpack_require__(15).SetViewPortion;
 exports.RecommendItemsToUser = __webpack_require__(16).RecommendItemsToUser;
 exports.RecommendItemsToItem = __webpack_require__(17).RecommendItemsToItem;
-exports.SearchItems = __webpack_require__(18).SearchItems;
+exports.RecommendNextItems = __webpack_require__(18).RecommendNextItems;
+exports.SearchItems = __webpack_require__(19).SearchItems;
 
 /***/ }),
 /* 6 */
@@ -920,8 +921,11 @@ const rqs = __webpack_require__(0);
 /**
  * Based on user's past interactions (purchases, ratings, etc.) with the items, recommends top-N items that are most likely to be of high value for a given user.
  * The most typical use cases are recommendations at homepage, in some "Picked just for you" section or in email.
- * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
  * The returned items are sorted by relevance (first item being the most relevant).
+ * Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
+ * - Let Recombee know that this recommendation was successful (e.g. user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
+ * - Get subsequent recommended items when the user scrolls down (*infinite scroll*) or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api.html#recommend-next-items).
+ * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
  */
 class RecommendItemsToUser extends rqs.Request {
 
@@ -966,7 +970,8 @@ class RecommendItemsToUser extends rqs.Request {
    *             "url": "myshop.com/mixer-42"
    *           }
    *         }
-   *       ]
+   *       ],
+   *      "numberNextRecommsCalls": 0
    *   }
    * ```
    *     - *includedProperties*
@@ -992,7 +997,8 @@ class RecommendItemsToUser extends rqs.Request {
    *             "price": 39
    *           }
    *         }
-   *       ]
+   *       ],
+   *     "numberNextRecommsCalls": 0
    *   }
    * ```
    *     - *filter*
@@ -1105,8 +1111,11 @@ const rqs = __webpack_require__(0);
 
 /**
  * Recommends set of items that are somehow related to one given item, *X*. Typical scenario  is when user *A* is viewing *X*. Then you may display items to the user that he might be also interested in. Recommend items to item request gives you Top-N such items, optionally taking the target user *A* into account.
- * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
  * The returned items are sorted by relevance (first item being the most relevant).
+ * Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
+ * - Let Recombee know that this recommendation was successful (e.g. user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
+ * - Get subsequent recommended items when the user scrolls down (*infinite scroll*) or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api.html#recommend-next-items).
+ * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
  */
 class RecommendItemsToItem extends rqs.Request {
 
@@ -1164,7 +1173,8 @@ class RecommendItemsToItem extends rqs.Request {
    *             "url": "myshop.com/mixer-42"
    *           }
    *         }
-   *       ]
+   *       ],
+   *     "numberNextRecommsCalls": 0
    *   }
    * ```
    *     - *includedProperties*
@@ -1190,7 +1200,8 @@ class RecommendItemsToItem extends rqs.Request {
    *             "price": 39
    *           }
    *         }
-   *       ]
+   *       ],
+   *     "numberNextRecommsCalls": 0
    *   }
    * ```
    *     - *filter*
@@ -1310,11 +1321,69 @@ exports.RecommendItemsToItem = RecommendItemsToItem;
 const rqs = __webpack_require__(0);
 
 /**
+ * Returns items that shall be shown to a user as next recommendations when the user e.g. scrolls the page down (*infinite scroll*) or goes to a next page.
+ * It accepts `recommId` of a base recommendation request (e.g. request from the first page) and number of items that shall be returned (`count`).
+ * The base request can be one of:
+ *   - [Recommend items to item](https://docs.recombee.com/api.html#recommend-items-to-item)
+ *   - [Recommend items to user](https://docs.recombee.com/api.html#recommend-items-to-user)
+ *   - [Search items](https://docs.recombee.com/api.html#search-items)
+ * All the other parameters are inherited from the base request.
+ * *Recommend next items* can be called many times for a single `recommId` and each call returns different (previously not recommended) items.
+ * The number of *Recommend next items* calls performed so far is returned in the `numberNextRecommsCalls` field.
+ * *Recommend next items* can be requested up to 30 minutes after the base request or a previous *Recommend next items* call.
+ * For billing purposes, each call to *Recommend next items* is counted as a separate recommendation request.
+ */
+class RecommendNextItems extends rqs.Request {
+
+  /**
+   * Construct the request
+   * @param {string} recommId - ID of the base recommendation request for which next recommendations should be returned
+   * @param {number} count - Number of items to be recommended
+   */
+  constructor(recommId, count) {
+    super('POST', `/recomms/next/items/${encodeURIComponent(recommId)}`, 9000, false);
+    this.recommId = recommId;
+    this.count = count;
+  }
+
+  /**
+   * Get body parameters
+   * @return {Object} The values of body parameters (name of parameter: value of the parameter)
+   */
+  bodyParameters() {
+    let params = {};
+    params.count = this.count;
+
+    params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
+    return params;
+  }
+
+}
+
+exports.RecommendNextItems = RecommendNextItems;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ This file is auto-generated, do not edit
+*/
+
+
+
+const rqs = __webpack_require__(0);
+
+/**
  * Full-text personalized search. The results are based on the provided `searchQuery` and also on the user's past interactions (purchases, ratings, etc.) with the items (items more suitable for the user are preferred in the results).
  * All the string and set item properties are indexed by the search engine.
  * This endpoint should be used in a search box at your website/app. It can be called multiple times as the user is typing the query in order to get the most viable suggestions based on current state of the query, or once after submitting the whole query. 
- * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
  * The returned items are sorted by relevance (first item being the most relevant).
+ * Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
+ * - Let Recombee know that this search was successful (e.g. user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
+ * - Get subsequent search results when the user scrolls down or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api.html#recommend-next-items).
+ * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
  */
 class SearchItems extends rqs.Request {
 
@@ -1360,7 +1429,8 @@ class SearchItems extends rqs.Request {
    *             "url": "myshop.com/mixer-42"
    *           }
    *         }
-   *       ]
+   *       ],
+   *     "numberNextRecommsCalls": 0
    *   }
    * ```
    *     - *includedProperties*
@@ -1386,7 +1456,8 @@ class SearchItems extends rqs.Request {
    *             "price": 39
    *           }
    *         }
-   *       ]
+   *       ],
+   *     "numberNextRecommsCalls": 0
    *   }
    * ```
    *     - *filter*

@@ -7,8 +7,11 @@ const rqs = require("./request");
 
 /**
  * Recommends set of items that are somehow related to one given item, *X*. Typical scenario  is when user *A* is viewing *X*. Then you may display items to the user that he might be also interested in. Recommend items to item request gives you Top-N such items, optionally taking the target user *A* into account.
- * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
  * The returned items are sorted by relevance (first item being the most relevant).
+ * Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
+ * - Let Recombee know that this recommendation was successful (e.g. user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
+ * - Get subsequent recommended items when the user scrolls down (*infinite scroll*) or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api.html#recommend-next-items).
+ * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
  */
 class RecommendItemsToItem extends rqs.Request {
 
@@ -66,7 +69,8 @@ class RecommendItemsToItem extends rqs.Request {
    *             "url": "myshop.com/mixer-42"
    *           }
    *         }
-   *       ]
+   *       ],
+   *     "numberNextRecommsCalls": 0
    *   }
    * ```
    *     - *includedProperties*
@@ -92,7 +96,8 @@ class RecommendItemsToItem extends rqs.Request {
    *             "price": 39
    *           }
    *         }
-   *       ]
+   *       ],
+   *     "numberNextRecommsCalls": 0
    *   }
    * ```
    *     - *filter*

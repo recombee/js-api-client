@@ -15,7 +15,7 @@ The library is [UMD](https://github.com/umdjs/umd) compatible.
 You can download [recombee-api-client.min.js](./dist/recombee-api-client.min.js) and host it at your site, or use a CDN such as [jsDelivr](https://www.jsdelivr.com/) CDN:
 
 ```js
-<script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@3.0.1/dist/recombee-api-client.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@3.1.0/dist/recombee-api-client.min.js"></script>
 ```
 
 ### npm
@@ -86,7 +86,7 @@ client.send(new recombee.RecommendItemsToUser('user-13434', 5), callback);
 #### Promise
 
 ```javascript
-// Get 5 recommendations related to 'item-365'  viewed by 'user-13434'
+// Get 5 recommendations related to 'item-365' viewed by 'user-13434'
 client.send(new recombee.RecommendItemsToItem('item-356', 'user-13434', 5))
 .then(function(res) {
   console.log(res.recomms);
@@ -122,19 +122,38 @@ client.send(new recombee.SearchItems('user-13434', searchQuery, 5))
 });
 ```
 
-#### Optional parameters
+### Recommend Next Items
+
+Recombee can return items that shall be shown to a user as next recommendations when the user e.g. scrolls the page down (infinite scroll) or goes to a next page. See [Recommend next items](https://docs.recombee.com/api.html#recommend-next-items) for more info.
+
+
+```javascript
+client.send(new recombee.RecommendItemsToUser('user-13434', 5))
+.then(function(res) {
+  console.log(res.recomms);
+
+  // Get next 3 recommended items as user-13434 is scrolling the page down
+  client.send(new recombee.RecommendNextItems(res.recommId, 3))
+  .then(function(res) {
+    console.log(res.recomms);
+  })
+});
+```
+
+### Optional parameters
 Recommendation requests accept various optional parameters (see [the docs](https://docs.recombee.com/api.html#recommendations)). Following example shows some of them:
 
 ```javascript
 client.send(new recombee.RecommendItemsToUser('user-13434', 5,
   {
+    scenario: 'homepage', // Label particular usage. You can assign various settings
+                          // for each scenario in the Admin UI (https://admin.recombee.com/).
     returnProperties: true, // Return properties of the recommended items
     includedProperties: ['title', 'img_url', 'url', 'price'], // Use these properties to show
                                                               // the recommended items to user
-    filter: "'title' != null AND 'availability' == \"in stock\"",
+    filter: "'title' != null AND 'availability' == \"in stock\""
                                                      // Recommend only items with filled title 
                                                      // which are in stock
-    scenario: 'homepage' // Label particular usage
   }
 ), callback);
 
@@ -170,7 +189,7 @@ Let's assume we want to show recommendations at product page of pants `product-2
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@3.0.1/dist/recombee-api-client.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@3.1.0/dist/recombee-api-client.min.js"></script>
 
     <script type="text/javascript">
 
