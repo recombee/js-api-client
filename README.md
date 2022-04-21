@@ -15,7 +15,7 @@ The library is [UMD](https://github.com/umdjs/umd) compatible.
 You can download [recombee-api-client.min.js](./dist/recombee-api-client.min.js) and host it at your site, or use a CDN such as [jsDelivr](https://www.jsdelivr.com/) CDN:
 
 ```js
-<script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@3.1.0/dist/recombee-api-client.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@4.0.0/dist/recombee-api-client.min.js"></script>
 ```
 
 ### npm
@@ -44,7 +44,7 @@ It is intentionally not possible to change item catalog (properties of items) wi
 
 ```javascript
 // Initialize client with name of your database and PUBLIC token
-var client = new recombee.ApiClient('name-of-your-db', '...db-public-token...');
+var client = new recombee.ApiClient('name-of-your-db', '...db-public-token...', {region: 'us-west'});
 
 //Interactions take Id of user and Id of item
 client.send(new recombee.AddBookmark('user-13434', 'item-256'));
@@ -189,7 +189,7 @@ Let's assume we want to show recommendations at product page of pants `product-2
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@3.1.0/dist/recombee-api-client.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@4.0.0/dist/recombee-api-client.min.js"></script>
 
     <script type="text/javascript">
 
@@ -211,7 +211,7 @@ Let's assume we want to show recommendations at product page of pants `product-2
     }
 
     // Initialize client
-    var client = new recombee.ApiClient('js-client-example', 'dXx2Jw4VkkYQP1XU4JwBAqGezs8BNzwhogGIRjDHJi39Yj3i0tWyIZ0IhKKw5Ln7');
+    var client = new recombee.ApiClient('js-client-example', 'dXx2Jw4VkkYQP1XU4JwBAqGezs8BNzwhogGIRjDHJi39Yj3i0tWyIZ0IhKKw5Ln7', {region: 'eu-west'});
 
     var itemId = 'product-270';
     var userId = 'user-1539'

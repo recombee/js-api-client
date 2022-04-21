@@ -18,9 +18,36 @@ class ApiClient {
       this.databaseId = databaseId;
       this.publicToken = publicToken;
       this.options = options || {};
-      this.baseUri = this.options.baseUri || 'client-rapi.recombee.com';
+      this.baseUri = this._getBaseUri()
       this.useHttps = ('useHttps' in this.options) ? this.options.useHttps : true;
       this.async = ('async' in this.options) ? this.options.async : true;
+  }
+
+
+  _getRegionalBaseUri(region) {
+    const uri = {
+      'ap-se': 'client-rapi-ap-se.recombee.com',
+      'ca-east': 'client-rapi-ca-east.recombee.com',
+      'eu-west': 'client-rapi-eu-west.recombee.com',
+      'us-west': 'client-rapi-us-west.recombee.com'
+    }[region.toLowerCase()];
+
+    if (uri === undefined) {
+      throw new Error(`Region "${region}" is unknown. You may need to update the version of the SDK.`)
+    }
+
+    return uri;
+  }
+
+  _getBaseUri() {
+    let baseUri = this.options.baseUri;
+    if (this.options.region) {
+      if (baseUri) {
+        throw new Error('baseUri and region cannot be specified at the same time');
+      }
+      baseUri = this._getRegionalBaseUri(this.options.region);
+    }
+    return baseUri || 'client-rapi.recombee.com';
   }
 
   /**

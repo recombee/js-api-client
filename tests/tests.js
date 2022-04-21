@@ -1,5 +1,5 @@
 function createClient() {
-    return new recombee.ApiClient('tst-public-key', 'dIuCAwTeXn87m24HYE6uAIwSVzgEkTrQflrYlDBeIoeTIrhG1FVqj1v0h6u3nNSu');
+    return new recombee.ApiClient('tst-public-key', 'dIuCAwTeXn87m24HYE6uAIwSVzgEkTrQflrYlDBeIoeTIrhG1FVqj1v0h6u3nNSu', {region: 'eu-west'});
 }
 
 function testInteractionPromise(assert, interactionReq) {
