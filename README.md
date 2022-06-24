@@ -53,6 +53,7 @@ client.send(new recombee.AddDetailView('user-9318', 'item-108'));
 client.send(new recombee.AddPurchase('user-7499', 'item-750'));
 client.send(new recombee.AddRating('user-3967', 'item-365', 0.5));
 client.send(new recombee.SetViewPortion('user-4289', 'item-487', 0.3));
+client.send(new recombee.SetUserValues('user-2310', {'country': 'AO', 'sex': 'M'}));
 
 ```
 
