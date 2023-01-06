@@ -67,7 +67,6 @@ QUnit.test("SetViewPortion test", function( assert ) {
     testInteractionCallback(assert, new recombee.SetViewPortion(Math.random().toString(36).substring(7), 'item-1', 0.1));
 });
 
-
 function addInteractions(client) {
   var i, j;
   for (i = 0; i < 50; i++) {
@@ -138,4 +137,24 @@ QUnit.test("RecommendNextItems test", function( assert ) {
       testRecommendations(assert, new recombee.RecommendNextItems(res.recommId, 5));
       done();
     });
+});
+
+QUnit.test("SearchItems test", function( assert ) {
+    testRecommendations(assert, new recombee.SearchItems('user-1', 'computer', 5));
+});
+
+QUnit.test("RecommendItemSegmentsToUser test", function( assert ) {
+    testRecommendations(assert, new recombee.RecommendItemSegmentsToUser('user-1', 5, {scenario: 'is-to-u'}));
+});
+
+QUnit.test("RecommendItemSegmentsToItem test", function( assert ) {
+    testRecommendations(assert, new recombee.RecommendItemSegmentsToItem('item-1', 'user-1', 5, {scenario: 'is-to-i'}));
+});
+
+QUnit.test("RecommendItemSegmentsToItemSegment test", function( assert ) {
+    testRecommendations(assert, new recombee.RecommendItemSegmentsToItemSegment('5', 'user-1', 5, {scenario: 'is-to-is'}));
+});
+
+QUnit.test("SearchItemSegments test", function( assert ) {
+    testRecommendations(assert, new recombee.SearchItemSegments('user-1', 'computer', 5, {scenario: 's-is'}));
 });

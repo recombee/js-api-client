@@ -213,7 +213,11 @@ exports.SetViewPortion = __webpack_require__(15).SetViewPortion;
 exports.RecommendItemsToUser = __webpack_require__(16).RecommendItemsToUser;
 exports.RecommendItemsToItem = __webpack_require__(17).RecommendItemsToItem;
 exports.RecommendNextItems = __webpack_require__(18).RecommendNextItems;
-exports.SearchItems = __webpack_require__(19).SearchItems;
+exports.RecommendItemSegmentsToUser = __webpack_require__(19).RecommendItemSegmentsToUser;
+exports.RecommendItemSegmentsToItem = __webpack_require__(20).RecommendItemSegmentsToItem;
+exports.RecommendItemSegmentsToItemSegment = __webpack_require__(21).RecommendItemSegmentsToItemSegment;
+exports.SearchItems = __webpack_require__(22).SearchItems;
+exports.SearchItemSegments = __webpack_require__(23).SearchItemSegments;
 
 /***/ }),
 /* 6 */
@@ -292,7 +296,7 @@ class ApiClient {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST", url, this.async);
     xmlhttp.setRequestHeader("Accept", "application/json");
-    xmlhttp.setRequestHeader("Content-Type", "text/plain");
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
 
     if (this.async) xmlhttp.timeout = request.timeout;
 
@@ -406,14 +410,14 @@ exports.TimeoutError = __webpack_require__(3).TimeoutError;
 const rqs = __webpack_require__(0);
 
 /**
- * Merges interactions (purchases, ratings, bookmarks, detail views ...) of two different users under a single user ID. This is especially useful for online e-commerce applications working with anonymous users identified by unique tokens such as the session ID. In such applications, it may often happen that a user owns a persistent account, yet accesses the system anonymously while, e.g., putting items into a shopping cart. At some point in time, such as when the user wishes to confirm the purchase, (s)he logs into the system using his/her username and password. The interactions made under anonymous session ID then become connected with the persistent account, and merging these two together becomes desirable.
+ * Merges interactions (purchases, ratings, bookmarks, detail views ...) of two different users under a single user ID. This is especially useful for online e-commerce applications working with anonymous users identified by unique tokens such as the session ID. In such applications, it may often happen that a user owns a persistent account, yet accesses the system anonymously while, e.g., putting items into a shopping cart. At some point in time, such as when the user wishes to confirm the purchase, (s)he logs into the system using his/her username and password. The interactions made under anonymous session ID then become connected with the persistent account, and merging these two becomes desirable.
  * Merging happens between two users referred to as the *target* and the *source*. After the merge, all the interactions of the source user are attributed to the target user, and the source user is **deleted**.
  */
 class MergeUsers extends rqs.Request {
 
   /**
    * Construct the request
-   * @param {string} targetUserId - ID of the targer user.
+   * @param {string} targetUserId - ID of the target user.
    * @param {string} sourceUserId - ID of the source user.
    * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
    * - Allowed parameters:
@@ -458,7 +462,7 @@ exports.MergeUsers = MergeUsers;
 const rqs = __webpack_require__(0);
 
 /**
- * Adds a detail view of a given item made by a given user.
+ * Adds a detail view of the given item made by the given user.
  */
 class AddDetailView extends rqs.Request {
 
@@ -537,7 +541,7 @@ exports.AddDetailView = AddDetailView;
 const rqs = __webpack_require__(0);
 
 /**
- * Adds a purchase of a given item made by a given user.
+ * Adds a purchase of the given item made by the given user.
  */
 class AddPurchase extends rqs.Request {
 
@@ -555,13 +559,13 @@ class AddPurchase extends rqs.Request {
    *         - Description: Sets whether the given user/item should be created if not present in the database.
    *     - *amount*
    *         - Type: number
-   *         - Description: Amount (number) of purchased items. The default is 1. For example if `user-x` purchases two `item-y` during a single order (session...), the `amount` should equal to 2.
+   *         - Description: Amount (number) of purchased items. The default is 1. For example, if `user-x` purchases two `item-y` during a single order (session...), the `amount` should equal 2.
    *     - *price*
    *         - Type: number
-   *         - Description: Price paid by the user for the item. If `amount` is greater than 1, sum of prices of all the items should be given.
+   *         - Description: Price paid by the user for the item. If `amount` is greater than 1, the sum of prices of all the items should be given.
    *     - *profit*
    *         - Type: number
-   *         - Description: Your profit from the purchased item. The profit is natural in e-commerce domain (for example if `user-x` purchases `item-y` for $100 and the gross margin is 30 %, then the profit is $30), but is applicable also in other domains (for example at a news company it may be income from displayed advertisement on article page). If `amount` is greater than 1, sum of profit of all the items should be given.
+   *         - Description: Your profit from the purchased item. The profit is natural in the e-commerce domain (for example, if `user-x` purchases `item-y` for $100 and the gross margin is 30 %, then the profit is $30) but is also applicable in other domains (for example, at a news company it may be income from a displayed advertisement on article page). If `amount` is greater than 1, the sum of profit of all the items should be given.
    *     - *recommId*
    *         - Type: string
    *         - Description: If this purchase is based on a recommendation request, `recommId` is the id of the clicked recommendation.
@@ -628,7 +632,7 @@ exports.AddPurchase = AddPurchase;
 const rqs = __webpack_require__(0);
 
 /**
- * Adds a rating of given item made by a given user.
+ * Adds a rating of the given item made by the given user.
  */
 class AddRating extends rqs.Request {
 
@@ -704,7 +708,7 @@ exports.AddRating = AddRating;
 const rqs = __webpack_require__(0);
 
 /**
- * Adds a cart addition of a given item made by a given user.
+ * Adds a cart addition of the given item made by the given user.
  */
 class AddCartAddition extends rqs.Request {
 
@@ -722,10 +726,10 @@ class AddCartAddition extends rqs.Request {
    *         - Description: Sets whether the given user/item should be created if not present in the database.
    *     - *amount*
    *         - Type: number
-   *         - Description: Amount (number) added to cart. The default is 1. For example if `user-x` adds two `item-y` during a single order (session...), the `amount` should equal to 2.
+   *         - Description: Amount (number) added to cart. The default is 1. For example, if `user-x` adds two `item-y` during a single order (session...), the `amount` should equal 2.
    *     - *price*
    *         - Type: number
-   *         - Description: Price of the added item. If `amount` is greater than 1, sum of prices of all the items should be given.
+   *         - Description: Price of the added item. If `amount` is greater than 1, the sum of prices of all the items should be given.
    *     - *recommId*
    *         - Type: string
    *         - Description: If this cart addition is based on a recommendation request, `recommId` is the id of the clicked recommendation.
@@ -789,7 +793,7 @@ exports.AddCartAddition = AddCartAddition;
 const rqs = __webpack_require__(0);
 
 /**
- * Adds a bookmark of a given item made by a given user.
+ * Adds a bookmark of the given item made by the given user.
  */
 class AddBookmark extends rqs.Request {
 
@@ -863,7 +867,7 @@ const rqs = __webpack_require__(0);
 
 /**
  * Sets viewed portion of an item (for example a video or article) by a user (at a session).
- * If you send new request with the same (`userId`, `itemId`, `sessionId`), the portion gets updated.
+ * If you send a new request with the same (`userId`, `itemId`, `sessionId`), the portion gets updated.
  */
 class SetViewPortion extends rqs.Request {
 
@@ -871,12 +875,12 @@ class SetViewPortion extends rqs.Request {
    * Construct the request
    * @param {string} userId - User who viewed a portion of the item
    * @param {string} itemId - Viewed item
-   * @param {number} portion - Viewed portion of the item (number between 0.0 (viewed nothing) and 1.0 (viewed full item) ). It should be the really viewed part of the item, no matter seeking, so for example if the user seeked immediately to half of the item and then viewed 10% of the item, the `portion` should still be `0.1`.
+   * @param {number} portion - Viewed portion of the item (number between 0.0 (viewed nothing) and 1.0 (viewed full item) ). It should be the actual viewed part of the item, no matter the seeking. For example, if the user seeked immediately to half of the item and then viewed 10% of the item, the `portion` should still be `0.1`.
    * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
    * - Allowed parameters:
    *     - *sessionId*
    *         - Type: string
-   *         - Description: ID of session in which the user viewed the item. Default is `null` (`None`, `nil`, `NULL` etc. depending on language).
+   *         - Description: ID of the session in which the user viewed the item. Default is `null` (`None`, `nil`, `NULL` etc., depending on the language).
    *     - *timestamp*
    *         - Type: string|number
    *         - Description: UTC timestamp of the rating as ISO8601-1 pattern or UTC epoch time. The default value is the current time.
@@ -945,13 +949,13 @@ exports.SetViewPortion = SetViewPortion;
 const rqs = __webpack_require__(0);
 
 /**
- * Based on user's past interactions (purchases, ratings, etc.) with the items, recommends top-N items that are most likely to be of high value for a given user.
- * The most typical use cases are recommendations at homepage, in some "Picked just for you" section or in email.
- * The returned items are sorted by relevance (first item being the most relevant).
+ * Based on the user's past interactions (purchases, ratings, etc.) with the items, recommends top-N items that are most likely to be of high value for the given user.
+ * The most typical use cases are recommendations on the homepage, in some "Picked just for you" section, or in email.
+ * The returned items are sorted by relevance (the first item being the most relevant).
  * Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
- * - Let Recombee know that this recommendation was successful (e.g. user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
+ * - Let Recombee know that this recommendation was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
  * - Get subsequent recommended items when the user scrolls down (*infinite scroll*) or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api.html#recommend-next-items).
- * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
+ * It is also possible to use POST HTTP method (for example in the case of a very long ReQL filter) - query parameters then become body parameters.
  */
 class RecommendItemsToUser extends rqs.Request {
 
@@ -963,15 +967,15 @@ class RecommendItemsToUser extends rqs.Request {
    * - Allowed parameters:
    *     - *scenario*
    *         - Type: string
-   *         - Description: Scenario defines a particular application of recommendations. It can be for example "homepage", "cart" or "emailing".
-   * You can set various settings to the [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com). You can also see performance of each scenario in the Admin UI separately, so you can check how well each application performs.
-   * The AI which optimizes models in order to get the best results may optimize different scenarios separately, or even use different models in each of the scenarios.
+   *         - Description: Scenario defines a particular application of recommendations. It can be, for example, "homepage", "cart", or "emailing".
+   * You can set various settings to the [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com). You can also see the performance of each scenario in the Admin UI separately, so you can check how well each application performs.
+   * The AI that optimizes models to get the best results may optimize different scenarios separately or even use different models in each of the scenarios.
    *     - *cascadeCreate*
    *         - Type: boolean
-   *         - Description: If the user does not exist in the database, returns a list of non-personalized recommendations and creates the user in the database. This allows for example rotations in the following recommendations for that user, as the user will be already known to the system.
+   *         - Description: If the user does not exist in the database, returns a list of non-personalized recommendations and creates the user in the database. This allows, for example, rotations in the following recommendations for that user, as the user will be already known to the system.
    *     - *returnProperties*
    *         - Type: boolean
-   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used for easy displaying of the recommended items to the user. 
+   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user. 
    * Example response:
    * ```
    *   {
@@ -1002,7 +1006,7 @@ class RecommendItemsToUser extends rqs.Request {
    * ```
    *     - *includedProperties*
    *         - Type: string[]
-   *         - Description: Allows to specify, which properties should be returned when `returnProperties=true` is set. The properties are given as a comma-separated list. 
+   *         - Description: Allows specifying which properties should be returned when `returnProperties=true` is set. The properties are given as a comma-separated list.
    * Example response for `includedProperties=description,price`:
    * ```
    *   {
@@ -1029,36 +1033,36 @@ class RecommendItemsToUser extends rqs.Request {
    * ```
    *     - *filter*
    *         - Type: string
-   *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to filter recommended items based on the values of their attributes.
-   * Filters can be also assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression, which allows you to filter recommended items based on the values of their attributes.
+   * Filters can also be assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *booster*
    *         - Type: string
-   *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some items based on the values of their attributes.
-   * Boosters can be also assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression, which allows you to boost the recommendation rate of some items based on the values of their attributes.
+   * Boosters can also be assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *logic*
    *         - Type: string|
-   *         - Description: Logic specifies particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
-   * See [this section](https://docs.recombee.com/recommendation_logics.html) for list of available logics and other details.
+   *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
+   * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
    * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
-   * Logic can be also set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   * Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *diversity*
    *         - Type: number
-   *         - Description: **Expert option** Real number from [0.0, 1.0] which determines how much mutually dissimilar should the recommended items be. The default value is 0.0, i.e., no diversification. Value 1.0 means maximal diversification.
+   *         - Description: **Expert option** Real number from [0.0, 1.0], which determines how mutually dissimilar the recommended items should be. The default value is 0.0, i.e., no diversification. Value 1.0 means maximal diversification.
    *     - *minRelevance*
    *         - Type: string
-   *         - Description: **Expert option** Specifies the threshold of how much relevant must the recommended items be to the user. Possible values one of: "low", "medium", "high". The default value is "low", meaning that the system attempts to recommend number of items equal to *count* at any cost. If there are not enough data (such as interactions or item properties), this may even lead to bestseller-based recommendations to be appended to reach the full *count*. This behavior may be suppressed by using "medium" or "high" values. In such case, the system only recommends items of at least the requested relevance, and may return less than *count* items when there is not enough data to fulfill it.
+   *         - Description: **Expert option** Specifies the threshold of how relevant must the recommended items be to the user. Possible values one of: "low", "medium", "high". The default value is "low", meaning that the system attempts to recommend a number of items equal to *count* at any cost. If there is not enough data (such as interactions or item properties), this may even lead to bestseller-based recommendations to be appended to reach the full *count*. This behavior may be suppressed by using "medium" or "high" values. In such a case, the system only recommends items of at least the requested relevance and may return less than *count* items when there is not enough data to fulfill it.
    *     - *rotationRate*
    *         - Type: number
-   *         - Description: **Expert option** If your users browse the system in real-time, it may easily happen that you wish to offer them recommendations multiple times. Here comes the question: how much should the recommendations change? Should they remain the same, or should they rotate? Recombee API allows you to control this per-request in backward fashion. You may penalize an item for being recommended in the near past. For the specific user, `rotationRate=1` means maximal rotation, `rotationRate=0` means absolutely no rotation. You may also use, for example `rotationRate=0.2` for only slight rotation of recommended items. Default: `0`.
+   *         - Description: **Expert option** If your users browse the system in real-time, it may easily happen that you wish to offer them recommendations multiple times. Here comes the question: how much should the recommendations change? Should they remain the same, or should they rotate? Recombee API allows you to control this per request in a backward fashion. You may penalize an item for being recommended in the near past. For the specific user, `rotationRate=1` means maximal rotation, `rotationRate=0` means absolutely no rotation. You may also use, for example, `rotationRate=0.2` for only slight rotation of recommended items. Default: `0`.
    *     - *rotationTime*
    *         - Type: number
-   *         - Description: **Expert option** Taking *rotationRate* into account, specifies how long time it takes to an item to recover from the penalization. For example, `rotationTime=7200.0` means that items recommended less than 2 hours ago are penalized. Default: `7200.0`.
+   *         - Description: **Expert option** Taking *rotationRate* into account, specifies how long it takes for an item to recover from the penalization. For example, `rotationTime=7200.0` means that items recommended less than 2 hours ago are penalized. Default: `7200.0`.
    *     - *expertSettings*
    *         - Type: 
    *         - Description: Dictionary of custom options.
    *     - *returnAbGroup*
    *         - Type: boolean
-   *         - Description: If there is a custom AB-testing running, return name of group to which the request belongs.
+   *         - Description: If there is a custom AB-testing running, return the name of the group to which the request belongs.
    */
   constructor(userId, count, optional) {
     super('POST', `/recomms/users/${encodeURIComponent(userId)}/items/`, 9000, false);
@@ -1136,12 +1140,12 @@ exports.RecommendItemsToUser = RecommendItemsToUser;
 const rqs = __webpack_require__(0);
 
 /**
- * Recommends set of items that are somehow related to one given item, *X*. Typical scenario  is when user *A* is viewing *X*. Then you may display items to the user that he might be also interested in. Recommend items to item request gives you Top-N such items, optionally taking the target user *A* into account.
- * The returned items are sorted by relevance (first item being the most relevant).
+ * Recommends a set of items that are somehow related to one given item, *X*. A typical scenario is when the user *A* is viewing *X*. Then you may display items to the user that he might also be interested in. Recommend items to item request gives you Top-N such items, optionally taking the target user *A* into account.
+ * The returned items are sorted by relevance (the first item being the most relevant).
  * Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
- * - Let Recombee know that this recommendation was successful (e.g. user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
+ * - Let Recombee know that this recommendation was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
  * - Get subsequent recommended items when the user scrolls down (*infinite scroll*) or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api.html#recommend-next-items).
- * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
+ * It is also possible to use POST HTTP method (for example in the case of a very long ReQL filter) - query parameters then become body parameters.
  */
 class RecommendItemsToItem extends rqs.Request {
 
@@ -1154,27 +1158,27 @@ class RecommendItemsToItem extends rqs.Request {
    * * Allows the calculation of Actions and Conversions
    *   in the graphical user interface,
    *   as Recombee can pair the user who got recommendations
-   *   and who afterwards viewed/purchased an item.
+   *   and who afterward viewed/purchased an item.
    * If you insist on not specifying the user, pass `null`
-   * (`None`, `nil`, `NULL` etc. depending on language) to *targetUserId*.
+   * (`None`, `nil`, `NULL` etc., depending on the language) to *targetUserId*.
    * Do not create some special dummy user for getting recommendations,
    * as it could mislead the recommendation models,
    * and result in wrong recommendations.
-   * For anonymous/unregistered users it is possible to use for example their session ID.
+   * For anonymous/unregistered users, it is possible to use, for example, their session ID.
    * @param {number} count - Number of items to be recommended (N for the top-N recommendation).
    * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
    * - Allowed parameters:
    *     - *scenario*
    *         - Type: string
-   *         - Description: Scenario defines a particular application of recommendations. It can be for example "homepage", "cart" or "emailing".
-   * You can set various settings to the [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com). You can also see performance of each scenario in the Admin UI separately, so you can check how well each application performs.
-   * The AI which optimizes models in order to get the best results may optimize different scenarios separately, or even use different models in each of the scenarios.
+   *         - Description: Scenario defines a particular application of recommendations. It can be, for example, "homepage", "cart", or "emailing".
+   * You can set various settings to the [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com). You can also see the performance of each scenario in the Admin UI separately, so you can check how well each application performs.
+   * The AI that optimizes models to get the best results may optimize different scenarios separately or even use different models in each of the scenarios.
    *     - *cascadeCreate*
    *         - Type: boolean
-   *         - Description: If item of given *itemId* or user of given *targetUserId* doesn't exist in the database, it creates the missing entity/entities and returns some (non-personalized) recommendations. This allows for example rotations in the following recommendations for the user of given *targetUserId*, as the user will be already known to the system.
+   *         - Description: If an item of the given *itemId* or user of the given *targetUserId* doesn't exist in the database, it creates the missing entity/entities and returns some (non-personalized) recommendations. This allows, for example, rotations in the following recommendations for the user of the given *targetUserId*, as the user will be already known to the system.
    *     - *returnProperties*
    *         - Type: boolean
-   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used for easy displaying of the recommended items to the user. 
+   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user. 
    * Example response:
    * ```
    *   {
@@ -1205,7 +1209,7 @@ class RecommendItemsToItem extends rqs.Request {
    * ```
    *     - *includedProperties*
    *         - Type: string[]
-   *         - Description: Allows to specify, which properties should be returned when `returnProperties=true` is set. The properties are given as a comma-separated list. 
+   *         - Description: Allows specifying which properties should be returned when `returnProperties=true` is set. The properties are given as a comma-separated list.
    * Example response for `includedProperties=description,price`:
    * ```
    *   {
@@ -1232,39 +1236,39 @@ class RecommendItemsToItem extends rqs.Request {
    * ```
    *     - *filter*
    *         - Type: string
-   *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to filter recommended items based on the values of their attributes.
-   * Filters can be also assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression, which allows you to filter recommended items based on the values of their attributes.
+   * Filters can also be assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *booster*
    *         - Type: string
-   *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some items based on the values of their attributes.
-   * Boosters can be also assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression, which allows you to boost the recommendation rate of some items based on the values of their attributes.
+   * Boosters can also be assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *logic*
    *         - Type: string|
-   *         - Description: Logic specifies particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
-   * See [this section](https://docs.recombee.com/recommendation_logics.html) for list of available logics and other details.
+   *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
+   * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
    * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
-   * Logic can be also set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   * Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *userImpact*
    *         - Type: number
-   *         - Description: **Expert option** If *targetUserId* parameter is present, the recommendations are biased towards the given user. Using *userImpact*, you may control this bias. For an extreme case of `userImpact=0.0`, the interactions made by the user are not taken into account at all (with the exception of history-based blacklisting), for `userImpact=1.0`, you'll get user-based recommendation. The default value is `0`.
+   *         - Description: **Expert option** If *targetUserId* parameter is present, the recommendations are biased towards the given user. Using *userImpact*, you may control this bias. For an extreme case of `userImpact=0.0`, the interactions made by the user are not taken into account at all (with the exception of history-based blacklisting), for `userImpact=1.0`, you'll get a user-based recommendation. The default value is `0`.
    *     - *diversity*
    *         - Type: number
-   *         - Description: **Expert option** Real number from [0.0, 1.0] which determines how much mutually dissimilar should the recommended items be. The default value is 0.0, i.e., no diversification. Value 1.0 means maximal diversification.
+   *         - Description: **Expert option** Real number from [0.0, 1.0], which determines how mutually dissimilar the recommended items should be. The default value is 0.0, i.e., no diversification. Value 1.0 means maximal diversification.
    *     - *minRelevance*
    *         - Type: string
-   *         - Description: **Expert option** If the *targetUserId* is provided:  Specifies the threshold of how much relevant must the recommended items be to the user. Possible values one of: "low", "medium", "high". The default value is "low", meaning that the system attempts to recommend number of items equal to *count* at any cost. If there are not enough data (such as interactions or item properties), this may even lead to bestseller-based recommendations to be appended to reach the full *count*. This behavior may be suppressed by using "medium" or "high" values. In such case, the system only recommends items of at least the requested relevance, and may return less than *count* items when there is not enough data to fulfill it.
+   *         - Description: **Expert option** If the *targetUserId* is provided:  Specifies the threshold of how relevant must the recommended items be to the user. Possible values one of: "low", "medium", "high". The default value is "low", meaning that the system attempts to recommend a number of items equal to *count* at any cost. If there is not enough data (such as interactions or item properties), this may even lead to bestseller-based recommendations being appended to reach the full *count*. This behavior may be suppressed by using "medium" or "high" values. In such case, the system only recommends items of at least the requested relevance and may return less than *count* items when there is not enough data to fulfill it.
    *     - *rotationRate*
    *         - Type: number
-   *         - Description: **Expert option** If the *targetUserId* is provided: If your users browse the system in real-time, it may easily happen that you wish to offer them recommendations multiple times. Here comes the question: how much should the recommendations change? Should they remain the same, or should they rotate? Recombee API allows you to control this per-request in backward fashion. You may penalize an item for being recommended in the near past. For the specific user, `rotationRate=1` means maximal rotation, `rotationRate=0` means absolutely no rotation. You may also use, for example `rotationRate=0.2` for only slight rotation of recommended items.
+   *         - Description: **Expert option** If the *targetUserId* is provided: If your users browse the system in real-time, it may easily happen that you wish to offer them recommendations multiple times. Here comes the question: how much should the recommendations change? Should they remain the same, or should they rotate? Recombee API allows you to control this per request in a backward fashion. You may penalize an item for being recommended in the near past. For the specific user, `rotationRate=1` means maximal rotation, `rotationRate=0` means absolutely no rotation. You may also use, for example, `rotationRate=0.2` for only slight rotation of recommended items.
    *     - *rotationTime*
    *         - Type: number
-   *         - Description: **Expert option** If the *targetUserId* is provided: Taking *rotationRate* into account, specifies how long time it takes to an item to recover from the penalization. For example, `rotationTime=7200.0` means that items recommended less than 2 hours ago are penalized.
+   *         - Description: **Expert option** If the *targetUserId* is provided: Taking *rotationRate* into account, specifies how long it takes for an item to recover from the penalization. For example, `rotationTime=7200.0` means that items recommended less than 2 hours ago are penalized.
    *     - *expertSettings*
    *         - Type: 
    *         - Description: Dictionary of custom options.
    *     - *returnAbGroup*
    *         - Type: boolean
-   *         - Description: If there is a custom AB-testing running, return name of group to which the request belongs.
+   *         - Description: If there is a custom AB-testing running, return the name of the group to which the request belongs.
    */
   constructor(itemId, targetUserId, count, optional) {
     super('POST', `/recomms/items/${encodeURIComponent(itemId)}/items/`, 9000, false);
@@ -1347,8 +1351,8 @@ exports.RecommendItemsToItem = RecommendItemsToItem;
 const rqs = __webpack_require__(0);
 
 /**
- * Returns items that shall be shown to a user as next recommendations when the user e.g. scrolls the page down (*infinite scroll*) or goes to a next page.
- * It accepts `recommId` of a base recommendation request (e.g. request from the first page) and number of items that shall be returned (`count`).
+ * Returns items that shall be shown to a user as next recommendations when the user e.g. scrolls the page down (*infinite scroll*) or goes to the next page.
+ * It accepts `recommId` of a base recommendation request (e.g., request from the first page) and the number of items that shall be returned (`count`).
  * The base request can be one of:
  *   - [Recommend items to item](https://docs.recombee.com/api.html#recommend-items-to-item)
  *   - [Recommend items to user](https://docs.recombee.com/api.html#recommend-items-to-user)
@@ -1402,14 +1406,353 @@ exports.RecommendNextItems = RecommendNextItems;
 const rqs = __webpack_require__(0);
 
 /**
+ * Recommends the top Segments from a Segmentation for a particular user, based on the user's past interactions.
+ * Based on the used Segmentation, this endpoint can be used for example for:
+ *   - Recommending the top categories for the user
+ *   - Recommending the top genres for the user
+ *   - Recommending the top brands for the user
+ *   - Recommending the top artists for the user
+ * You need to set the used Segmentation the Admin UI in the Scenario settings prior to using this endpoint.
+ * The returned segments are sorted by relevance (first segment being the most relevant).
+ * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
+ */
+class RecommendItemSegmentsToUser extends rqs.Request {
+
+  /**
+   * Construct the request
+   * @param {string} userId - ID of the user for whom personalized recommendations are to be generated.
+   * @param {number} count - Number of item segments to be recommended (N for the top-N recommendation).
+   * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
+   * - Allowed parameters:
+   *     - *scenario*
+   *         - Type: string
+   *         - Description: Scenario defines a particular application of recommendations. It can be, for example, "homepage", "cart", or "emailing".
+   * You can set various settings to the [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com). You can also see the performance of each scenario in the Admin UI separately, so you can check how well each application performs.
+   * The AI that optimizes models to get the best results may optimize different scenarios separately or even use different models in each of the scenarios.
+   *     - *cascadeCreate*
+   *         - Type: boolean
+   *         - Description: If the user does not exist in the database, returns a list of non-personalized recommendations and creates the user in the database. This allows, for example, rotations in the following recommendations for that user, as the user will be already known to the system.
+   *     - *filter*
+   *         - Type: string
+   *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to filter recommended segments based on the `segmentationId`.
+   *     - *booster*
+   *         - Type: string
+   *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some segments based on the `segmentationId`.
+   *     - *logic*
+   *         - Type: string|
+   *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
+   * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
+   * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
+   * Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   *     - *expertSettings*
+   *         - Type: 
+   *         - Description: Dictionary of custom options.
+   *     - *returnAbGroup*
+   *         - Type: boolean
+   *         - Description: If there is a custom AB-testing running, return the name of the group to which the request belongs.
+   */
+  constructor(userId, count, optional) {
+    super('POST', `/recomms/users/${encodeURIComponent(userId)}/item-segments/`, 9000, false);
+    this.userId = userId;
+    this.count = count;
+    optional = optional || {};
+    this.scenario = optional.scenario;
+    this.cascadeCreate = optional.cascadeCreate;
+    this.filter = optional.filter;
+    this.booster = optional.booster;
+    this.logic = optional.logic;
+    this.expertSettings = optional.expertSettings;
+    this.returnAbGroup = optional.returnAbGroup;
+  }
+
+  /**
+   * Get body parameters
+   * @return {Object} The values of body parameters (name of parameter: value of the parameter)
+   */
+  bodyParameters() {
+    let params = {};
+    params.count = this.count;
+
+    if (this.scenario !== undefined) params.scenario = this.scenario;
+
+    if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
+
+    if (this.filter !== undefined) params.filter = this.filter;
+
+    if (this.booster !== undefined) params.booster = this.booster;
+
+    if (this.logic !== undefined) params.logic = this.logic;
+
+    if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
+
+    if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
+
+    params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
+    return params;
+  }
+
+}
+
+exports.RecommendItemSegmentsToUser = RecommendItemSegmentsToUser;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ This file is auto-generated, do not edit
+*/
+
+
+
+const rqs = __webpack_require__(0);
+
+/**
+ * Recommends Segments from a Segmentation that are the most relevant to a particular item.
+ * Based on the used Segmentation, this endpoint can be used for example for:
+ *   - Recommending the related categories
+ *   - Recommending the related genres
+ *   - Recommending the related brands
+ *   - Recommending the related artists
+ * You need to set the used Segmentation the Admin UI in the Scenario settings prior to using this endpoint.
+ * The returned segments are sorted by relevance (first segment being the most relevant).
+ * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
+ */
+class RecommendItemSegmentsToItem extends rqs.Request {
+
+  /**
+   * Construct the request
+   * @param {string} itemId - ID of the item for which the recommendations are to be generated.
+   * @param {string} targetUserId - ID of the user who will see the recommendations.
+   * Specifying the *targetUserId* is beneficial because:
+   * * It makes the recommendations personalized
+   * * Allows the calculation of Actions and Conversions
+   *   in the graphical user interface,
+   *   as Recombee can pair the user who got recommendations
+   *   and who afterward viewed/purchased an item.
+   * If you insist on not specifying the user, pass `null`
+   * (`None`, `nil`, `NULL` etc., depending on the language) to *targetUserId*.
+   * Do not create some special dummy user for getting recommendations,
+   * as it could mislead the recommendation models,
+   * and result in wrong recommendations.
+   * For anonymous/unregistered users, it is possible to use, for example, their session ID.
+   * @param {number} count - Number of item segments to be recommended (N for the top-N recommendation).
+   * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
+   * - Allowed parameters:
+   *     - *scenario*
+   *         - Type: string
+   *         - Description: Scenario defines a particular application of recommendations. It can be, for example, "homepage", "cart", or "emailing".
+   * You can set various settings to the [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com). You can also see the performance of each scenario in the Admin UI separately, so you can check how well each application performs.
+   * The AI that optimizes models to get the best results may optimize different scenarios separately or even use different models in each of the scenarios.
+   *     - *cascadeCreate*
+   *         - Type: boolean
+   *         - Description: If the user does not exist in the database, returns a list of non-personalized recommendations and creates the user in the database. This allows, for example, rotations in the following recommendations for that user, as the user will be already known to the system.
+   *     - *filter*
+   *         - Type: string
+   *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to filter recommended segments based on the `segmentationId`.
+   *     - *booster*
+   *         - Type: string
+   *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some segments based on the `segmentationId`.
+   *     - *logic*
+   *         - Type: string|
+   *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
+   * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
+   * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
+   * Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   *     - *expertSettings*
+   *         - Type: 
+   *         - Description: Dictionary of custom options.
+   *     - *returnAbGroup*
+   *         - Type: boolean
+   *         - Description: If there is a custom AB-testing running, return the name of the group to which the request belongs.
+   */
+  constructor(itemId, targetUserId, count, optional) {
+    super('POST', `/recomms/items/${encodeURIComponent(itemId)}/item-segments/`, 9000, false);
+    this.itemId = itemId;
+    this.targetUserId = targetUserId;
+    this.count = count;
+    optional = optional || {};
+    this.scenario = optional.scenario;
+    this.cascadeCreate = optional.cascadeCreate;
+    this.filter = optional.filter;
+    this.booster = optional.booster;
+    this.logic = optional.logic;
+    this.expertSettings = optional.expertSettings;
+    this.returnAbGroup = optional.returnAbGroup;
+  }
+
+  /**
+   * Get body parameters
+   * @return {Object} The values of body parameters (name of parameter: value of the parameter)
+   */
+  bodyParameters() {
+    let params = {};
+    params.targetUserId = this.targetUserId;
+    params.count = this.count;
+
+    if (this.scenario !== undefined) params.scenario = this.scenario;
+
+    if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
+
+    if (this.filter !== undefined) params.filter = this.filter;
+
+    if (this.booster !== undefined) params.booster = this.booster;
+
+    if (this.logic !== undefined) params.logic = this.logic;
+
+    if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
+
+    if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
+
+    params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
+    return params;
+  }
+
+}
+
+exports.RecommendItemSegmentsToItem = RecommendItemSegmentsToItem;
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ This file is auto-generated, do not edit
+*/
+
+
+
+const rqs = __webpack_require__(0);
+
+/**
+ * Recommends Segments from a result Segmentation that are the most relevant to a particular Segment from a context Segmentation.
+ * Based on the used Segmentations, this endpoint can be used for example for:
+ *   - Recommending the related brands to particular brand
+ *   - Recommending the related brands to particular category
+ *   - Recommending the related artists to a particular genre (assuming songs are the Items)
+ * You need to set the used context and result Segmentation the Admin UI in the Scenario settings prior to using this endpoint.
+ * The returned segments are sorted by relevance (first segment being the most relevant).
+ * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
+ */
+class RecommendItemSegmentsToItemSegment extends rqs.Request {
+
+  /**
+   * Construct the request
+   * @param {string} contextSegmentId - ID of the segment from `contextSegmentationId` for which the recommendations are to be generated.
+   * @param {string} targetUserId - ID of the user who will see the recommendations.
+   * Specifying the *targetUserId* is beneficial because:
+   * * It makes the recommendations personalized
+   * * Allows the calculation of Actions and Conversions
+   *   in the graphical user interface,
+   *   as Recombee can pair the user who got recommendations
+   *   and who afterward viewed/purchased an item.
+   * If you insist on not specifying the user, pass `null`
+   * (`None`, `nil`, `NULL` etc., depending on the language) to *targetUserId*.
+   * Do not create some special dummy user for getting recommendations,
+   * as it could mislead the recommendation models,
+   * and result in wrong recommendations.
+   * For anonymous/unregistered users, it is possible to use, for example, their session ID.
+   * @param {number} count - Number of item segments to be recommended (N for the top-N recommendation).
+   * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
+   * - Allowed parameters:
+   *     - *scenario*
+   *         - Type: string
+   *         - Description: Scenario defines a particular application of recommendations. It can be, for example, "homepage", "cart", or "emailing".
+   * You can set various settings to the [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com). You can also see the performance of each scenario in the Admin UI separately, so you can check how well each application performs.
+   * The AI that optimizes models to get the best results may optimize different scenarios separately or even use different models in each of the scenarios.
+   *     - *cascadeCreate*
+   *         - Type: boolean
+   *         - Description: If the user does not exist in the database, returns a list of non-personalized recommendations and creates the user in the database. This allows, for example, rotations in the following recommendations for that user, as the user will be already known to the system.
+   *     - *filter*
+   *         - Type: string
+   *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to filter recommended segments based on the `segmentationId`.
+   *     - *booster*
+   *         - Type: string
+   *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some segments based on the `segmentationId`.
+   *     - *logic*
+   *         - Type: string|
+   *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
+   * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
+   * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
+   * Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   *     - *expertSettings*
+   *         - Type: 
+   *         - Description: Dictionary of custom options.
+   *     - *returnAbGroup*
+   *         - Type: boolean
+   *         - Description: If there is a custom AB-testing running, return the name of the group to which the request belongs.
+   */
+  constructor(contextSegmentId, targetUserId, count, optional) {
+    super('POST', '/recomms/item-segments/item-segments/', 9000, false);
+    this.contextSegmentId = contextSegmentId;
+    this.targetUserId = targetUserId;
+    this.count = count;
+    optional = optional || {};
+    this.scenario = optional.scenario;
+    this.cascadeCreate = optional.cascadeCreate;
+    this.filter = optional.filter;
+    this.booster = optional.booster;
+    this.logic = optional.logic;
+    this.expertSettings = optional.expertSettings;
+    this.returnAbGroup = optional.returnAbGroup;
+  }
+
+  /**
+   * Get body parameters
+   * @return {Object} The values of body parameters (name of parameter: value of the parameter)
+   */
+  bodyParameters() {
+    let params = {};
+    params.contextSegmentId = this.contextSegmentId;
+    params.targetUserId = this.targetUserId;
+    params.count = this.count;
+
+    if (this.scenario !== undefined) params.scenario = this.scenario;
+
+    if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
+
+    if (this.filter !== undefined) params.filter = this.filter;
+
+    if (this.booster !== undefined) params.booster = this.booster;
+
+    if (this.logic !== undefined) params.logic = this.logic;
+
+    if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
+
+    if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
+
+    params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
+    return params;
+  }
+
+}
+
+exports.RecommendItemSegmentsToItemSegment = RecommendItemSegmentsToItemSegment;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ This file is auto-generated, do not edit
+*/
+
+
+
+const rqs = __webpack_require__(0);
+
+/**
  * Full-text personalized search. The results are based on the provided `searchQuery` and also on the user's past interactions (purchases, ratings, etc.) with the items (items more suitable for the user are preferred in the results).
  * All the string and set item properties are indexed by the search engine.
- * This endpoint should be used in a search box at your website/app. It can be called multiple times as the user is typing the query in order to get the most viable suggestions based on current state of the query, or once after submitting the whole query. 
- * The returned items are sorted by relevance (first item being the most relevant).
+ * This endpoint should be used in a search box on your website/app. It can be called multiple times as the user is typing the query in order to get the most viable suggestions based on the current state of the query, or once after submitting the whole query. 
+ * The returned items are sorted by relevance (the first item being the most relevant).
  * Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
- * - Let Recombee know that this search was successful (e.g. user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
+ * - Let Recombee know that this search was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
  * - Get subsequent search results when the user scrolls down or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api.html#recommend-next-items).
- * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
+ * It is also possible to use POST HTTP method (for example in the case of a very long ReQL filter) - query parameters then become body parameters.
  */
 class SearchItems extends rqs.Request {
 
@@ -1423,14 +1766,14 @@ class SearchItems extends rqs.Request {
    *     - *scenario*
    *         - Type: string
    *         - Description: Scenario defines a particular search field in your user interface.
-   * You can set various settings to the [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com). You can also see performance of each scenario in the Admin UI separately, so you can check how well each field performs.
-   * The AI which optimizes models in order to get the best results may optimize different scenarios separately, or even use different models in each of the scenarios.
+   * You can set various settings to the [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com). You can also see the performance of each scenario in the Admin UI separately, so you can check how well each field performs.
+   * The AI that optimizes models to get the best results may optimize different scenarios separately, or even use different models in each of the scenarios.
    *     - *cascadeCreate*
    *         - Type: boolean
-   *         - Description: If the user does not exist in the database, returns a list of non-personalized search results and creates the user in the database. This allows for example rotations in the following recommendations for that user, as the user will be already known to the system.
+   *         - Description: If the user does not exist in the database, returns a list of non-personalized search results and creates the user in the database. This allows, for example, rotations in the following recommendations for that user, as the user will be already known to the system.
    *     - *returnProperties*
    *         - Type: boolean
-   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used for easy displaying of the recommended items to the user. 
+   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user. 
    * Example response:
    * ```
    *   {
@@ -1461,7 +1804,7 @@ class SearchItems extends rqs.Request {
    * ```
    *     - *includedProperties*
    *         - Type: string[]
-   *         - Description: Allows to specify, which properties should be returned when `returnProperties=true` is set. The properties are given as a comma-separated list. 
+   *         - Description: Allows specifying which properties should be returned when `returnProperties=true` is set. The properties are given as a comma-separated list.
    * Example response for `includedProperties=description,price`:
    * ```
    *   {
@@ -1488,24 +1831,24 @@ class SearchItems extends rqs.Request {
    * ```
    *     - *filter*
    *         - Type: string
-   *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to filter recommended items based on the values of their attributes.
-   * Filters can be also assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression, which allows you to filter recommended items based on the values of their attributes.
+   * Filters can also be assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *booster*
    *         - Type: string
-   *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some items based on the values of their attributes.
-   * Boosters can be also assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression, which allows you to boost the recommendation rate of some items based on the values of their attributes.
+   * Boosters can also be assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *logic*
    *         - Type: string|
-   *         - Description: Logic specifies particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
-   * See [this section](https://docs.recombee.com/recommendation_logics.html) for list of available logics and other details.
+   *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
+   * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
    * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
-   * Logic can be also set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   * Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *expertSettings*
    *         - Type: 
    *         - Description: Dictionary of custom options.
    *     - *returnAbGroup*
    *         - Type: boolean
-   *         - Description: If there is a custom AB-testing running, return name of group to which the request belongs.
+   *         - Description: If there is a custom AB-testing running, return the name of the group to which the request belongs.
    */
   constructor(userId, searchQuery, count, optional) {
     super('POST', `/search/users/${encodeURIComponent(userId)}/items/`, 9000, false);
@@ -1558,6 +1901,111 @@ class SearchItems extends rqs.Request {
 }
 
 exports.SearchItems = SearchItems;
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ This file is auto-generated, do not edit
+*/
+
+
+
+const rqs = __webpack_require__(0);
+
+/**
+ * Full-text personalized search that returns Segments from a Segmentation. The results are based on the provided `searchQuery` and also on the user's past interactions (purchases, ratings, etc.).
+ * Based on the used Segmentation, this endpoint can be used for example for:
+ *   - Searching within categories or brands
+ *   - Searching within genres or artists
+ * For example if the user is searching for "iPhone" this endpoint can return "cell phones" category.
+ * You need to set the used Segmentation the Admin UI in the Scenario settings prior to using this endpoint.
+ * The returned segments are sorted by relevance (first segment being the most relevant).
+ * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
+ */
+class SearchItemSegments extends rqs.Request {
+
+  /**
+   * Construct the request
+   * @param {string} userId - ID of the user for whom personalized search will be performed.
+   * @param {string} searchQuery - Search query provided by the user. It is used for the full-text search.
+   * @param {number} count - Number of segments to be returned (N for the top-N results).
+   * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
+   * - Allowed parameters:
+   *     - *scenario*
+   *         - Type: string
+   *         - Description: Scenario defines a particular application of recommendations. It can be, for example, "homepage", "cart", or "emailing".
+   * You can set various settings to the [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com). You can also see the performance of each scenario in the Admin UI separately, so you can check how well each application performs.
+   * The AI that optimizes models to get the best results may optimize different scenarios separately or even use different models in each of the scenarios.
+   *     - *cascadeCreate*
+   *         - Type: boolean
+   *         - Description: If the user does not exist in the database, returns a list of non-personalized recommendations and creates the user in the database. This allows, for example, rotations in the following recommendations for that user, as the user will be already known to the system.
+   *     - *filter*
+   *         - Type: string
+   *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to filter recommended segments based on the `segmentationId`.
+   *     - *booster*
+   *         - Type: string
+   *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some segments based on the `segmentationId`.
+   *     - *logic*
+   *         - Type: string|
+   *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
+   * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
+   * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
+   * Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   *     - *expertSettings*
+   *         - Type: 
+   *         - Description: Dictionary of custom options.
+   *     - *returnAbGroup*
+   *         - Type: boolean
+   *         - Description: If there is a custom AB-testing running, return the name of the group to which the request belongs.
+   */
+  constructor(userId, searchQuery, count, optional) {
+    super('POST', `/search/users/${encodeURIComponent(userId)}/item-segments/`, 9000, false);
+    this.userId = userId;
+    this.searchQuery = searchQuery;
+    this.count = count;
+    optional = optional || {};
+    this.scenario = optional.scenario;
+    this.cascadeCreate = optional.cascadeCreate;
+    this.filter = optional.filter;
+    this.booster = optional.booster;
+    this.logic = optional.logic;
+    this.expertSettings = optional.expertSettings;
+    this.returnAbGroup = optional.returnAbGroup;
+  }
+
+  /**
+   * Get body parameters
+   * @return {Object} The values of body parameters (name of parameter: value of the parameter)
+   */
+  bodyParameters() {
+    let params = {};
+    params.searchQuery = this.searchQuery;
+    params.count = this.count;
+
+    if (this.scenario !== undefined) params.scenario = this.scenario;
+
+    if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
+
+    if (this.filter !== undefined) params.filter = this.filter;
+
+    if (this.booster !== undefined) params.booster = this.booster;
+
+    if (this.logic !== undefined) params.logic = this.logic;
+
+    if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
+
+    if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
+
+    params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
+    return params;
+  }
+
+}
+
+exports.SearchItemSegments = SearchItemSegments;
 
 /***/ })
 /******/ ]);

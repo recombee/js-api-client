@@ -71,7 +71,7 @@ class ApiClient {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST", url, this.async);
     xmlhttp.setRequestHeader("Accept", "application/json");
-    xmlhttp.setRequestHeader("Content-Type", "text/plain");
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
 
     if ( this.async )
       xmlhttp.timeout = request.timeout;
