@@ -22,3 +22,4 @@ exports.RecommendItemSegmentsToItem = require("./requests/recommend-item-segment
 exports.RecommendItemSegmentsToItemSegment = require("./requests/recommend-item-segments-to-item-segment").RecommendItemSegmentsToItemSegment;
 exports.SearchItems = require("./requests/search-items").SearchItems;
 exports.SearchItemSegments = require("./requests/search-item-segments").SearchItemSegments;
+exports.Batch = require("./requests/batch").Batch;

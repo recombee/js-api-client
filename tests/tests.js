@@ -3,7 +3,7 @@ function createClient() {
 }
 
 function testInteractionPromise(assert, interactionReq) {
-  assert.timeout(1000);
+  assert.timeout(3000);
   var done = assert.async();
 
   var client = createClient();
@@ -19,7 +19,7 @@ function testInteractionPromise(assert, interactionReq) {
 }
 
 function testInteractionCallback(assert, interactionReq) {
-  assert.timeout(1000);
+  assert.timeout(3000);
   var done = assert.async();
 
   function callback(err, res) {
@@ -157,4 +157,35 @@ QUnit.test("RecommendItemSegmentsToItemSegment test", function( assert ) {
 
 QUnit.test("SearchItemSegments test", function( assert ) {
     testRecommendations(assert, new recombee.SearchItemSegments('user-1', 'computer', 5, {scenario: 's-is'}));
+});
+
+
+QUnit.test("Batch test", function( assert ) {
+  const req = new recombee.Batch([new recombee.AddBookmark('user-1', 'item-1'),
+                                  new recombee.AddCartAddition('user-1', 'item-1'),
+                                  new recombee.AddPurchase('user-1', 'item-1'),
+                                  new recombee.AddRating('user-1', 'item-1', -1),
+                                  new recombee.RecommendItemsToUser('user-1', 5),
+                                  new recombee.RecommendItemsToItem('item-1', 'user-1', 5),
+                                  new recombee.SearchItems('user-1', 'computer', 5),
+                                  new recombee.RecommendItemSegmentsToUser('user-1', 5, {scenario: 'is-to-u'}),
+                                  new recombee.RecommendItemSegmentsToItem('item-1', 'user-1', 5, {scenario: 'is-to-i'}),
+                                  new recombee.RecommendItemSegmentsToItemSegment('5', 'user-1', 5, {scenario: 'is-to-is'}),
+                                  new recombee.SearchItemSegments('user-1', 'computer', 5, {scenario: 's-is'})
+                                  ]);
+
+  assert.timeout(10000);
+  var done = assert.async();
+
+  var client = createClient();
+  client.send(req)
+  .then(function(res) {
+    res.forEach(requestRes => assert.ok(200 <= requestRes.code && requestRes.code <= 299));
+    done();
+  })
+  .catch(function(err) {
+    assert.ok( false, "Sending Batch should not throw" );
+    done();
+  })
+
 });
