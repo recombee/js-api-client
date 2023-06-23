@@ -474,7 +474,7 @@ class AddDetailView extends rqs.Request {
    * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
    * - Allowed parameters:
    *     - *timestamp*
-   *         - Type: string|number
+   *         - Type: string | number
    *         - Description: UTC timestamp of the view as ISO8601-1 pattern or UTC epoch time. The default value is the current time.
    *     - *duration*
    *         - Type: number
@@ -486,7 +486,7 @@ class AddDetailView extends rqs.Request {
    *         - Type: string
    *         - Description: If this detail view is based on a recommendation request, `recommId` is the id of the clicked recommendation.
    *     - *additionalData*
-   *         - Type: 
+   *         - Type: object
    *         - Description: A dictionary of additional data for the interaction.
    */
   constructor(userId, itemId, optional) {
@@ -553,7 +553,7 @@ class AddPurchase extends rqs.Request {
    * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
    * - Allowed parameters:
    *     - *timestamp*
-   *         - Type: string|number
+   *         - Type: string | number
    *         - Description: UTC timestamp of the purchase as ISO8601-1 pattern or UTC epoch time. The default value is the current time.
    *     - *cascadeCreate*
    *         - Type: boolean
@@ -571,7 +571,7 @@ class AddPurchase extends rqs.Request {
    *         - Type: string
    *         - Description: If this purchase is based on a recommendation request, `recommId` is the id of the clicked recommendation.
    *     - *additionalData*
-   *         - Type: 
+   *         - Type: object
    *         - Description: A dictionary of additional data for the interaction.
    */
   constructor(userId, itemId, optional) {
@@ -645,7 +645,7 @@ class AddRating extends rqs.Request {
    * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
    * - Allowed parameters:
    *     - *timestamp*
-   *         - Type: string|number
+   *         - Type: string | number
    *         - Description: UTC timestamp of the rating as ISO8601-1 pattern or UTC epoch time. The default value is the current time.
    *     - *cascadeCreate*
    *         - Type: boolean
@@ -654,7 +654,7 @@ class AddRating extends rqs.Request {
    *         - Type: string
    *         - Description: If this rating is based on a recommendation request, `recommId` is the id of the clicked recommendation.
    *     - *additionalData*
-   *         - Type: 
+   *         - Type: object
    *         - Description: A dictionary of additional data for the interaction.
    */
   constructor(userId, itemId, rating, optional) {
@@ -720,7 +720,7 @@ class AddCartAddition extends rqs.Request {
    * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
    * - Allowed parameters:
    *     - *timestamp*
-   *         - Type: string|number
+   *         - Type: string | number
    *         - Description: UTC timestamp of the cart addition as ISO8601-1 pattern or UTC epoch time. The default value is the current time.
    *     - *cascadeCreate*
    *         - Type: boolean
@@ -735,7 +735,7 @@ class AddCartAddition extends rqs.Request {
    *         - Type: string
    *         - Description: If this cart addition is based on a recommendation request, `recommId` is the id of the clicked recommendation.
    *     - *additionalData*
-   *         - Type: 
+   *         - Type: object
    *         - Description: A dictionary of additional data for the interaction.
    */
   constructor(userId, itemId, optional) {
@@ -805,7 +805,7 @@ class AddBookmark extends rqs.Request {
    * @param {Object} optional - Optional parameters given as an object with structure name of the parameter: value
    * - Allowed parameters:
    *     - *timestamp*
-   *         - Type: string|number
+   *         - Type: string | number
    *         - Description: UTC timestamp of the bookmark as ISO8601-1 pattern or UTC epoch time. The default value is the current time.
    *     - *cascadeCreate*
    *         - Type: boolean
@@ -814,7 +814,7 @@ class AddBookmark extends rqs.Request {
    *         - Type: string
    *         - Description: If this bookmark is based on a recommendation request, `recommId` is the id of the clicked recommendation.
    *     - *additionalData*
-   *         - Type: 
+   *         - Type: object
    *         - Description: A dictionary of additional data for the interaction.
    */
   constructor(userId, itemId, optional) {
@@ -883,7 +883,7 @@ class SetViewPortion extends rqs.Request {
    *         - Type: string
    *         - Description: ID of the session in which the user viewed the item. Default is `null` (`None`, `nil`, `NULL` etc., depending on the language).
    *     - *timestamp*
-   *         - Type: string|number
+   *         - Type: string | number
    *         - Description: UTC timestamp of the rating as ISO8601-1 pattern or UTC epoch time. The default value is the current time.
    *     - *cascadeCreate*
    *         - Type: boolean
@@ -892,7 +892,7 @@ class SetViewPortion extends rqs.Request {
    *         - Type: string
    *         - Description: If this view portion is based on a recommendation request, `recommId` is the id of the clicked recommendation.
    *     - *additionalData*
-   *         - Type: 
+   *         - Type: object
    *         - Description: A dictionary of additional data for the interaction.
    */
   constructor(userId, itemId, portion, optional) {
@@ -1041,7 +1041,7 @@ class RecommendItemsToUser extends rqs.Request {
    *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression, which allows you to boost the recommendation rate of some items based on the values of their attributes.
    * Boosters can also be assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *logic*
-   *         - Type: string|
+   *         - Type: string | object
    *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
    * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
    * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
@@ -1059,7 +1059,7 @@ class RecommendItemsToUser extends rqs.Request {
    *         - Type: number
    *         - Description: **Expert option** Taking *rotationRate* into account, specifies how long it takes for an item to recover from the penalization. For example, `rotationTime=7200.0` means that items recommended less than 2 hours ago are penalized. Default: `7200.0`.
    *     - *expertSettings*
-   *         - Type: 
+   *         - Type: object
    *         - Description: Dictionary of custom options.
    *     - *returnAbGroup*
    *         - Type: boolean
@@ -1244,7 +1244,7 @@ class RecommendItemsToItem extends rqs.Request {
    *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression, which allows you to boost the recommendation rate of some items based on the values of their attributes.
    * Boosters can also be assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *logic*
-   *         - Type: string|
+   *         - Type: string | object
    *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
    * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
    * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
@@ -1265,7 +1265,7 @@ class RecommendItemsToItem extends rqs.Request {
    *         - Type: number
    *         - Description: **Expert option** If the *targetUserId* is provided: Taking *rotationRate* into account, specifies how long it takes for an item to recover from the penalization. For example, `rotationTime=7200.0` means that items recommended less than 2 hours ago are penalized.
    *     - *expertSettings*
-   *         - Type: 
+   *         - Type: object
    *         - Description: Dictionary of custom options.
    *     - *returnAbGroup*
    *         - Type: boolean
@@ -1440,13 +1440,13 @@ class RecommendItemSegmentsToUser extends rqs.Request {
    *         - Type: string
    *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some segments based on the `segmentationId`.
    *     - *logic*
-   *         - Type: string|
+   *         - Type: string | object
    *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
    * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
    * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
    * Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *expertSettings*
-   *         - Type: 
+   *         - Type: object
    *         - Description: Dictionary of custom options.
    *     - *returnAbGroup*
    *         - Type: boolean
@@ -1556,13 +1556,13 @@ class RecommendItemSegmentsToItem extends rqs.Request {
    *         - Type: string
    *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some segments based on the `segmentationId`.
    *     - *logic*
-   *         - Type: string|
+   *         - Type: string | object
    *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
    * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
    * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
    * Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *expertSettings*
-   *         - Type: 
+   *         - Type: object
    *         - Description: Dictionary of custom options.
    *     - *returnAbGroup*
    *         - Type: boolean
@@ -1673,13 +1673,13 @@ class RecommendItemSegmentsToItemSegment extends rqs.Request {
    *         - Type: string
    *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some segments based on the `segmentationId`.
    *     - *logic*
-   *         - Type: string|
+   *         - Type: string | object
    *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
    * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
    * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
    * Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *expertSettings*
-   *         - Type: 
+   *         - Type: object
    *         - Description: Dictionary of custom options.
    *     - *returnAbGroup*
    *         - Type: boolean
@@ -1839,13 +1839,13 @@ class SearchItems extends rqs.Request {
    *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression, which allows you to boost the recommendation rate of some items based on the values of their attributes.
    * Boosters can also be assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *logic*
-   *         - Type: string|
+   *         - Type: string | object
    *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
    * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
    * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
    * Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *expertSettings*
-   *         - Type: 
+   *         - Type: object
    *         - Description: Dictionary of custom options.
    *     - *returnAbGroup*
    *         - Type: boolean
@@ -1950,13 +1950,13 @@ class SearchItemSegments extends rqs.Request {
    *         - Type: string
    *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression which allows you to boost recommendation rate of some segments based on the `segmentationId`.
    *     - *logic*
-   *         - Type: string|
+   *         - Type: string | object
    *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
    * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
    * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
    * Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
    *     - *expertSettings*
-   *         - Type: 
+   *         - Type: object
    *         - Description: Dictionary of custom options.
    *     - *returnAbGroup*
    *         - Type: boolean
