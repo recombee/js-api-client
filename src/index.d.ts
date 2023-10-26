@@ -1,4 +1,4 @@
-declare module "recombee-api-client" {
+export module "recombee-js-api-client" {
   namespace errors {
     /**
      * Base class for errors that occur because of errors in requests reported by API or because of a timeout
