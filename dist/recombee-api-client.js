@@ -91,11 +91,13 @@ class Request {
    * @param {string} method - GET/PUT/POST/DELETE
    * @param {string} path - Path to the endpoint
    * @param {number} timeout - Timeout in milliseconds
+   * @param {boolean} ensureHttps - If true, always use HTTPS.
    */
   constructor(method, path, timeout, ensureHttps) {
     this.method = method;
     this.path = path;
     this.timeout = timeout;
+    this.ensureHttps = ensureHttps;
   }
 }
 
@@ -292,7 +294,7 @@ class ApiClient {
     }
 
     var signedUrl = this._signUrl(request.path);
-    var url = (this.useHttps ? 'https://' : 'http://') + this.baseUri + signedUrl;
+    var url = (this.useHttps || request.ensureHttps ? 'https://' : 'http://') + this.baseUri + signedUrl;
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST", url, this.async);

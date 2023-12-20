@@ -70,7 +70,7 @@ export module "recombee-js-api-client" {
       */
     export class Batch extends Request {
       /**
-       * @param requests - Array containing the
+       * @param requests - Array containing the requests.
        * @param optional - Optional parameters given as an object (allowed parameters: distinctRecomms).
        */
       constructor(
@@ -968,7 +968,7 @@ export module "recombee-js-api-client" {
     /**
      * Full-text personalized search. The results are based on the provided `searchQuery` and also on the user's past interactions (purchases, ratings, etc.) with the items (items more suitable for the user are preferred in the results).
      * All the string and set item properties are indexed by the search engine.
-     * This endpoint should be used in a search box on your website/app. It can be called multiple times as the user is typing the query in order to get the most viable suggestions based on the current state of the query, or once after submitting the whole query.
+     * This endpoint should be used in a search box on your website/app. It can be called multiple times as the user is typing the query in order to get the most viable suggestions based on the current state of the query, or once after submitting the whole query. 
      * The returned items are sorted by relevance (the first item being the most relevant).
      * Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
      * - Let Recombee know that this search was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
@@ -1105,7 +1105,6 @@ export module "recombee-js-api-client" {
 
       queryParameters(): {
       };
+    }
 
-
-  }
 }
