@@ -18,18 +18,30 @@ You can download [recombee-api-client.min.js](./dist/recombee-api-client.min.js)
 <script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@4.1.4/dist/recombee-api-client.min.js"></script>
 ```
 
-### npm
-Use `npm` also for React Native / NativeScript applications.
-```
-npm install recombee-js-api-client --save
+and use the global `recombee` object.
+
+### Package managers
+
+```sh
+npm install recombee-js-api-client
+# or
+yarn add recombee-js-api-client
+# or
+pnpm add recombee-js-api-client
+# or
+bun add recombee-js-api-client
 ```
 
-### Bower
+and import into your code using
 
+```js
+import recombee from 'recombee-js-api-client'
+// or
+const recombee = require('recombee-js-api-client');
 ```
-bower install recombee-js-api-client -S
 
-```
+The library ships with types, so you should get autocomplete in your IDE out of the box.
+If you're using TypeScript, it should recognize these correctly and warn you about any type errors.
 
 ## How to use
 
@@ -44,7 +56,7 @@ It is intentionally not possible to change item catalog (properties of items) wi
 
 ```javascript
 // Initialize client with name of your database and PUBLIC token
-var client = new recombee.ApiClient('name-of-your-db', '...db-public-token...', {region: 'us-west'});
+const client = new recombee.ApiClient('name-of-your-db', '...db-public-token...', {region: 'us-west'});
 
 //Interactions take Id of user and Id of item
 client.send(new recombee.AddBookmark('user-13434', 'item-256'));
@@ -53,7 +65,6 @@ client.send(new recombee.AddDetailView('user-9318', 'item-108'));
 client.send(new recombee.AddPurchase('user-7499', 'item-750'));
 client.send(new recombee.AddRating('user-3967', 'item-365', 0.5));
 client.send(new recombee.SetViewPortion('user-4289', 'item-487', 0.3));
-
 ```
 
 ### Requesting recommendations
@@ -62,85 +73,93 @@ You can [recommend items to user](https://docs.recombee.com/api.html#recommend-i
 
 It is possible to use callbacks or Promises.
 
-#### Callback
-Callback function take two parameters:
-
-- *err* - `null` if request succeeds or `Error` object
-- *res* - object containg reply from Recombee
-
-```javascript
-
-var callback  = function (err, res) {
-  if(err) {
-    console.log(err);
-    // use fallback ...
-    return;
-  }
-  console.log(res.recomms);
-}
-
-// Get 5 recommendations for user-13434
-client.send(new recombee.RecommendItemsToUser('user-13434', 5), callback);
-```
-
 #### Promise
 
 ```javascript
 // Get 5 recommendations related to 'item-365' viewed by 'user-13434'
-client.send(new recombee.RecommendItemsToItem('item-356', 'user-13434', 5))
-.then(function(res) {
-  console.log(res.recomms);
-})
-.catch(function(error) {
-  console.log(error);
-  // use fallback ...
-});
+const response = await client.send(
+	new recombee.RecommendItemsToItem("item-356", "user-13434", 5)
+);
+// or
+client
+	.send(new recombee.RecommendItemsToItem("item-356", "user-13434", 5))
+	.then(function (res) {
+		console.log(res.recomms);
+	})
+	.catch(function (error) {
+		console.log(error);
+		// use fallback...
+	});
+```
+
+#### Callback
+
+Callback function take two parameters:
+
+-   _err_ - `null` if request succeeds or `Error` object
+-   _res_ - object containg reply from Recombee
+
+```javascript
+const callback = function (err, res) {
+	if (err) {
+		console.log(err);
+		// use fallback ...
+		return;
+	}
+	console.log(res.recomms);
+};
+
+// Get 5 recommendations for user-13434
+client.send(new recombee.RecommendItemsToUser("user-13434", 5), callback);
 ```
 
 ### Personalized search
 
 [Personalized full-text search](https://docs.recombee.com/api.html#search-items) is requested in the same way as recommendations.
 
-#### Callback
-
-```javascript
-var searchQuery = ' ... search query from search field ....';
-client.send(new recombee.SearchItems('user-13434', searchQuery, 5), callback);
-```
-
 #### Promise
 
 ```javascript
-var searchQuery = ' ... search query from search field ....';
-client.send(new recombee.SearchItems('user-13434', searchQuery, 5))
-.then(function(res) {
-  console.log(res.recomms);
-})
-.catch(function(error) {
-  console.log(error);
-  // use fallback ...
-});
+const searchQuery = " ... search query from search field ....";
+const response = await client.send(
+	new recombee.SearchItems("user-13434", searchQuery, 5)
+);
+// or
+client
+	.send(new recombee.SearchItems("user-13434", searchQuery, 5))
+	.then(function (res) {
+		console.log(res.recomms);
+	})
+	.catch(function (error) {
+		console.log(error);
+		// use fallback...
+	});
+```
+
+#### Callback
+
+```javascript
+const searchQuery = " ... search query from search field ....";
+client.send(new recombee.SearchItems("user-13434", searchQuery, 5), callback);
 ```
 
 ### Recommend Next Items
 
 Recombee can return items that shall be shown to a user as next recommendations when the user e.g. scrolls the page down (infinite scroll) or goes to a next page. See [Recommend next items](https://docs.recombee.com/api.html#recommend-next-items) for more info.
 
-
 ```javascript
-client.send(new recombee.RecommendItemsToUser('user-13434', 5))
-.then(function(res) {
-  console.log(res.recomms);
-
-  // Get next 3 recommended items as user-13434 is scrolling the page down
-  client.send(new recombee.RecommendNextItems(res.recommId, 3))
-  .then(function(res) {
-    console.log(res.recomms);
-  })
-});
+const initialRecomms = await client.send(
+	new recombee.RecommendItemsToUser("user-13434", 5)
+);
+// Get next 3 recommended items as user-13434 is scrolling the page down
+const nextRecomms = await client.send(
+	new recombee.RecommendNextItems(initialRecomms.recommId, 3)
+	// notice we're using recommId from previous request ^
+);
 ```
 
 ### Optional parameters
+
 Recommendation requests accept various optional parameters (see [the docs](https://docs.recombee.com/api.html#recommendations)). Following example shows some of them:
 
 ```javascript
@@ -152,7 +171,7 @@ client.send(new recombee.RecommendItemsToUser('user-13434', 5,
     includedProperties: ['title', 'img_url', 'url', 'price'], // Use these properties to show
                                                               // the recommended items to user
     filter: "'title' != null AND 'availability' == \"in stock\""
-                                                     // Recommend only items with filled title 
+                                                     // Recommend only items with filled title
                                                      // which are in stock
   }
 ), callback);
@@ -164,14 +183,15 @@ client.send(new recombee.RecommendItemsToUser('user-13434', 5,
 
 ### 1. Create instant account at recombee.com
 
-
 ### 2. Upload items catalog
+
 You can use a [script](https://docs.recombee.com/gettingstarted.html#managing-item-catalog) or set a product feed at [Recombee web admin](https://admin.recombee.com/). We will set following sample Google Merchant product feed: [product_feed_sample.xml](./examples/product_feed_sample.xml).
 You will see the items in web interface after the feed is processed.
 
 ### 3. Use client to send interaction and get recommendations
 
 Let's assume we want to show recommendations at product page of pants `product-270` to user with id `user-1539`. The following HTML+js sample send the detail view of the product by the user and request 3 related items from Recombee:
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -211,10 +231,10 @@ Let's assume we want to show recommendations at product page of pants `product-2
     }
 
     // Initialize client
-    var client = new recombee.ApiClient('js-client-example', 'dXx2Jw4VkkYQP1XU4JwBAqGezs8BNzwhogGIRjDHJi39Yj3i0tWyIZ0IhKKw5Ln7', {region: 'eu-west'});
+    const client = new recombee.ApiClient('js-client-example', 'dXx2Jw4VkkYQP1XU4JwBAqGezs8BNzwhogGIRjDHJi39Yj3i0tWyIZ0IhKKw5Ln7', {region: 'eu-west'});
 
-    var itemId = 'product-270';
-    var userId = 'user-1539'
+    const itemId = 'product-270';
+    const userId = 'user-1539'
 
     // Send detail view
     client.send(new recombee.AddDetailView(userId, itemId));
@@ -233,7 +253,7 @@ Let's assume we want to show recommendations at product page of pants `product-2
           return;
         }
         // Show recommendations
-        var recomms_html = resp.recomms.map(r => r.values).
+        const recomms_html = resp.recomms.map(r => r.values).
                     map(vals => showProduct(vals['title'], vals['description'],
                         vals['link'], vals['image_link'], vals['price']));
         document.getElementById("relatedProducts").innerHTML = recomms_html.join("\n");
@@ -244,24 +264,25 @@ Let's assume we want to show recommendations at product page of pants `product-2
 </body>
 </html>
 ```
+
 You should see something like this:
 
 <a href="./examples/related_products.png"><img src="./examples/related_products.png" alt="Related products" width="500"/></a>
 
-
-Please notice how the properties returned by `returnProperties`&`includedProperties` were used to show  titles, images, descriptions and URLs.
+Please notice how the properties returned by `returnProperties` & `includedProperties` were used to show titles, images, descriptions and URLs.
 
 ### Remark on user identification
 
 In order to achieve personalization, you need a unique identifier for each user. An easy way can be using Google Analytics for this purpose. The example then becomes:
+
 ```javascript
 ga('create', 'UA-XXXXX-Y', 'auto'); // Create a tracker if you don't have one
                                     // Replace the UA-XXXXX-Y with your UA code from Google Analytics.
 
-var client = new recombee.ApiClient('js-client-example', 'dXx2Jw4VkkYQP1XU4JwBAqGezs8BNzwhogGIRjDHJi39Yj3i0tWyIZ0IhKKw5Ln7');
+const client = new recombee.ApiClient('js-client-example', 'dXx2Jw4VkkYQP1XU4JwBAqGezs8BNzwhogGIRjDHJi39Yj3i0tWyIZ0IhKKw5Ln7');
 
 ga(function(tracker) {
-  var userId = tracker.get('clientId'); // Get id from GA
+  const userId = tracker.get('clientId'); // Get id from GA
 
   client.send(new recombee.RecommendItemsToUser(userId, 3,
     {

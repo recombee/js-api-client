@@ -10,11 +10,13 @@ class Request {
    * @param {string} method - GET/PUT/POST/DELETE
    * @param {string} path - Path to the endpoint
    * @param {number} timeout - Timeout in milliseconds
+   * @param {boolean} ensureHttps - If true, always use HTTPS.
    */
   constructor(method, path, timeout, ensureHttps) {
     this.method = method;
     this.path = path;
     this.timeout = timeout;
+    this.ensureHttps = ensureHttps;
   }
 }
 

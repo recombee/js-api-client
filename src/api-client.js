@@ -66,7 +66,7 @@ class ApiClient {
     }
 
     var signedUrl = this._signUrl(request.path);
-    var url = ((this.useHttps) ? 'https://' : 'http://') + this.baseUri + signedUrl;
+    var url = ((this.useHttps || request.ensureHttps) ? 'https://' : 'http://') + this.baseUri + signedUrl;
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST", url, this.async);

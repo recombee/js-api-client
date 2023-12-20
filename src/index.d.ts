@@ -1,5 +1,4 @@
 export module "recombee-js-api-client" {
-  namespace errors {
     /**
      * Base class for errors that occur because of errors in requests reported by API or because of a timeout
      */
@@ -15,14 +14,14 @@ export module "recombee-js-api-client" {
     /**
      * Error thrown when a request did not succeed (did not return 200 or 201)
      */
-    export class ResponseError extends errors.ApiError {
+    export class ResponseError extends ApiError {
       /**
        * @param request - Request which caused the exception.
        * @param statusCode - The returned status code.
        * @param message - Error message from the API.
        */
       constructor(
-        request: requests.Request,
+        request: Request,
         statusCode: number,
         message: string
       );
@@ -31,17 +30,15 @@ export module "recombee-js-api-client" {
     /**
      * Error thrown when a request is not processed within the timeout
      */
-    export class TimeoutError extends errors.ApiError {
+    export class TimeoutError extends ApiError {
       /**
        * @param request - Request which caused the exception.
        */
       constructor(
-        request: requests.Request
+        request: Request
       );
     }
-  }
 
-  namespace requests {
     /**
      * Base class for all the requests
      */
@@ -58,7 +55,12 @@ export module "recombee-js-api-client" {
         ensureHttps: boolean
       );
 
-      protected __response_type: any; // @ts-expect-error
+      method: "GET" | "PUT" | "POST" | "DELETE";
+      path: string;
+      timeout: number;
+      ensureHttps: boolean;
+
+      protected __response_type: any;
     }
 
     /**
@@ -66,21 +68,23 @@ export module "recombee-js-api-client" {
      * Batch processing allows you to submit arbitrary sequence of requests and the batch may combine different types of requests arbitrarily as well.
      * Note that the status code of the batch request itself is 200 even if the individual requests result in error – you have to inspect the code values in the resulting array.
       */
-    export class Batch extends requests.Request {
+    export class Batch extends Request {
       /**
-       * @param requests - Array containing the requests.
+       * @param requests - Array containing the
        * @param optional - Optional parameters given as an object (allowed parameters: distinctRecomms).
        */
       constructor(
-        requests: requests.Request[],
+        requests: Request[],
         optional?: {
           distinctRecomms?: boolean
         }
       );
 
+      protected __response_type: BatchResponse;
+
       /**
        * Get body parameters
-       * 
+       *
        * @returns The values of body parameters (name of parameter: value of the parameter)
        */
       bodyParameters(): {
@@ -89,10 +93,10 @@ export module "recombee-js-api-client" {
       }
 
       _request_to_batch_object(
-        req: requests.Request
+        req: Request
       ): BatchedRequest
     }
-  }
+
 
   export type BatchedRequest = {
     method: string;
@@ -108,9 +112,9 @@ export module "recombee-js-api-client" {
   }
 
   export type BatchResponse = {
-    statusCode: number;
-    response: Response[];
-  }
+    code: number;
+    json: any;
+  }[];
 
   /**
     * Client for sending requests to Recombee and getting replies
@@ -136,14 +140,14 @@ export module "recombee-js-api-client" {
 
     /**
      * Send the request to Recombee
-     * 
+     *
      * @param request - Request to be sent.
      * @param callback - Optional callback.
      * @returns Promise if callback is omitted, otherwise void.
      */
-    send<TRequest extends requests.Request>(
+    send<TRequest extends Request>(
       request: TRequest, // @ts-expect-error
-      callback?: (error: errors.ResponseError | null, response?: TRequest["__response_type"]) => void // @ts-expect-error
+      callback?: (error: ResponseError | null, response?: TRequest["__response_type"]) => void // @ts-expect-error
     ): Promise<TRequest["__response_type"]>;
 
     _signUrl(
@@ -172,12 +176,11 @@ export module "recombee-js-api-client" {
     abGroup?: string;
   }
 
-  namespace requests {
     /**
      * Merges interactions (purchases, ratings, bookmarks, detail views ...) of two different users under a single user ID. This is especially useful for online e-commerce applications working with anonymous users identified by unique tokens such as the session ID. In such applications, it may often happen that a user owns a persistent account, yet accesses the system anonymously while, e.g., putting items into a shopping cart. At some point in time, such as when the user wishes to confirm the purchase, (s)he logs into the system using his/her username and password. The interactions made under anonymous session ID then become connected with the persistent account, and merging these two becomes desirable.
      * Merging happens between two users referred to as the *target* and the *source*. After the merge, all the interactions of the source user are attributed to the target user, and the source user is **deleted**.
      */
-    export class MergeUsers extends requests.Request {
+    export class MergeUsers extends Request {
       /**
        * @param targetUserId - ID of the target user.
        * @param sourceUserId - ID of the source user.
@@ -208,7 +211,7 @@ export module "recombee-js-api-client" {
     /**
      * Adds a detail view of the given item made by the given user.
      */
-    export class AddDetailView extends requests.Request {
+    export class AddDetailView extends Request {
       /**
        * @param userId - User who viewed the item
        * @param itemId - Viewed item
@@ -257,7 +260,7 @@ export module "recombee-js-api-client" {
     /**
      * Adds a purchase of the given item made by the given user.
      */
-    export class AddPurchase extends requests.Request {
+    export class AddPurchase extends Request {
       /**
        * @param userId - User who purchased the item
        * @param itemId - Purchased item
@@ -314,7 +317,7 @@ export module "recombee-js-api-client" {
     /**
      * Adds a rating of the given item made by the given user.
      */
-    export class AddRating extends requests.Request {
+    export class AddRating extends Request {
       /**
        * @param userId - User who submitted the rating
        * @param itemId - Rated item
@@ -363,7 +366,7 @@ export module "recombee-js-api-client" {
     /**
      * Adds a cart addition of the given item made by the given user.
      */
-    export class AddCartAddition extends requests.Request {
+    export class AddCartAddition extends Request {
       /**
        * @param userId - User who added the item to the cart
        * @param itemId - Item added to the cart
@@ -416,7 +419,7 @@ export module "recombee-js-api-client" {
     /**
      * Adds a bookmark of the given item made by the given user.
      */
-    export class AddBookmark extends requests.Request {
+    export class AddBookmark extends Request {
       /**
        * @param userId - User who bookmarked the item
        * @param itemId - Bookmarked item
@@ -462,7 +465,7 @@ export module "recombee-js-api-client" {
      * Sets viewed portion of an item (for example a video or article) by a user (at a session).
      * If you send a new request with the same (`userId`, `itemId`, `sessionId`), the portion gets updated.
      */
-    export class SetViewPortion extends requests.Request {
+    export class SetViewPortion extends Request {
       /**
        * @param userId - User who viewed a portion of the item
        * @param itemId - Viewed item
@@ -521,7 +524,7 @@ export module "recombee-js-api-client" {
      * - Get subsequent recommended items when the user scrolls down (*infinite scroll*) or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api.html#recommend-next-items).
      * It is also possible to use POST HTTP method (for example in the case of a very long ReQL filter) - query parameters then become body parameters.
      */
-    export class RecommendItemsToUser extends requests.Request {
+    export class RecommendItemsToUser extends Request {
       /**
        * @param userId - ID of the user for whom personalized recommendations are to be generated.
        * @param count - Number of items to be recommended (N for the top-N recommendation).
@@ -606,7 +609,7 @@ export module "recombee-js-api-client" {
      * - Get subsequent recommended items when the user scrolls down (*infinite scroll*) or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api.html#recommend-next-items).
      * It is also possible to use POST HTTP method (for example in the case of a very long ReQL filter) - query parameters then become body parameters.
      */
-    export class RecommendItemsToItem extends requests.Request {
+    export class RecommendItemsToItem extends Request {
       /**
        * @param itemId - ID of the item for which the recommendations are to be generated.
        * @param targetUserId - ID of the user who will see the recommendations.
@@ -716,7 +719,7 @@ export module "recombee-js-api-client" {
      * *Recommend next items* can be requested up to 30 minutes after the base request or a previous *Recommend next items* call.
      * For billing purposes, each call to *Recommend next items* is counted as a separate recommendation request.
      */
-    export class RecommendNextItems extends requests.Request {
+    export class RecommendNextItems extends Request {
       /**
        * @param recommId - ID of the base recommendation request for which next recommendations should be returned
        * @param count - Number of items to be recommended
@@ -749,7 +752,7 @@ export module "recombee-js-api-client" {
      * The returned segments are sorted by relevance (first segment being the most relevant).
      * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
      */
-    export class RecommendItemSegmentsToUser extends requests.Request {
+    export class RecommendItemSegmentsToUser extends Request {
       /**
        * @param userId - ID of the user for whom personalized recommendations are to be generated.
        * @param count - Number of item segments to be recommended (N for the top-N recommendation).
@@ -813,7 +816,7 @@ export module "recombee-js-api-client" {
      * The returned segments are sorted by relevance (first segment being the most relevant).
      * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
      */
-    export class RecommendItemSegmentsToItem extends requests.Request {
+    export class RecommendItemSegmentsToItem extends Request {
       /**
        * @param itemId - ID of the item for which the recommendations are to be generated.
        * @param targetUserId - ID of the user who will see the recommendations.
@@ -892,7 +895,7 @@ export module "recombee-js-api-client" {
      * The returned segments are sorted by relevance (first segment being the most relevant).
      * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
      */
-    export class RecommendItemSegmentsToItemSegment extends requests.Request {
+    export class RecommendItemSegmentsToItemSegment extends Request {
       /**
        * @param contextSegmentId - ID of the segment from `contextSegmentationId` for which the recommendations are to be generated.
        * @param targetUserId - ID of the user who will see the recommendations.
@@ -965,14 +968,14 @@ export module "recombee-js-api-client" {
     /**
      * Full-text personalized search. The results are based on the provided `searchQuery` and also on the user's past interactions (purchases, ratings, etc.) with the items (items more suitable for the user are preferred in the results).
      * All the string and set item properties are indexed by the search engine.
-     * This endpoint should be used in a search box on your website/app. It can be called multiple times as the user is typing the query in order to get the most viable suggestions based on the current state of the query, or once after submitting the whole query. 
+     * This endpoint should be used in a search box on your website/app. It can be called multiple times as the user is typing the query in order to get the most viable suggestions based on the current state of the query, or once after submitting the whole query.
      * The returned items are sorted by relevance (the first item being the most relevant).
      * Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
      * - Let Recombee know that this search was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
      * - Get subsequent search results when the user scrolls down or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api.html#recommend-next-items).
      * It is also possible to use POST HTTP method (for example in the case of a very long ReQL filter) - query parameters then become body parameters.
      */
-    export class SearchItems extends requests.Request {
+    export class SearchItems extends Request {
       /**
        * @param userId - ID of the user for whom personalized search will be performed.
        * @param searchQuery - Search query provided by the user. It is used for the full-text search.
@@ -1047,7 +1050,7 @@ export module "recombee-js-api-client" {
      * The returned segments are sorted by relevance (first segment being the most relevant).
      * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
      */
-    export class SearchItemSegments extends requests.Request {
+    export class SearchItemSegments extends Request {
       /**
        * @param userId - ID of the user for whom personalized search will be performed.
        * @param searchQuery - Search query provided by the user. It is used for the full-text search.
@@ -1102,6 +1105,7 @@ export module "recombee-js-api-client" {
 
       queryParameters(): {
       };
-    }
+
+
   }
 }
