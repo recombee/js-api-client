@@ -57,7 +57,8 @@ class ApiClient {
    */
   send(request, callback) {
     var self = this;
-    if ( callback === undefined && window.Promise ) {
+    var Promise = (typeof globalThis === "undefined" ? window.Promise : globalThis.Promise);
+    if ( callback === undefined && Promise ) {
       return new Promise(function (resolve, reject) {
         self.send(request, function (err, result) {
           err ? reject(err) : resolve(result)

@@ -151,6 +151,12 @@ QUnit.test("RecommendItemSegmentsToItem test", function( assert ) {
     testRecommendations(assert, new recombee.RecommendItemSegmentsToItem('item-1', 'user-1', 5, {scenario: 'is-to-i'}));
 });
 
+
+QUnit.test("RecommendItemsToItemSegment test", function( assert ) {
+    testRecommendations(assert, new recombee.RecommendItemsToItemSegment('5', 'user-1', 5, {scenario: 'i-to-is'}));
+});
+
+
 QUnit.test("RecommendItemSegmentsToItemSegment test", function( assert ) {
     testRecommendations(assert, new recombee.RecommendItemSegmentsToItemSegment('5', 'user-1', 5, {scenario: 'is-to-is'}));
 });

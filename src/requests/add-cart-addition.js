@@ -36,7 +36,7 @@ class AddCartAddition extends rqs.Request {
    *         - Description: A dictionary of additional data for the interaction.
    */
   constructor(userId, itemId, optional) {
-    super('POST', '/cartadditions/', 3000, false);
+    super('POST', '/cartadditions/', 9000, false);
     this.userId = userId;
     this.itemId = itemId;
     optional = optional || {};

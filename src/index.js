@@ -20,6 +20,7 @@ exports.RecommendNextItems = require("./requests/recommend-next-items").Recommen
 exports.RecommendItemSegmentsToUser = require("./requests/recommend-item-segments-to-user").RecommendItemSegmentsToUser;
 exports.RecommendItemSegmentsToItem = require("./requests/recommend-item-segments-to-item").RecommendItemSegmentsToItem;
 exports.RecommendItemSegmentsToItemSegment = require("./requests/recommend-item-segments-to-item-segment").RecommendItemSegmentsToItemSegment;
+exports.RecommendItemsToItemSegment = require("./requests/recommend-items-to-item-segment").RecommendItemsToItemSegment;
 exports.SearchItems = require("./requests/search-items").SearchItems;
 exports.SearchItemSegments = require("./requests/search-item-segments").SearchItemSegments;
 exports.Batch = require("./requests/batch").Batch;

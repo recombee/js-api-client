@@ -15,7 +15,7 @@ The library is [UMD](https://github.com/umdjs/umd) compatible.
 You can download [recombee-api-client.min.js](./dist/recombee-api-client.min.js) and host it at your site, or use a CDN such as [jsDelivr](https://www.jsdelivr.com/) CDN:
 
 ```js
-<script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@4.1.5/dist/recombee-api-client.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@5.0.0/dist/recombee-api-client.min.js"></script>
 ```
 
 and use the global `recombee` object.
@@ -47,10 +47,10 @@ If you're using TypeScript, it should recognize these correctly and warn you abo
 
 This library allows you to request recommendations and send interactions between users and items (views, bookmarks, purchases ...) to Recombee. It uses the **public token** for authentication.
 
-It is intentionally not possible to change item catalog (properties of items) with public token, so you should use one of the following ways to send it to Recombee:
+It is intentionally not possible to change the item catalog (properties of items) with the public token, so you should use one of the following ways to send it to Recombee:
 
- - Use one of the server-side SDKs (Node.js, PHP, Java...). The synchronization can done for example by a peridodically ran script. See [this section](https://docs.recombee.com/gettingstarted.html#managing-item-catalog) for more details.
- - Set a product feed at [Recombee web admin](https://admin.recombee.com/).
+ - Use one of the server-side SDKs (Node.js, PHP, Java...). The synchronization can done for example by a peridodically run script. See [this section](https://docs.recombee.com/gettingstarted.html#managing-item-catalog) for more details.
+ - Set a catalog feed at [Recombee web admin](https://admin.recombee.com/).
 
 ### Sending interactions
 
@@ -58,7 +58,7 @@ It is intentionally not possible to change item catalog (properties of items) wi
 // Initialize client with name of your database and PUBLIC token
 const client = new recombee.ApiClient('name-of-your-db', '...db-public-token...', {region: 'us-west'});
 
-//Interactions take Id of user and Id of item
+// Interactions take the ID of the user and the ID of the item
 client.send(new recombee.AddBookmark('user-13434', 'item-256'));
 client.send(new recombee.AddCartAddition('user-4395', 'item-129'));
 client.send(new recombee.AddDetailView('user-9318', 'item-108'));
@@ -69,9 +69,9 @@ client.send(new recombee.SetViewPortion('user-4289', 'item-487', 0.3));
 
 ### Requesting recommendations
 
-You can [recommend items to user](https://docs.recombee.com/api.html#recommend-items-to-user) or [recommend items to item](https://docs.recombee.com/api.html#recommend-items-to-item).
+You can [recommend items to user](https://docs.recombee.com/api.html#recommend-items-to-user), [recommend items to item](https://docs.recombee.com/api.html#recommend-items-to-item) or even [recommend Item Segments](https://docs.recombee.com/api#recommend-item-segments-to-user) such as categories, genres or artists.
 
-It is possible to use callbacks or Promises.
+It is possible to use Promises or callbacks.
 
 #### Promise
 
@@ -145,7 +145,7 @@ client.send(new recombee.SearchItems("user-13434", searchQuery, 5), callback);
 
 ### Recommend Next Items
 
-Recombee can return items that shall be shown to a user as next recommendations when the user e.g. scrolls the page down (infinite scroll) or goes to a next page. See [Recommend next items](https://docs.recombee.com/api.html#recommend-next-items) for more info.
+Recombee can return items that shall be shown to a user as next recommendations when the user e.g. scrolls the page down (infinite scroll) or goes to the next page. See [Recommend next items](https://docs.recombee.com/api.html#recommend-next-items) for more info.
 
 ```javascript
 const initialRecomms = await client.send(
@@ -209,7 +209,7 @@ Let's assume we want to show recommendations at product page of pants `product-2
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@4.1.5/dist/recombee-api-client.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/recombee/js-api-client@5.0.0/dist/recombee-api-client.min.js"></script>
 
     <script type="text/javascript">
 

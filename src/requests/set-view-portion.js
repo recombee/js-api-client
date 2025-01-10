@@ -35,7 +35,7 @@ class SetViewPortion extends rqs.Request {
    *         - Description: A dictionary of additional data for the interaction.
    */
   constructor(userId, itemId, portion, optional) {
-    super('POST', '/viewportions/', 3000, false);
+    super('POST', '/viewportions/', 9000, false);
     this.userId = userId;
     this.itemId = itemId;
     this.portion = portion;
