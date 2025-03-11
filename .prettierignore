@@ -1,0 +1,4 @@
+dist/
+examples/
+pnpm-lock.yaml
+README.md

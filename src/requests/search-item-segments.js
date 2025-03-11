@@ -3,7 +3,7 @@
 */
 
 'use strict';
-const rqs = require("./request");
+const rqs = require('./request');
 
 /**
  * Full-text personalized search that returns Segments from a Segmentation. The results are based on the provided `searchQuery` and also on the user's past interactions (purchases, ratings, etc.).
@@ -16,7 +16,6 @@ const rqs = require("./request");
  * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
  */
 class SearchItemSegments extends rqs.Request {
-
   /**
    * Construct the request
    * @param {string} userId - ID of the user for whom personalized search will be performed.
@@ -71,35 +70,27 @@ class SearchItemSegments extends rqs.Request {
    * @return {Object} The values of body parameters (name of parameter: value of the parameter)
    */
   bodyParameters() {
-    let params = {};
+    const params = {};
     params.searchQuery = this.searchQuery;
     params.count = this.count;
 
-    if(this.scenario !== undefined)
-      params.scenario = this.scenario;
+    if (this.scenario !== undefined) params.scenario = this.scenario;
 
-    if(this.cascadeCreate !== undefined)
-      params.cascadeCreate = this.cascadeCreate;
+    if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
 
-    if(this.filter !== undefined)
-      params.filter = this.filter;
+    if (this.filter !== undefined) params.filter = this.filter;
 
-    if(this.booster !== undefined)
-      params.booster = this.booster;
+    if (this.booster !== undefined) params.booster = this.booster;
 
-    if(this.logic !== undefined)
-      params.logic = this.logic;
+    if (this.logic !== undefined) params.logic = this.logic;
 
-    if(this.expertSettings !== undefined)
-      params.expertSettings = this.expertSettings;
+    if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
 
-    if(this.returnAbGroup !== undefined)
-      params.returnAbGroup = this.returnAbGroup;
+    if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
 
-    params.cascadeCreate = (this.cascadeCreate !== undefined) ? this.cascadeCreate : true;
+    params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
     return params;
   }
-
 }
 
-exports.SearchItemSegments = SearchItemSegments
+exports.SearchItemSegments = SearchItemSegments;

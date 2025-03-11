@@ -1,5 +1,5 @@
 'use strict';
-const ae = require("./api-error");
+const ae = require('./api-error');
 
 /**
  * Error thrown when a request is not processed within the timeout
@@ -15,4 +15,4 @@ class TimeoutError extends ae.ApiError {
   }
 }
 
-exports.TimeoutError = TimeoutError
+exports.TimeoutError = TimeoutError;

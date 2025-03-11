@@ -1,0 +1,9 @@
+arrowParens: always
+printWidth: 100
+singleQuote: true
+useTabs: false
+tabWidth: 2
+overrides:
+  - files: ['package.json']
+    options:
+      useTabs: false

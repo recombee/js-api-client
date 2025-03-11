@@ -21,17 +21,20 @@ return /******/ (() => { // webpackBootstrap
 
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-var jsSHA = __webpack_require__(/*! jssha */ "./node_modules/jssha/dist/sha.js");
+var jsSHA = __webpack_require__(/*! jssha */ "./node_modules/.pnpm/jssha@3.3.1/node_modules/jssha/dist/sha.js");
 var api_errors = __webpack_require__(/*! ./errors */ "./src/errors/index.js");
 
 /**
-  * Client for sending requests to Recombee and getting replies
-  */
+ * Client for sending requests to Recombee and getting replies
+ */
 var ApiClient = /*#__PURE__*/function () {
   /**
    * Construct the client
@@ -47,6 +50,7 @@ var ApiClient = /*#__PURE__*/function () {
     this.baseUri = this._getBaseUri();
     this.useHttps = 'useHttps' in this.options ? this.options.useHttps : true;
     this.async = 'async' in this.options ? this.options.async : true;
+    this.future_v6_fetch = 'future_v6_fetch' in this.options ? this.options.future_v6_fetch : false;
   }
   return _createClass(ApiClient, [{
     key: "_getRegionalBaseUri",
@@ -78,35 +82,115 @@ var ApiClient = /*#__PURE__*/function () {
     /**
      * Send the request to Recombee
      * @param {Request} request - Request to be sent
-     * @param {Object} callback - Optional callback (send returns Promise if omitted) 
+     * @param {Object} callback - Optional callback (send returns Promise if omitted)
      */
   }, {
     key: "send",
     value: function send(request, callback) {
-      var self = this;
-      var Promise = typeof globalThis === "undefined" ? window.Promise : globalThis.Promise;
+      if (this.future_v6_fetch) {
+        if (!(typeof globalThis === 'undefined' ? window.Promise : globalThis.Promise)) {
+          throw new Error('future_v6_fetch requires Promises to be available.');
+        }
+        if (!this.async) {
+          throw new Error('future_v6_fetch cannot be used with synchronous requests.');
+        }
+        if (callback === undefined) {
+          return this._sendFetch(request);
+        } else {
+          return this._sendFetch(request).then(function (result) {
+            return callback(null, result);
+          })["catch"](callback);
+        }
+      }
+      return this._sendXhr(request, callback);
+    }
+  }, {
+    key: "_sendFetch",
+    value: function () {
+      var _sendFetch2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(request) {
+        var url, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              url = this._getUrl(request);
+              _context.prev = 1;
+              _context.next = 4;
+              return fetch(url, {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(request.bodyParameters()),
+                signal: AbortSignal.timeout(request.timeout)
+              });
+            case 4:
+              response = _context.sent;
+              if (!response.ok) {
+                _context.next = 11;
+                break;
+              }
+              _context.next = 8;
+              return response.json();
+            case 8:
+              return _context.abrupt("return", _context.sent);
+            case 11:
+              _context.t0 = api_errors.ResponseError;
+              _context.t1 = request;
+              _context.t2 = response.status;
+              _context.next = 16;
+              return response.text();
+            case 16:
+              _context.t3 = _context.sent;
+              throw new _context.t0(_context.t1, _context.t2, _context.t3);
+            case 18:
+              _context.next = 27;
+              break;
+            case 20:
+              _context.prev = 20;
+              _context.t4 = _context["catch"](1);
+              if (!(_context.t4.name === 'TimeoutError')) {
+                _context.next = 26;
+                break;
+              }
+              throw new api_errors.TimeoutError(request);
+            case 26:
+              throw _context.t4;
+            case 27:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, this, [[1, 20]]);
+      }));
+      function _sendFetch(_x) {
+        return _sendFetch2.apply(this, arguments);
+      }
+      return _sendFetch;
+    }()
+  }, {
+    key: "_sendXhr",
+    value: function _sendXhr(request, callback) {
+      var Promise = typeof globalThis === 'undefined' ? window.Promise : globalThis.Promise;
       if (callback === undefined && Promise) {
+        var sendXhr = this._sendXhr.bind(this);
         return new Promise(function (resolve, reject) {
-          self.send(request, function (err, result) {
-            err ? reject(err) : resolve(result);
+          sendXhr(request, function (err, result) {
+            return err ? reject(err) : resolve(result);
           });
         });
       }
-      var signedUrl = this._signUrl(request.path);
-      var url = (this.useHttps || request.ensureHttps ? 'https://' : 'http://') + this.baseUri + signedUrl;
+      var url = this._getUrl(request);
       var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open("POST", url, this.async);
-      xmlhttp.setRequestHeader("Accept", "application/json");
-      xmlhttp.setRequestHeader("Content-Type", "application/json");
+      xmlhttp.open('POST', url, this.async);
+      xmlhttp.setRequestHeader('Accept', 'application/json');
+      xmlhttp.setRequestHeader('Content-Type', 'application/json');
       if (this.async) xmlhttp.timeout = request.timeout;
       xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4) {
-          if (this.responseText) {
-            if (this.status == 200) {
-              if (callback) return callback(null, JSON.parse(this.responseText));
-            } else {
-              if (callback) return callback(new api_errors.ResponseError(request, this.status, this.responseText));
-            }
+        if (this.readyState == 4 && this.responseText) {
+          if (this.status == 200) {
+            if (callback) return callback(null, JSON.parse(this.responseText));
+          } else {
+            if (callback) return callback(new api_errors.ResponseError(request, this.status, this.responseText));
           }
         }
       };
@@ -116,14 +200,21 @@ var ApiClient = /*#__PURE__*/function () {
       xmlhttp.send(JSON.stringify(request.bodyParameters()));
     }
   }, {
+    key: "_getUrl",
+    value: function _getUrl(request) {
+      var signedUrl = this._signUrl(request.path);
+      var url = (this.useHttps || request.ensureHttps ? 'https://' : 'http://') + this.baseUri + signedUrl;
+      return url;
+    }
+  }, {
     key: "_signUrl",
     value: function _signUrl(req_part) {
       var url = '/' + this.databaseId + req_part;
-      url += (req_part.indexOf("?") == -1 ? "?" : "&") + "frontend_timestamp=" + parseInt(new Date().getTime() / 1000);
-      var shaObj = new jsSHA("SHA-1", "TEXT");
-      shaObj.setHMACKey(this.publicToken, "TEXT");
+      url += (req_part.indexOf('?') == -1 ? '?' : '&') + 'frontend_timestamp=' + parseInt(new Date().getTime() / 1000);
+      var shaObj = new jsSHA('SHA-1', 'TEXT');
+      shaObj.setHMACKey(this.publicToken, 'TEXT');
       shaObj.update(url);
-      url += "&frontend_sign=" + shaObj.getHMAC("HEX");
+      url += '&frontend_sign=' + shaObj.getHMAC('HEX');
       return url;
     }
   }]);
@@ -802,10 +893,15 @@ var sum_timeouts = function sum_timeouts(requests) {
 };
 
 /**
- * In many cases, it may be desirable to execute multiple requests at once. For example, when synchronizing the catalog of items in a periodical manner, you would have to execute a sequence of thousands of separate POST requests, which is very ineffective and may take a very long time to complete. Most notably, network latencies can make execution of such sequence very slow and even if executed in multiple parallel threads, there will still be unreasonable overhead caused by the HTTP(s). To avoid the mentioned problems, batch processing may be used, encapsulating a sequence of requests into a single HTTPS request.
- * Batch processing allows you to submit arbitrary sequence of requests and the batch may combine different types of requests arbitrarily as well.
- * Note that the status code of the batch request itself is 200 even if the individual requests result in error – you have to inspect the code values in the resulting array.
-  */
+ * Batch processing allows you to submit any sequence of requests within a single HTTPS request.
+ *
+ * Any type of request from this SDK may be used in the Batch, and the Batch may combine different types of requests arbitrarily as well.
+ *
+ * Using Batch requests can be beneficial in situations such as synchronizing the catalog of items or uploading historical interaction data,
+ * as sending the data in Batch is considerably faster than sending the individual requests (thanks to optimizations and reducing network and HTTPS overhead).
+ *
+ * @note The status code of the batch request itself is 200 even if the individual requests result in an error – you have to inspect the code values in the resulting array.
+ */
 var Batch = /*#__PURE__*/function (_rqs$Request) {
   /**
    * Construct the request
@@ -1378,9 +1474,9 @@ var RecommendItemsToItemSegment = /*#__PURE__*/function (_rqs$Request) {
    *         - Description: If an item of the given *itemId* or user of the given *targetUserId* doesn't exist in the database, it creates the missing entity/entities and returns some (non-personalized) recommendations. This allows, for example, rotations in the following recommendations for the user of the given *targetUserId*, as the user will be already known to the system.
    *     - *returnProperties*
    *         - Type: boolean
-   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user. 
+   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user.
    * Example response:
-   * ```
+   * ```json
    *   {
    *     "recommId": "0c6189e7-dc1a-429a-b613-192696309361",
    *     "recomms":
@@ -1411,10 +1507,10 @@ var RecommendItemsToItemSegment = /*#__PURE__*/function (_rqs$Request) {
    *         - Type: string[]
    *         - Description: Allows specifying which properties should be returned when `returnProperties=true` is set. The properties are given as a comma-separated list.
    * Example response for `includedProperties=description,price`:
-   * ```
+   * ```json
    *   {
    *     "recommId": "6842c725-a79f-4537-a02c-f34d668a3f80",
-   *     "recomms": 
+   *     "recomms":
    *       [
    *         {
    *           "id": "tv-178",
@@ -1586,9 +1682,9 @@ var RecommendItemsToItem = /*#__PURE__*/function (_rqs$Request) {
    *         - Description: If an item of the given *itemId* or user of the given *targetUserId* doesn't exist in the database, it creates the missing entity/entities and returns some (non-personalized) recommendations. This allows, for example, rotations in the following recommendations for the user of the given *targetUserId*, as the user will be already known to the system.
    *     - *returnProperties*
    *         - Type: boolean
-   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user. 
+   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user.
    * Example response:
-   * ```
+   * ```json
    *   {
    *     "recommId": "0c6189e7-dc1a-429a-b613-192696309361",
    *     "recomms":
@@ -1619,10 +1715,10 @@ var RecommendItemsToItem = /*#__PURE__*/function (_rqs$Request) {
    *         - Type: string[]
    *         - Description: Allows specifying which properties should be returned when `returnProperties=true` is set. The properties are given as a comma-separated list.
    * Example response for `includedProperties=description,price`:
-   * ```
+   * ```json
    *   {
    *     "recommId": "6842c725-a79f-4537-a02c-f34d668a3f80",
-   *     "recomms": 
+   *     "recomms":
    *       [
    *         {
    *           "id": "tv-178",
@@ -1791,12 +1887,12 @@ var RecommendItemsToUser = /*#__PURE__*/function (_rqs$Request) {
    *         - Description: If the user does not exist in the database, returns a list of non-personalized recommendations and creates the user in the database. This allows, for example, rotations in the following recommendations for that user, as the user will be already known to the system.
    *     - *returnProperties*
    *         - Type: boolean
-   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user. 
+   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user.
    * Example response:
-   * ```
+   * ```json
    *   {
    *     "recommId": "ce52ada4-e4d9-4885-943c-407db2dee837",
-   *     "recomms": 
+   *     "recomms":
    *       [
    *         {
    *           "id": "tv-178",
@@ -1824,7 +1920,7 @@ var RecommendItemsToUser = /*#__PURE__*/function (_rqs$Request) {
    *         - Type: string[]
    *         - Description: Allows specifying which properties should be returned when `returnProperties=true` is set. The properties are given as a comma-separated list.
    * Example response for `includedProperties=description,price`:
-   * ```
+   * ```json
    *   {
    *     "recommId": "a86ee8d5-cd8e-46d1-886c-8b3771d0520b",
    *     "recomms":
@@ -1967,9 +2063,10 @@ var rqs = __webpack_require__(/*! ./request */ "./src/requests/request.js");
  * Returns items that shall be shown to a user as next recommendations when the user e.g. scrolls the page down (*infinite scroll*) or goes to the next page.
  * It accepts `recommId` of a base recommendation request (e.g., request from the first page) and the number of items that shall be returned (`count`).
  * The base request can be one of:
- *   - [Recommend items to item](https://docs.recombee.com/api.html#recommend-items-to-item)
- *   - [Recommend items to user](https://docs.recombee.com/api.html#recommend-items-to-user)
- *   - [Search items](https://docs.recombee.com/api.html#search-items)
+ *   - [Recommend Items to Item](https://docs.recombee.com/api.html#recommend-items-to-item)
+ *   - [Recommend Items to User](https://docs.recombee.com/api.html#recommend-items-to-user)
+ *   - [Recommend Items to Item Segment](https://docs.recombee.com/api.html#recommend-items-to-item-segment)
+ *   - [Search Items](https://docs.recombee.com/api.html#search-items)
  * All the other parameters are inherited from the base request.
  * *Recommend next items* can be called many times for a single `recommId` and each call returns different (previously not recommended) items.
  * The number of *Recommend next items* calls performed so far is returned in the `numberNextRecommsCalls` field.
@@ -2196,7 +2293,7 @@ var rqs = __webpack_require__(/*! ./request */ "./src/requests/request.js");
 /**
  * Full-text personalized search. The results are based on the provided `searchQuery` and also on the user's past interactions (purchases, ratings, etc.) with the items (items more suitable for the user are preferred in the results).
  * All the string and set item properties are indexed by the search engine.
- * This endpoint should be used in a search box on your website/app. It can be called multiple times as the user is typing the query in order to get the most viable suggestions based on the current state of the query, or once after submitting the whole query. 
+ * This endpoint should be used in a search box on your website/app. It can be called multiple times as the user is typing the query in order to get the most viable suggestions based on the current state of the query, or once after submitting the whole query.
  * The returned items are sorted by relevance (the first item being the most relevant).
  * Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
  * - Let Recombee know that this search was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
@@ -2221,12 +2318,12 @@ var SearchItems = /*#__PURE__*/function (_rqs$Request) {
    *         - Description: If the user does not exist in the database, returns a list of non-personalized search results and creates the user in the database. This allows, for example, rotations in the following recommendations for that user, as the user will be already known to the system.
    *     - *returnProperties*
    *         - Type: boolean
-   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user. 
+   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user.
    * Example response:
-   * ```
+   * ```json
    *   {
    *     "recommId": "ce52ada4-e4d9-4885-943c-407db2dee837",
-   *     "recomms": 
+   *     "recomms":
    *       [
    *         {
    *           "id": "tv-178",
@@ -2254,7 +2351,7 @@ var SearchItems = /*#__PURE__*/function (_rqs$Request) {
    *         - Type: string[]
    *         - Description: Allows specifying which properties should be returned when `returnProperties=true` is set. The properties are given as a comma-separated list.
    * Example response for `includedProperties=description,price`:
-   * ```
+   * ```json
    *   {
    *     "recommId": "a86ee8d5-cd8e-46d1-886c-8b3771d0520b",
    *     "recomms":
@@ -2445,10 +2542,10 @@ exports.SetViewPortion = SetViewPortion;
 
 /***/ }),
 
-/***/ "./node_modules/jssha/dist/sha.js":
-/*!****************************************!*\
-  !*** ./node_modules/jssha/dist/sha.js ***!
-  \****************************************/
+/***/ "./node_modules/.pnpm/jssha@3.3.1/node_modules/jssha/dist/sha.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/.pnpm/jssha@3.3.1/node_modules/jssha/dist/sha.js ***!
+  \***********************************************************************/
 /***/ (function(module) {
 
 /**
@@ -2531,11 +2628,11 @@ exports.AddBookmark = __webpack_require__(/*! ./requests/add-bookmark */ "./src/
 exports.SetViewPortion = __webpack_require__(/*! ./requests/set-view-portion */ "./src/requests/set-view-portion.js").SetViewPortion;
 exports.RecommendItemsToUser = __webpack_require__(/*! ./requests/recommend-items-to-user */ "./src/requests/recommend-items-to-user.js").RecommendItemsToUser;
 exports.RecommendItemsToItem = __webpack_require__(/*! ./requests/recommend-items-to-item */ "./src/requests/recommend-items-to-item.js").RecommendItemsToItem;
+exports.RecommendItemsToItemSegment = __webpack_require__(/*! ./requests/recommend-items-to-item-segment */ "./src/requests/recommend-items-to-item-segment.js").RecommendItemsToItemSegment;
 exports.RecommendNextItems = __webpack_require__(/*! ./requests/recommend-next-items */ "./src/requests/recommend-next-items.js").RecommendNextItems;
 exports.RecommendItemSegmentsToUser = __webpack_require__(/*! ./requests/recommend-item-segments-to-user */ "./src/requests/recommend-item-segments-to-user.js").RecommendItemSegmentsToUser;
 exports.RecommendItemSegmentsToItem = __webpack_require__(/*! ./requests/recommend-item-segments-to-item */ "./src/requests/recommend-item-segments-to-item.js").RecommendItemSegmentsToItem;
 exports.RecommendItemSegmentsToItemSegment = __webpack_require__(/*! ./requests/recommend-item-segments-to-item-segment */ "./src/requests/recommend-item-segments-to-item-segment.js").RecommendItemSegmentsToItemSegment;
-exports.RecommendItemsToItemSegment = __webpack_require__(/*! ./requests/recommend-items-to-item-segment */ "./src/requests/recommend-items-to-item-segment.js").RecommendItemsToItemSegment;
 exports.SearchItems = __webpack_require__(/*! ./requests/search-items */ "./src/requests/search-items.js").SearchItems;
 exports.SearchItemSegments = __webpack_require__(/*! ./requests/search-item-segments */ "./src/requests/search-item-segments.js").SearchItemSegments;
 exports.Batch = __webpack_require__(/*! ./requests/batch */ "./src/requests/batch.js").Batch;

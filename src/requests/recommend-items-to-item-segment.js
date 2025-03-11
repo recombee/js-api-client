@@ -3,7 +3,7 @@
 */
 
 'use strict';
-const rqs = require("./request");
+const rqs = require('./request');
 
 /**
  * Recommends Items that are the most relevant to a particular Segment from a context [Segmentation](https://docs.recombee.com/segmentations.html).
@@ -16,7 +16,6 @@ const rqs = require("./request");
  * It is also possible to use the POST HTTP method (for example, in the case of a very long ReQL filter) — query parameters then become body parameters.
  */
 class RecommendItemsToItemSegment extends rqs.Request {
-
   /**
    * Construct the request
    * @param {string} contextSegmentId - ID of the segment from `contextSegmentationId` for which the recommendations are to be generated.
@@ -46,9 +45,9 @@ class RecommendItemsToItemSegment extends rqs.Request {
    *         - Description: If an item of the given *itemId* or user of the given *targetUserId* doesn't exist in the database, it creates the missing entity/entities and returns some (non-personalized) recommendations. This allows, for example, rotations in the following recommendations for the user of the given *targetUserId*, as the user will be already known to the system.
    *     - *returnProperties*
    *         - Type: boolean
-   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user. 
+   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user.
    * Example response:
-   * ```
+   * ```json
    *   {
    *     "recommId": "0c6189e7-dc1a-429a-b613-192696309361",
    *     "recomms":
@@ -79,10 +78,10 @@ class RecommendItemsToItemSegment extends rqs.Request {
    *         - Type: string[]
    *         - Description: Allows specifying which properties should be returned when `returnProperties=true` is set. The properties are given as a comma-separated list.
    * Example response for `includedProperties=description,price`:
-   * ```
+   * ```json
    *   {
    *     "recommId": "6842c725-a79f-4537-a02c-f34d668a3f80",
-   *     "recomms": 
+   *     "recomms":
    *       [
    *         {
    *           "id": "tv-178",
@@ -157,51 +156,38 @@ class RecommendItemsToItemSegment extends rqs.Request {
    * @return {Object} The values of body parameters (name of parameter: value of the parameter)
    */
   bodyParameters() {
-    let params = {};
+    const params = {};
     params.contextSegmentId = this.contextSegmentId;
     params.targetUserId = this.targetUserId;
     params.count = this.count;
 
-    if(this.scenario !== undefined)
-      params.scenario = this.scenario;
+    if (this.scenario !== undefined) params.scenario = this.scenario;
 
-    if(this.cascadeCreate !== undefined)
-      params.cascadeCreate = this.cascadeCreate;
+    if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
 
-    if(this.returnProperties !== undefined)
-      params.returnProperties = this.returnProperties;
+    if (this.returnProperties !== undefined) params.returnProperties = this.returnProperties;
 
-    if(this.includedProperties !== undefined)
-      params.includedProperties = this.includedProperties;
+    if (this.includedProperties !== undefined) params.includedProperties = this.includedProperties;
 
-    if(this.filter !== undefined)
-      params.filter = this.filter;
+    if (this.filter !== undefined) params.filter = this.filter;
 
-    if(this.booster !== undefined)
-      params.booster = this.booster;
+    if (this.booster !== undefined) params.booster = this.booster;
 
-    if(this.logic !== undefined)
-      params.logic = this.logic;
+    if (this.logic !== undefined) params.logic = this.logic;
 
-    if(this.minRelevance !== undefined)
-      params.minRelevance = this.minRelevance;
+    if (this.minRelevance !== undefined) params.minRelevance = this.minRelevance;
 
-    if(this.rotationRate !== undefined)
-      params.rotationRate = this.rotationRate;
+    if (this.rotationRate !== undefined) params.rotationRate = this.rotationRate;
 
-    if(this.rotationTime !== undefined)
-      params.rotationTime = this.rotationTime;
+    if (this.rotationTime !== undefined) params.rotationTime = this.rotationTime;
 
-    if(this.expertSettings !== undefined)
-      params.expertSettings = this.expertSettings;
+    if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
 
-    if(this.returnAbGroup !== undefined)
-      params.returnAbGroup = this.returnAbGroup;
+    if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
 
-    params.cascadeCreate = (this.cascadeCreate !== undefined) ? this.cascadeCreate : true;
+    params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
     return params;
   }
-
 }
 
-exports.RecommendItemsToItemSegment = RecommendItemsToItemSegment
+exports.RecommendItemsToItemSegment = RecommendItemsToItemSegment;

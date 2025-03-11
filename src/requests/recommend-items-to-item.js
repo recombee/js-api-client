@@ -3,7 +3,7 @@
 */
 
 'use strict';
-const rqs = require("./request");
+const rqs = require('./request');
 
 /**
  * Recommends a set of items that are somehow related to one given item, *X*. A typical scenario is when the user *A* is viewing *X*. Then you may display items to the user that he might also be interested in. Recommend items to item request gives you Top-N such items, optionally taking the target user *A* into account.
@@ -14,7 +14,6 @@ const rqs = require("./request");
  * It is also possible to use POST HTTP method (for example in the case of a very long ReQL filter) - query parameters then become body parameters.
  */
 class RecommendItemsToItem extends rqs.Request {
-
   /**
    * Construct the request
    * @param {string} itemId - ID of the item for which the recommendations are to be generated.
@@ -44,9 +43,9 @@ class RecommendItemsToItem extends rqs.Request {
    *         - Description: If an item of the given *itemId* or user of the given *targetUserId* doesn't exist in the database, it creates the missing entity/entities and returns some (non-personalized) recommendations. This allows, for example, rotations in the following recommendations for the user of the given *targetUserId*, as the user will be already known to the system.
    *     - *returnProperties*
    *         - Type: boolean
-   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user. 
+   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user.
    * Example response:
-   * ```
+   * ```json
    *   {
    *     "recommId": "0c6189e7-dc1a-429a-b613-192696309361",
    *     "recomms":
@@ -77,10 +76,10 @@ class RecommendItemsToItem extends rqs.Request {
    *         - Type: string[]
    *         - Description: Allows specifying which properties should be returned when `returnProperties=true` is set. The properties are given as a comma-separated list.
    * Example response for `includedProperties=description,price`:
-   * ```
+   * ```json
    *   {
    *     "recommId": "6842c725-a79f-4537-a02c-f34d668a3f80",
-   *     "recomms": 
+   *     "recomms":
    *       [
    *         {
    *           "id": "tv-178",
@@ -163,56 +162,41 @@ class RecommendItemsToItem extends rqs.Request {
    * @return {Object} The values of body parameters (name of parameter: value of the parameter)
    */
   bodyParameters() {
-    let params = {};
+    const params = {};
     params.targetUserId = this.targetUserId;
     params.count = this.count;
 
-    if(this.scenario !== undefined)
-      params.scenario = this.scenario;
+    if (this.scenario !== undefined) params.scenario = this.scenario;
 
-    if(this.cascadeCreate !== undefined)
-      params.cascadeCreate = this.cascadeCreate;
+    if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
 
-    if(this.returnProperties !== undefined)
-      params.returnProperties = this.returnProperties;
+    if (this.returnProperties !== undefined) params.returnProperties = this.returnProperties;
 
-    if(this.includedProperties !== undefined)
-      params.includedProperties = this.includedProperties;
+    if (this.includedProperties !== undefined) params.includedProperties = this.includedProperties;
 
-    if(this.filter !== undefined)
-      params.filter = this.filter;
+    if (this.filter !== undefined) params.filter = this.filter;
 
-    if(this.booster !== undefined)
-      params.booster = this.booster;
+    if (this.booster !== undefined) params.booster = this.booster;
 
-    if(this.logic !== undefined)
-      params.logic = this.logic;
+    if (this.logic !== undefined) params.logic = this.logic;
 
-    if(this.userImpact !== undefined)
-      params.userImpact = this.userImpact;
+    if (this.userImpact !== undefined) params.userImpact = this.userImpact;
 
-    if(this.diversity !== undefined)
-      params.diversity = this.diversity;
+    if (this.diversity !== undefined) params.diversity = this.diversity;
 
-    if(this.minRelevance !== undefined)
-      params.minRelevance = this.minRelevance;
+    if (this.minRelevance !== undefined) params.minRelevance = this.minRelevance;
 
-    if(this.rotationRate !== undefined)
-      params.rotationRate = this.rotationRate;
+    if (this.rotationRate !== undefined) params.rotationRate = this.rotationRate;
 
-    if(this.rotationTime !== undefined)
-      params.rotationTime = this.rotationTime;
+    if (this.rotationTime !== undefined) params.rotationTime = this.rotationTime;
 
-    if(this.expertSettings !== undefined)
-      params.expertSettings = this.expertSettings;
+    if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
 
-    if(this.returnAbGroup !== undefined)
-      params.returnAbGroup = this.returnAbGroup;
+    if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
 
-    params.cascadeCreate = (this.cascadeCreate !== undefined) ? this.cascadeCreate : true;
+    params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
     return params;
   }
-
 }
 
-exports.RecommendItemsToItem = RecommendItemsToItem
+exports.RecommendItemsToItem = RecommendItemsToItem;

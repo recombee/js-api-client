@@ -1,5 +1,5 @@
 'use strict';
-const ae = require("./api-error");
+const ae = require('./api-error');
 
 /**
  * Error thrown when a request did not succeed (did not return 200 or 201)
@@ -18,4 +18,4 @@ class ResponseError extends ae.ApiError {
   }
 }
 
-exports.ResponseError = ResponseError
+exports.ResponseError = ResponseError;

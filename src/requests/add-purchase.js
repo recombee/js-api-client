@@ -3,13 +3,12 @@
 */
 
 'use strict';
-const rqs = require("./request");
+const rqs = require('./request');
 
 /**
  * Adds a purchase of the given item made by the given user.
  */
 class AddPurchase extends rqs.Request {
-
   /**
    * Construct the request
    * @param {string} userId - User who purchased the item
@@ -57,35 +56,27 @@ class AddPurchase extends rqs.Request {
    * @return {Object} The values of body parameters (name of parameter: value of the parameter)
    */
   bodyParameters() {
-    let params = {};
+    const params = {};
     params.userId = this.userId;
     params.itemId = this.itemId;
 
-    if(this.timestamp !== undefined)
-      params.timestamp = this.timestamp;
+    if (this.timestamp !== undefined) params.timestamp = this.timestamp;
 
-    if(this.cascadeCreate !== undefined)
-      params.cascadeCreate = this.cascadeCreate;
+    if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
 
-    if(this.amount !== undefined)
-      params.amount = this.amount;
+    if (this.amount !== undefined) params.amount = this.amount;
 
-    if(this.price !== undefined)
-      params.price = this.price;
+    if (this.price !== undefined) params.price = this.price;
 
-    if(this.profit !== undefined)
-      params.profit = this.profit;
+    if (this.profit !== undefined) params.profit = this.profit;
 
-    if(this.recommId !== undefined)
-      params.recommId = this.recommId;
+    if (this.recommId !== undefined) params.recommId = this.recommId;
 
-    if(this.additionalData !== undefined)
-      params.additionalData = this.additionalData;
+    if (this.additionalData !== undefined) params.additionalData = this.additionalData;
 
-    params.cascadeCreate = (this.cascadeCreate !== undefined) ? this.cascadeCreate : true;
+    params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
     return params;
   }
-
 }
 
-exports.AddPurchase = AddPurchase
+exports.AddPurchase = AddPurchase;

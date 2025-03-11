@@ -1,10 +1,13 @@
 {
   "name": "recombee-js-api-client",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Client-side js library for easy use of the Recombee recommendation API",
-  "main": "./src/index.js",
   "browser": "./src/index.js",
   "types": "src/index.d.ts",
+  "files": [
+    "src",
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Recombee/js-api-client.git"
@@ -25,23 +28,27 @@
   },
   "homepage": "https://github.com/Recombee/js-api-client#readme",
   "dependencies": {
-    "jssha": "^3.3.1"
+    "jssha": "3.3.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0",
-    "babel-loader": "^9.2.1",
-    "eslint": "^9.15.0",
-    "globals": "^15.12.0",
-    "qunit": "^2.22.0",
-    "typescript-eslint": "^8.16.0",
-    "webpack": "^5.96.1",
-    "webpack-cli": "^5.1.4",
-    "webpack-node-externals": "^3.0.0",
+    "@babel/core": "7.26.0",
+    "@babel/preset-env": "7.26.0",
+    "babel-loader": "9.2.1",
+    "eslint": "9.21.0",
+    "globals": "15.13.0",
+    "prettier": "3.5.3",
+    "qunit": "2.23.1",
+    "typescript": "5.8.2",
+    "typescript-eslint": "8.26.0",
+    "webpack": "5.97.1",
+    "webpack-cli": "5.1.4",
+    "webpack-node-externals": "3.0.0",
     "webpack-sources": "3.2.3"
   },
   "scripts": {
     "build": "webpack",
-    "lint": "eslint ."
+    "lint": "tsc; eslint .; prettier --check .",
+    "lint:fix": "tsc && eslint . --fix && prettier --write .",
+    "test": "pnpm run build && open ./tests/index.html"
   }
 }

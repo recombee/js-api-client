@@ -3,13 +3,12 @@
 */
 
 'use strict';
-const rqs = require("./request");
+const rqs = require('./request');
 
 /**
  * Adds a detail view of the given item made by the given user.
  */
 class AddDetailView extends rqs.Request {
-
   /**
    * Construct the request
    * @param {string} userId - User who viewed the item
@@ -49,29 +48,23 @@ class AddDetailView extends rqs.Request {
    * @return {Object} The values of body parameters (name of parameter: value of the parameter)
    */
   bodyParameters() {
-    let params = {};
+    const params = {};
     params.userId = this.userId;
     params.itemId = this.itemId;
 
-    if(this.timestamp !== undefined)
-      params.timestamp = this.timestamp;
+    if (this.timestamp !== undefined) params.timestamp = this.timestamp;
 
-    if(this.duration !== undefined)
-      params.duration = this.duration;
+    if (this.duration !== undefined) params.duration = this.duration;
 
-    if(this.cascadeCreate !== undefined)
-      params.cascadeCreate = this.cascadeCreate;
+    if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
 
-    if(this.recommId !== undefined)
-      params.recommId = this.recommId;
+    if (this.recommId !== undefined) params.recommId = this.recommId;
 
-    if(this.additionalData !== undefined)
-      params.additionalData = this.additionalData;
+    if (this.additionalData !== undefined) params.additionalData = this.additionalData;
 
-    params.cascadeCreate = (this.cascadeCreate !== undefined) ? this.cascadeCreate : true;
+    params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
     return params;
   }
-
 }
 
-exports.AddDetailView = AddDetailView
+exports.AddDetailView = AddDetailView;

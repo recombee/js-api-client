@@ -3,12 +3,12 @@
 */
 
 'use strict';
-const rqs = require("./request");
+const rqs = require('./request');
 
 /**
  * Full-text personalized search. The results are based on the provided `searchQuery` and also on the user's past interactions (purchases, ratings, etc.) with the items (items more suitable for the user are preferred in the results).
  * All the string and set item properties are indexed by the search engine.
- * This endpoint should be used in a search box on your website/app. It can be called multiple times as the user is typing the query in order to get the most viable suggestions based on the current state of the query, or once after submitting the whole query. 
+ * This endpoint should be used in a search box on your website/app. It can be called multiple times as the user is typing the query in order to get the most viable suggestions based on the current state of the query, or once after submitting the whole query.
  * The returned items are sorted by relevance (the first item being the most relevant).
  * Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
  * - Let Recombee know that this search was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
@@ -16,7 +16,6 @@ const rqs = require("./request");
  * It is also possible to use POST HTTP method (for example in the case of a very long ReQL filter) - query parameters then become body parameters.
  */
 class SearchItems extends rqs.Request {
-
   /**
    * Construct the request
    * @param {string} userId - ID of the user for whom personalized search will be performed.
@@ -34,12 +33,12 @@ class SearchItems extends rqs.Request {
    *         - Description: If the user does not exist in the database, returns a list of non-personalized search results and creates the user in the database. This allows, for example, rotations in the following recommendations for that user, as the user will be already known to the system.
    *     - *returnProperties*
    *         - Type: boolean
-   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user. 
+   *         - Description: With `returnProperties=true`, property values of the recommended items are returned along with their IDs in a JSON dictionary. The acquired property values can be used to easily display the recommended items to the user.
    * Example response:
-   * ```
+   * ```json
    *   {
    *     "recommId": "ce52ada4-e4d9-4885-943c-407db2dee837",
-   *     "recomms": 
+   *     "recomms":
    *       [
    *         {
    *           "id": "tv-178",
@@ -67,7 +66,7 @@ class SearchItems extends rqs.Request {
    *         - Type: string[]
    *         - Description: Allows specifying which properties should be returned when `returnProperties=true` is set. The properties are given as a comma-separated list.
    * Example response for `includedProperties=description,price`:
-   * ```
+   * ```json
    *   {
    *     "recommId": "a86ee8d5-cd8e-46d1-886c-8b3771d0520b",
    *     "recomms":
@@ -133,41 +132,31 @@ class SearchItems extends rqs.Request {
    * @return {Object} The values of body parameters (name of parameter: value of the parameter)
    */
   bodyParameters() {
-    let params = {};
+    const params = {};
     params.searchQuery = this.searchQuery;
     params.count = this.count;
 
-    if(this.scenario !== undefined)
-      params.scenario = this.scenario;
+    if (this.scenario !== undefined) params.scenario = this.scenario;
 
-    if(this.cascadeCreate !== undefined)
-      params.cascadeCreate = this.cascadeCreate;
+    if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
 
-    if(this.returnProperties !== undefined)
-      params.returnProperties = this.returnProperties;
+    if (this.returnProperties !== undefined) params.returnProperties = this.returnProperties;
 
-    if(this.includedProperties !== undefined)
-      params.includedProperties = this.includedProperties;
+    if (this.includedProperties !== undefined) params.includedProperties = this.includedProperties;
 
-    if(this.filter !== undefined)
-      params.filter = this.filter;
+    if (this.filter !== undefined) params.filter = this.filter;
 
-    if(this.booster !== undefined)
-      params.booster = this.booster;
+    if (this.booster !== undefined) params.booster = this.booster;
 
-    if(this.logic !== undefined)
-      params.logic = this.logic;
+    if (this.logic !== undefined) params.logic = this.logic;
 
-    if(this.expertSettings !== undefined)
-      params.expertSettings = this.expertSettings;
+    if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
 
-    if(this.returnAbGroup !== undefined)
-      params.returnAbGroup = this.returnAbGroup;
+    if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
 
-    params.cascadeCreate = (this.cascadeCreate !== undefined) ? this.cascadeCreate : true;
+    params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
     return params;
   }
-
 }
 
-exports.SearchItems = SearchItems
+exports.SearchItems = SearchItems;

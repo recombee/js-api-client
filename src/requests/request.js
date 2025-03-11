@@ -4,7 +4,6 @@
  * Base class for all the requests
  */
 class Request {
-  
   /**
    * Construct the basis of request
    * @param {string} method - GET/PUT/POST/DELETE
@@ -20,4 +19,4 @@ class Request {
   }
 }
 
-exports.Request = Request
+exports.Request = Request;

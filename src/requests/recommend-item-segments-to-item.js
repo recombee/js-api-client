@@ -3,7 +3,7 @@
 */
 
 'use strict';
-const rqs = require("./request");
+const rqs = require('./request');
 
 /**
  * Recommends Segments from a [Segmentation](https://docs.recombee.com/segmentations.html) that are the most relevant to a particular item.
@@ -17,7 +17,6 @@ const rqs = require("./request");
  * It is also possible to use POST HTTP method (for example in case of very long ReQL filter) - query parameters then become body parameters.
  */
 class RecommendItemSegmentsToItem extends rqs.Request {
-
   /**
    * Construct the request
    * @param {string} itemId - ID of the item for which the recommendations are to be generated.
@@ -84,35 +83,27 @@ class RecommendItemSegmentsToItem extends rqs.Request {
    * @return {Object} The values of body parameters (name of parameter: value of the parameter)
    */
   bodyParameters() {
-    let params = {};
+    const params = {};
     params.targetUserId = this.targetUserId;
     params.count = this.count;
 
-    if(this.scenario !== undefined)
-      params.scenario = this.scenario;
+    if (this.scenario !== undefined) params.scenario = this.scenario;
 
-    if(this.cascadeCreate !== undefined)
-      params.cascadeCreate = this.cascadeCreate;
+    if (this.cascadeCreate !== undefined) params.cascadeCreate = this.cascadeCreate;
 
-    if(this.filter !== undefined)
-      params.filter = this.filter;
+    if (this.filter !== undefined) params.filter = this.filter;
 
-    if(this.booster !== undefined)
-      params.booster = this.booster;
+    if (this.booster !== undefined) params.booster = this.booster;
 
-    if(this.logic !== undefined)
-      params.logic = this.logic;
+    if (this.logic !== undefined) params.logic = this.logic;
 
-    if(this.expertSettings !== undefined)
-      params.expertSettings = this.expertSettings;
+    if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
 
-    if(this.returnAbGroup !== undefined)
-      params.returnAbGroup = this.returnAbGroup;
+    if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
 
-    params.cascadeCreate = (this.cascadeCreate !== undefined) ? this.cascadeCreate : true;
+    params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
     return params;
   }
-
 }
 
-exports.RecommendItemSegmentsToItem = RecommendItemSegmentsToItem
+exports.RecommendItemSegmentsToItem = RecommendItemSegmentsToItem;
