@@ -17,7 +17,7 @@ class ApiClient {
     this.databaseId = databaseId;
     this.publicToken = publicToken;
     this.options = options || {};
-    this.baseUri = this._getBaseUri();
+    this.baseUri = this.getBaseUri();
     this.useHttps = 'useHttps' in this.options ? this.options.useHttps : true;
     this.async = 'async' in this.options ? this.options.async : true;
     this.future_v6_fetch = 'future_v6_fetch' in this.options ? this.options.future_v6_fetch : false;
@@ -40,7 +40,7 @@ class ApiClient {
     return uri;
   }
 
-  _getBaseUri() {
+  getBaseUri() {
     let baseUri = this.options.baseUri;
     if (this.options.region) {
       if (baseUri) {
