@@ -123,10 +123,12 @@ declare module 'recombee-js-api-client' {
      * @param options - Other custom options.
      */
     constructor(databaseId: string, publicToken: string, options?: ApiClientOptions);
+    public readonly databaseId: string
+    publicToken: string
 
-    _getRegionalBaseUri(region: string): string;
+    protected _getRegionalBaseUri(region: string): string;
 
-    _getBaseUri(): string;
+    getBaseUri(): string;
 
     /**
      * Send the request to Recombee
@@ -142,7 +144,7 @@ declare module 'recombee-js-api-client' {
     ) // @ts-expect-error private member
     : Promise<TRequest['__response_type']>;
 
-    _signUrl(req_part: string): string;
+    protected _signUrl(req_part: string): string;
   }
 
   export type Recommendation = {
