@@ -17,10 +17,8 @@ class ApiClient {
     this.databaseId = databaseId;
     this.publicToken = publicToken;
     this.options = options || {};
-    this.baseUri = this._getBaseUri();
+    this.baseUri = this.getBaseUri();
     this.useHttps = 'useHttps' in this.options ? this.options.useHttps : true;
-    this.async = 'async' in this.options ? this.options.async : true;
-    this.future_v6_fetch = 'future_v6_fetch' in this.options ? this.options.future_v6_fetch : false;
   }
 
   _getRegionalBaseUri(region) {
@@ -40,7 +38,7 @@ class ApiClient {
     return uri;
   }
 
-  _getBaseUri() {
+  getBaseUri() {
     let baseUri = this.options.baseUri;
     if (this.options.region) {
       if (baseUri) {
@@ -57,22 +55,16 @@ class ApiClient {
    * @param {Object} callback - Optional callback (send returns Promise if omitted)
    */
   send(request, callback) {
-    if (this.future_v6_fetch) {
-      if (!(typeof globalThis === 'undefined' ? window.Promise : globalThis.Promise)) {
-        throw new Error('future_v6_fetch requires Promises to be available.');
-      }
-      if (!this.async) {
-        throw new Error('future_v6_fetch cannot be used with synchronous requests.');
-      }
-      if (callback === undefined) {
-        return this._sendFetch(request);
-      } else {
-        return this._sendFetch(request)
-          .then((result) => callback(null, result))
-          .catch(callback);
-      }
+    if (!(typeof globalThis === 'undefined' ? window.Promise : globalThis.Promise)) {
+      throw new Error('Recombee API Client requires Promises to be available.');
     }
-    return this._sendXhr(request, callback);
+    if (callback === undefined) {
+      return this._sendFetch(request);
+    } else {
+      return this._sendFetch(request)
+        .then((result) => callback(null, result))
+        .catch(callback);
+    }
   }
 
   async _sendFetch(request) {
@@ -100,42 +92,6 @@ class ApiClient {
         throw err;
       }
     }
-  }
-
-  _sendXhr(request, callback) {
-    const Promise = typeof globalThis === 'undefined' ? window.Promise : globalThis.Promise;
-    if (callback === undefined && Promise) {
-      const sendXhr = this._sendXhr.bind(this);
-      return new Promise(function (resolve, reject) {
-        sendXhr(request, function (err, result) {
-          return err ? reject(err) : resolve(result);
-        });
-      });
-    }
-
-    const url = this._getUrl(request);
-    const xmlhttp = new XMLHttpRequest();
-    xmlhttp.open('POST', url, this.async);
-    xmlhttp.setRequestHeader('Accept', 'application/json');
-    xmlhttp.setRequestHeader('Content-Type', 'application/json');
-
-    if (this.async) xmlhttp.timeout = request.timeout;
-
-    xmlhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.responseText) {
-        if (this.status == 200) {
-          if (callback) return callback(null, JSON.parse(this.responseText));
-        } else {
-          if (callback)
-            return callback(new api_errors.ResponseError(request, this.status, this.responseText));
-        }
-      }
-    };
-    xmlhttp.ontimeout = function () {
-      if (callback) return callback(new api_errors.TimeoutError(request));
-    };
-
-    xmlhttp.send(JSON.stringify(request.bodyParameters()));
   }
 
   _getUrl(request) {

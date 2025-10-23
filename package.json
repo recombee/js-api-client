@@ -1,6 +1,6 @@
 {
   "name": "recombee-js-api-client",
-  "version": "5.0.2",
+  "version": "6.0.0",
   "description": "Client-side js library for easy use of the Recombee recommendation API",
   "main": "./src/index.js",
   "browser": "./src/index.js",
@@ -22,6 +22,9 @@
     "API",
     "SDK"
   ],
+  "engines": {
+    "node": ">=18"
+  },
   "author": "Ondrej Fiedler <ondrej.fiedler@recombee.com> (https://www.recombee.com/)",
   "license": "MIT",
   "bugs": {

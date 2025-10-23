@@ -11,8 +11,8 @@ const rqs = require('./request');
  * This endpoint should be used in a search box on your website/app. It can be called multiple times as the user is typing the query in order to get the most viable suggestions based on the current state of the query, or once after submitting the whole query.
  * The returned items are sorted by relevance (the first item being the most relevant).
  * Besides the recommended items, also a unique `recommId` is returned in the response. It can be used to:
- * - Let Recombee know that this search was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui.html#reported-metrics).
- * - Get subsequent search results when the user scrolls down or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api.html#recommend-next-items).
+ * - Let Recombee know that this search was successful (e.g., user clicked one of the recommended items). See [Reported metrics](https://docs.recombee.com/admin_ui#reported-metrics).
+ * - Get subsequent search results when the user scrolls down or goes to the next page. See [Recommend Next Items](https://docs.recombee.com/api#recommend-next-items).
  * It is also possible to use POST HTTP method (for example in the case of a very long ReQL filter) - query parameters then become body parameters.
  */
 class SearchItems extends rqs.Request {
@@ -26,7 +26,7 @@ class SearchItems extends rqs.Request {
    *     - *scenario*
    *         - Type: string
    *         - Description: Scenario defines a particular search field in your user interface.
-   * You can set various settings to the [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com). You can also see the performance of each scenario in the Admin UI separately, so you can check how well each field performs.
+   * You can set various settings to the [scenario](https://docs.recombee.com/scenarios) in the [Admin UI](https://admin.recombee.com). You can also see the performance of each scenario in the Admin UI separately, so you can check how well each field performs.
    * The AI that optimizes models to get the best results may optimize different scenarios separately, or even use different models in each of the scenarios.
    *     - *cascadeCreate*
    *         - Type: boolean
@@ -91,18 +91,56 @@ class SearchItems extends rqs.Request {
    * ```
    *     - *filter*
    *         - Type: string
-   *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql.html) expression, which allows you to filter recommended items based on the values of their attributes.
-   * Filters can also be assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   *         - Description: Boolean-returning [ReQL](https://docs.recombee.com/reql) expression, which allows you to filter recommended items based on the values of their attributes.
+   * Filters can also be assigned to a [scenario](https://docs.recombee.com/scenarios) in the [Admin UI](https://admin.recombee.com).
    *     - *booster*
    *         - Type: string
-   *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql.html) expression, which allows you to boost the recommendation rate of some items based on the values of their attributes.
-   * Boosters can also be assigned to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   *         - Description: Number-returning [ReQL](https://docs.recombee.com/reql) expression, which allows you to boost the recommendation rate of some items based on the values of their attributes.
+   * Boosters can also be assigned to a [scenario](https://docs.recombee.com/scenarios) in the [Admin UI](https://admin.recombee.com).
    *     - *logic*
    *         - Type: string | object
    *         - Description: Logic specifies the particular behavior of the recommendation models. You can pick tailored logic for your domain and use case.
-   * See [this section](https://docs.recombee.com/recommendation_logics.html) for a list of available logics and other details.
+   * See [this section](https://docs.recombee.com/recommendation_logics) for a list of available logics and other details.
    * The difference between `logic` and `scenario` is that `logic` specifies mainly behavior, while `scenario` specifies the place where recommendations are shown to the users.
-   * Logic can also be set to a [scenario](https://docs.recombee.com/scenarios.html) in the [Admin UI](https://admin.recombee.com).
+   * Logic can also be set to a [scenario](https://docs.recombee.com/scenarios) in the [Admin UI](https://admin.recombee.com).
+   *     - *reqlExpressions*
+   *         - Type: object
+   *         - Description: A dictionary of [ReQL](https://docs.recombee.com/reql) expressions that will be executed for each recommended item.
+   * This can be used to compute additional properties of the recommended items that are not stored in the database.
+   * The keys are the names of the expressions, and the values are the actual ReQL expressions.
+   * Example request:
+   * ```json
+   * {
+   *   "reqlExpressions": {
+   *     "isInUsersCity": "context_user[\"city\"] in 'cities'",
+   *     "distanceToUser": "earth_distance('location', context_user[\"location\"])"
+   *   }
+   * }
+   * ```
+   * Example response:
+   * ```json
+   * {
+   *   "recommId": "ce52ada4-e4d9-4885-943c-407db2dee837",
+   *   "recomms":
+   *     [
+   *       {
+   *         "id": "restaurant-178",
+   *         "reqlEvaluations": {
+   *           "isInUsersCity": true,
+   *           "distanceToUser": 5200.2
+   *         }
+   *       },
+   *       {
+   *         "id": "bar-42",
+   *         "reqlEvaluations": {
+   *           "isInUsersCity": false,
+   *           "distanceToUser": 2516.0
+   *         }
+   *       }
+   *     ],
+   *    "numberNextRecommsCalls": 0
+   * }
+   * ```
    *     - *expertSettings*
    *         - Type: object
    *         - Description: Dictionary of custom options.
@@ -123,6 +161,7 @@ class SearchItems extends rqs.Request {
     this.filter = optional.filter;
     this.booster = optional.booster;
     this.logic = optional.logic;
+    this.reqlExpressions = optional.reqlExpressions;
     this.expertSettings = optional.expertSettings;
     this.returnAbGroup = optional.returnAbGroup;
   }
@@ -149,6 +188,8 @@ class SearchItems extends rqs.Request {
     if (this.booster !== undefined) params.booster = this.booster;
 
     if (this.logic !== undefined) params.logic = this.logic;
+
+    if (this.reqlExpressions !== undefined) params.reqlExpressions = this.reqlExpressions;
 
     if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
 

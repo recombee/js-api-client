@@ -22,7 +22,7 @@ class SetViewPortion extends rqs.Request {
    *         - Description: ID of the session in which the user viewed the item. Default is `null` (`None`, `nil`, `NULL` etc., depending on the language).
    *     - *timestamp*
    *         - Type: string | number
-   *         - Description: UTC timestamp of the rating as ISO8601-1 pattern or UTC epoch time. The default value is the current time.
+   *         - Description: UTC timestamp of the view portion as ISO8601-1 pattern or UTC epoch time. The default value is the current time.
    *     - *cascadeCreate*
    *         - Type: boolean
    *         - Description: Sets whether the given user/item should be created if not present in the database.
@@ -32,6 +32,12 @@ class SetViewPortion extends rqs.Request {
    *     - *additionalData*
    *         - Type: object
    *         - Description: A dictionary of additional data for the interaction.
+   *     - *autoPresented*
+   *         - Type: boolean
+   *         - Description: Indicates whether the item was automatically presented to the user (e.g., in a swiping feed) or explicitly requested by the user (e.g., by clicking on a link). Defaults to `false`.
+   *     - *timeSpent*
+   *         - Type: number
+   *         - Description: The duration (in seconds) that the user viewed the item. In update requests, this value may only increase and is required only if it has changed.
    */
   constructor(userId, itemId, portion, optional) {
     super('POST', '/viewportions/', 9000, false);
@@ -44,6 +50,8 @@ class SetViewPortion extends rqs.Request {
     this.cascadeCreate = optional.cascadeCreate;
     this.recommId = optional.recommId;
     this.additionalData = optional.additionalData;
+    this.autoPresented = optional.autoPresented;
+    this.timeSpent = optional.timeSpent;
   }
 
   /**
@@ -65,6 +73,10 @@ class SetViewPortion extends rqs.Request {
     if (this.recommId !== undefined) params.recommId = this.recommId;
 
     if (this.additionalData !== undefined) params.additionalData = this.additionalData;
+
+    if (this.autoPresented !== undefined) params.autoPresented = this.autoPresented;
+
+    if (this.timeSpent !== undefined) params.timeSpent = this.timeSpent;
 
     params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
     return params;

@@ -162,6 +162,19 @@ QUnit.module('Recommendations', () => {
       testRecommendations(assert, new recombee.RecommendItemsToUser('user-1', 5));
     });
 
+    QUnit.test('RecommendItemsToUser test with reqlExpressions', (assert) => {
+      testRecommendations(
+        assert,
+        new recombee.RecommendItemsToUser('user-1', 5, {
+          reqlExpressions: {
+            boolean: 'true',
+            number: "if ('num-cores' > 0) then 1 else 2",
+            string: '"test"',
+          },
+        }),
+      );
+    });
+
     QUnit.test('RecommendItemsToItem test', (assert) => {
       testRecommendations(assert, new recombee.RecommendItemsToItem('item-1', 'user-1', 5));
     });
