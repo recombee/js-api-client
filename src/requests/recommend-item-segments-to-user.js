@@ -49,6 +49,41 @@ class RecommendItemSegmentsToUser extends rqs.Request {
    *     - *returnAbGroup*
    *         - Type: boolean
    *         - Description: If there is a custom AB-testing running, return the name of the group to which the request belongs.
+   *     - *reqlExpressions*
+   *         - Type: object
+   *         - Description: A dictionary of [ReQL](https://docs.recombee.com/reql) expressions that will be executed for each recommended Item Segment.
+   * This can be used to compute additional properties of the recommended Item Segments.
+   * The keys are the names of the expressions, and the values are the actual ReQL expressions.
+   * Example request:
+   * ```json
+   * {
+   *   "reqlExpressions": {
+   *     "countItems": "size(segment_items(\"categories\", 'segmentId'))"
+   *   }
+   * }
+   * ```
+   * Example response:
+   * ```json
+   * {
+   *   "recommId": "a7ac55a4-8d6e-4f19-addc-abac4164d8a8",
+   *   "recomms":
+   *     [
+   *       {
+   *         "id": "category-fantasy-books",
+   *         "reqlEvaluations": {
+   *           "countItems": 486
+   *         }
+   *       },
+   *       {
+   *         "id": "category-sci-fi-costumes",
+   *         "reqlEvaluations": {
+   *           "countItems": 19
+   *         }
+   *       }
+   *     ],
+   *    "numberNextRecommsCalls": 0
+   * }
+   * ```
    */
   constructor(userId, count, optional) {
     super('POST', `/recomms/users/${encodeURIComponent(userId)}/item-segments/`, 9000, false);
@@ -62,6 +97,7 @@ class RecommendItemSegmentsToUser extends rqs.Request {
     this.logic = optional.logic;
     this.expertSettings = optional.expertSettings;
     this.returnAbGroup = optional.returnAbGroup;
+    this.reqlExpressions = optional.reqlExpressions;
   }
 
   /**
@@ -85,6 +121,8 @@ class RecommendItemSegmentsToUser extends rqs.Request {
     if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
 
     if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
+
+    if (this.reqlExpressions !== undefined) params.reqlExpressions = this.reqlExpressions;
 
     params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
     return params;

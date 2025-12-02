@@ -1,6 +1,6 @@
 {
   "name": "recombee-js-api-client",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "Client-side js library for easy use of the Recombee recommendation API",
   "main": "./src/index.js",
   "browser": "./src/index.js",

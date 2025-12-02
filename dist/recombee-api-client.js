@@ -1210,6 +1210,41 @@ var RecommendItemSegmentsToItemSegment = /*#__PURE__*/function (_rqs$Request) {
    *     - *returnAbGroup*
    *         - Type: boolean
    *         - Description: If there is a custom AB-testing running, return the name of the group to which the request belongs.
+   *     - *reqlExpressions*
+   *         - Type: object
+   *         - Description: A dictionary of [ReQL](https://docs.recombee.com/reql) expressions that will be executed for each recommended Item Segment.
+   * This can be used to compute additional properties of the recommended Item Segments.
+   * The keys are the names of the expressions, and the values are the actual ReQL expressions.
+   * Example request:
+   * ```json
+   * {
+   *   "reqlExpressions": {
+   *     "countItems": "size(segment_items(\"categories\", 'segmentId'))"
+   *   }
+   * }
+   * ```
+   * Example response:
+   * ```json
+   * {
+   *   "recommId": "a7ac55a4-8d6e-4f19-addc-abac4164d8a8",
+   *   "recomms":
+   *     [
+   *       {
+   *         "id": "category-fantasy-books",
+   *         "reqlEvaluations": {
+   *           "countItems": 486
+   *         }
+   *       },
+   *       {
+   *         "id": "category-sci-fi-costumes",
+   *         "reqlEvaluations": {
+   *           "countItems": 19
+   *         }
+   *       }
+   *     ],
+   *    "numberNextRecommsCalls": 0
+   * }
+   * ```
    */
   function RecommendItemSegmentsToItemSegment(contextSegmentId, targetUserId, count, optional) {
     var _this;
@@ -1226,6 +1261,7 @@ var RecommendItemSegmentsToItemSegment = /*#__PURE__*/function (_rqs$Request) {
     _this.logic = optional.logic;
     _this.expertSettings = optional.expertSettings;
     _this.returnAbGroup = optional.returnAbGroup;
+    _this.reqlExpressions = optional.reqlExpressions;
     return _this;
   }
 
@@ -1248,6 +1284,7 @@ var RecommendItemSegmentsToItemSegment = /*#__PURE__*/function (_rqs$Request) {
       if (this.logic !== undefined) params.logic = this.logic;
       if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
       if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
+      if (this.reqlExpressions !== undefined) params.reqlExpressions = this.reqlExpressions;
       params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
       return params;
     }
@@ -1342,6 +1379,41 @@ var RecommendItemSegmentsToItem = /*#__PURE__*/function (_rqs$Request) {
    *     - *returnAbGroup*
    *         - Type: boolean
    *         - Description: If there is a custom AB-testing running, return the name of the group to which the request belongs.
+   *     - *reqlExpressions*
+   *         - Type: object
+   *         - Description: A dictionary of [ReQL](https://docs.recombee.com/reql) expressions that will be executed for each recommended Item Segment.
+   * This can be used to compute additional properties of the recommended Item Segments.
+   * The keys are the names of the expressions, and the values are the actual ReQL expressions.
+   * Example request:
+   * ```json
+   * {
+   *   "reqlExpressions": {
+   *     "countItems": "size(segment_items(\"categories\", 'segmentId'))"
+   *   }
+   * }
+   * ```
+   * Example response:
+   * ```json
+   * {
+   *   "recommId": "a7ac55a4-8d6e-4f19-addc-abac4164d8a8",
+   *   "recomms":
+   *     [
+   *       {
+   *         "id": "category-fantasy-books",
+   *         "reqlEvaluations": {
+   *           "countItems": 486
+   *         }
+   *       },
+   *       {
+   *         "id": "category-sci-fi-costumes",
+   *         "reqlEvaluations": {
+   *           "countItems": 19
+   *         }
+   *       }
+   *     ],
+   *    "numberNextRecommsCalls": 0
+   * }
+   * ```
    */
   function RecommendItemSegmentsToItem(itemId, targetUserId, count, optional) {
     var _this;
@@ -1358,6 +1430,7 @@ var RecommendItemSegmentsToItem = /*#__PURE__*/function (_rqs$Request) {
     _this.logic = optional.logic;
     _this.expertSettings = optional.expertSettings;
     _this.returnAbGroup = optional.returnAbGroup;
+    _this.reqlExpressions = optional.reqlExpressions;
     return _this;
   }
 
@@ -1379,6 +1452,7 @@ var RecommendItemSegmentsToItem = /*#__PURE__*/function (_rqs$Request) {
       if (this.logic !== undefined) params.logic = this.logic;
       if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
       if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
+      if (this.reqlExpressions !== undefined) params.reqlExpressions = this.reqlExpressions;
       params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
       return params;
     }
@@ -1460,6 +1534,41 @@ var RecommendItemSegmentsToUser = /*#__PURE__*/function (_rqs$Request) {
    *     - *returnAbGroup*
    *         - Type: boolean
    *         - Description: If there is a custom AB-testing running, return the name of the group to which the request belongs.
+   *     - *reqlExpressions*
+   *         - Type: object
+   *         - Description: A dictionary of [ReQL](https://docs.recombee.com/reql) expressions that will be executed for each recommended Item Segment.
+   * This can be used to compute additional properties of the recommended Item Segments.
+   * The keys are the names of the expressions, and the values are the actual ReQL expressions.
+   * Example request:
+   * ```json
+   * {
+   *   "reqlExpressions": {
+   *     "countItems": "size(segment_items(\"categories\", 'segmentId'))"
+   *   }
+   * }
+   * ```
+   * Example response:
+   * ```json
+   * {
+   *   "recommId": "a7ac55a4-8d6e-4f19-addc-abac4164d8a8",
+   *   "recomms":
+   *     [
+   *       {
+   *         "id": "category-fantasy-books",
+   *         "reqlEvaluations": {
+   *           "countItems": 486
+   *         }
+   *       },
+   *       {
+   *         "id": "category-sci-fi-costumes",
+   *         "reqlEvaluations": {
+   *           "countItems": 19
+   *         }
+   *       }
+   *     ],
+   *    "numberNextRecommsCalls": 0
+   * }
+   * ```
    */
   function RecommendItemSegmentsToUser(userId, count, optional) {
     var _this;
@@ -1475,6 +1584,7 @@ var RecommendItemSegmentsToUser = /*#__PURE__*/function (_rqs$Request) {
     _this.logic = optional.logic;
     _this.expertSettings = optional.expertSettings;
     _this.returnAbGroup = optional.returnAbGroup;
+    _this.reqlExpressions = optional.reqlExpressions;
     return _this;
   }
 
@@ -1495,6 +1605,7 @@ var RecommendItemSegmentsToUser = /*#__PURE__*/function (_rqs$Request) {
       if (this.logic !== undefined) params.logic = this.logic;
       if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
       if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
+      if (this.reqlExpressions !== undefined) params.reqlExpressions = this.reqlExpressions;
       params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
       return params;
     }
@@ -2437,6 +2548,41 @@ var SearchItemSegments = /*#__PURE__*/function (_rqs$Request) {
    *     - *returnAbGroup*
    *         - Type: boolean
    *         - Description: If there is a custom AB-testing running, return the name of the group to which the request belongs.
+   *     - *reqlExpressions*
+   *         - Type: object
+   *         - Description: A dictionary of [ReQL](https://docs.recombee.com/reql) expressions that will be executed for each recommended Item Segment.
+   * This can be used to compute additional properties of the recommended Item Segments.
+   * The keys are the names of the expressions, and the values are the actual ReQL expressions.
+   * Example request:
+   * ```json
+   * {
+   *   "reqlExpressions": {
+   *     "countItems": "size(segment_items(\"categories\", 'segmentId'))"
+   *   }
+   * }
+   * ```
+   * Example response:
+   * ```json
+   * {
+   *   "recommId": "a7ac55a4-8d6e-4f19-addc-abac4164d8a8",
+   *   "recomms":
+   *     [
+   *       {
+   *         "id": "category-fantasy-books",
+   *         "reqlEvaluations": {
+   *           "countItems": 486
+   *         }
+   *       },
+   *       {
+   *         "id": "category-sci-fi-costumes",
+   *         "reqlEvaluations": {
+   *           "countItems": 19
+   *         }
+   *       }
+   *     ],
+   *    "numberNextRecommsCalls": 0
+   * }
+   * ```
    */
   function SearchItemSegments(userId, searchQuery, count, optional) {
     var _this;
@@ -2453,6 +2599,7 @@ var SearchItemSegments = /*#__PURE__*/function (_rqs$Request) {
     _this.logic = optional.logic;
     _this.expertSettings = optional.expertSettings;
     _this.returnAbGroup = optional.returnAbGroup;
+    _this.reqlExpressions = optional.reqlExpressions;
     return _this;
   }
 
@@ -2474,6 +2621,7 @@ var SearchItemSegments = /*#__PURE__*/function (_rqs$Request) {
       if (this.logic !== undefined) params.logic = this.logic;
       if (this.expertSettings !== undefined) params.expertSettings = this.expertSettings;
       if (this.returnAbGroup !== undefined) params.returnAbGroup = this.returnAbGroup;
+      if (this.reqlExpressions !== undefined) params.reqlExpressions = this.reqlExpressions;
       params.cascadeCreate = this.cascadeCreate !== undefined ? this.cascadeCreate : true;
       return params;
     }
