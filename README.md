@@ -34,10 +34,18 @@ There are two ways to include the library in your project:
 You can add the following `<script>` tag into your HTML file:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/recombee-js-api-client@6.1.0/dist/recombee-api-client.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/recombee-js-api-client@6.2.0/dist/recombee-api-client.min.js"></script>
 ```
 
 After this script is included, you can access the client using the global `recombee` object (also available as `window.recombee`).
+
+An ESM build is also available:
+
+```html
+<script type="module">
+  import * as recombee from 'https://cdn.jsdelivr.net/npm/recombee-js-api-client@6.2.0/dist/recombee-api-client.min.mjs';
+</script>
+```
 
 ### 📦 Install via package manager
 
@@ -83,26 +91,25 @@ client.send(
 );
 
 // Request recommendations
-client
-  .send(
+try {
+  const response = await client.send(
     new recombee.RecommendItemsToItem('item-356', 'user-13434', 5, {
       returnProperties: true,
       includedProperties: ['title'],
     }),
-  )
-  .then((response) => {
-    // `recommId` needs to be sent with interactions based on recommendations
-    console.log(response.recommId);
+  );
 
-    // The `recomms` object contains the `id` (and `values` if `returnProperties` is true)
-    response.recomms.forEach((item) => {
-      console.log(`ID: ${item.id}, Title: ${item.values.title}`);
-    });
-  })
-  .catch((error) => {
-    console.log(error);
-    // use fallback...
+  // `recommId` needs to be sent with interactions based on recommendations
+  console.log(response.recommId);
+
+  // The `recomms` object contains the `id` (and `values` if `returnProperties` is true)
+  response.recomms.forEach((item) => {
+    console.log(`ID: ${item.id}, Title: ${item.values.title}`);
   });
+} catch (error) {
+  console.log(error);
+  // use fallback...
+}
 ```
 
 ## 📝 Documentation

@@ -1,11 +1,10 @@
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const commonConfig = {
   entry: './src/index.js', // Adjust this path if needed
   output: {
     path: path.resolve(__dirname, 'dist'),
-    library: 'recombee',
-    libraryTarget: 'umd',
   },
   module: {
     rules: [
@@ -24,26 +23,77 @@ const commonConfig = {
   resolve: {
     extensions: ['.js'],
   },
+  devtool: 'source-map',
+};
+
+const umdBaseConfig = {
+  ...commonConfig,
+  output: {
+    ...commonConfig.output,
+    library: {
+      name: 'recombee',
+      type: 'umd',
+    },
+  },
 };
 
 const minimizedConfig = {
-  ...commonConfig,
+  ...umdBaseConfig,
   output: {
-    ...commonConfig.output,
+    ...umdBaseConfig.output,
     filename: 'recombee-api-client.min.js',
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'src/index.d.ts',
+          to: 'recombee-api-client.d.ts',
+        },
+      ],
+    }),
+  ],
   mode: 'production',
-  devtool: 'source-map', // Generates a source map for the minimized build
 };
 
 const nonMinimizedConfig = {
-  ...commonConfig,
+  ...umdBaseConfig,
   output: {
-    ...commonConfig.output,
+    ...umdBaseConfig.output,
     filename: 'recombee-api-client.js',
   },
   mode: 'development',
-  devtool: 'source-map', // Generates a source map for the non-minimized build
 };
 
-module.exports = [minimizedConfig, nonMinimizedConfig];
+const esmBaseConfig = {
+  ...commonConfig,
+  output: {
+    ...commonConfig.output,
+    library: {
+      type: 'module',
+    },
+  },
+  experiments: {
+    outputModule: true,
+  },
+};
+
+const esmMinimizedConfig = {
+  ...esmBaseConfig,
+  output: {
+    ...esmBaseConfig.output,
+    filename: 'recombee-api-client.min.mjs',
+  },
+  mode: 'production',
+};
+
+const esmNonMinimizedConfig = {
+  ...esmBaseConfig,
+  output: {
+    ...esmBaseConfig.output,
+    filename: 'recombee-api-client.mjs',
+  },
+  mode: 'development',
+};
+
+module.exports = [minimizedConfig, nonMinimizedConfig, esmMinimizedConfig, esmNonMinimizedConfig];

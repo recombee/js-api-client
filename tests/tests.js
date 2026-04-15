@@ -228,6 +228,22 @@ QUnit.module('Recommendations', () => {
         }),
       );
     });
+
+    QUnit.test('RecommendNextItemSegments test', (assert) => {
+      assert.timeout(5000);
+      const done = assert.async();
+      const client = createClient();
+      client
+        .send(
+          new recombee.RecommendItemSegmentsToItem('computer-1', 'user-1', 5, {
+            scenario: 'is-to-i',
+          }),
+        )
+        .then((res) => {
+          testRecommendations(assert, new recombee.RecommendNextItemSegments(res.recommId, 5));
+          done();
+        });
+    });
   });
 });
 

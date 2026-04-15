@@ -25,6 +25,8 @@ exports.RecommendItemSegmentsToItem =
   require('./requests/recommend-item-segments-to-item').RecommendItemSegmentsToItem;
 exports.RecommendItemSegmentsToItemSegment =
   require('./requests/recommend-item-segments-to-item-segment').RecommendItemSegmentsToItemSegment;
+exports.RecommendNextItemSegments =
+  require('./requests/recommend-next-item-segments').RecommendNextItemSegments;
 exports.CompositeRecommendation =
   require('./requests/composite-recommendation').CompositeRecommendation;
 exports.SearchItems = require('./requests/search-items').SearchItems;

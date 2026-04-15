@@ -1,12 +1,19 @@
 {
   "name": "recombee-js-api-client",
-  "version": "6.1.0",
+  "version": "6.2.0",
   "description": "Client-side js library for easy use of the Recombee recommendation API",
-  "main": "./src/index.js",
-  "browser": "./src/index.js",
-  "types": "src/index.d.ts",
+  "main": "./dist/recombee-api-client.js",
+  "module": "./dist/recombee-api-client.mjs",
+  "browser": "./dist/recombee-api-client.min.js",
+  "types": "./dist/recombee-api-client.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/recombee-api-client.d.ts",
+      "import": "./dist/recombee-api-client.mjs",
+      "require": "./dist/recombee-api-client.js"
+    }
+  },
   "files": [
-    "src",
     "dist"
   ],
   "repository": {
@@ -23,8 +30,10 @@
     "SDK"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=18",
+    "pnpm": "10.28.0"
   },
+  "packageManager": "pnpm@10.28.0",
   "author": "Ondrej Fiedler <ondrej.fiedler@recombee.com> (https://www.recombee.com/)",
   "license": "MIT",
   "bugs": {
@@ -38,6 +47,7 @@
     "@babel/core": "7.26.0",
     "@babel/preset-env": "7.26.0",
     "babel-loader": "9.2.1",
+    "copy-webpack-plugin": "14.0.0",
     "eslint": "9.21.0",
     "globals": "15.13.0",
     "prettier": "3.5.3",

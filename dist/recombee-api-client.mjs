@@ -1,15 +1,4 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["recombee"] = factory();
-	else
-		root["recombee"] = factory();
-})(self, () => {
-return /******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
+/******/ var __webpack_modules__ = ({
 
 /***/ "./src/api-client.js":
 /*!***************************!*\
@@ -17,7 +6,6 @@ return /******/ (() => { // webpackBootstrap
   \***************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -189,7 +177,6 @@ exports.ApiClient = ApiClient;
   \*********************************/
 /***/ ((__unused_webpack_module, exports) => {
 
-"use strict";
 
 
 //http://stackoverflow.com/questions/31089801/extending-error-in-javascript-with-es6-syntax
@@ -239,7 +226,6 @@ exports.ApiError = ApiError;
   \*****************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
 
 exports.ApiError = __webpack_require__(/*! ./api-error */ "./src/errors/api-error.js").ApiError;
@@ -254,7 +240,6 @@ exports.TimeoutError = __webpack_require__(/*! ./timeout-error */ "./src/errors/
   \**************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -303,7 +288,6 @@ exports.ResponseError = ResponseError;
   \*************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -349,7 +333,6 @@ exports.TimeoutError = TimeoutError;
   \**************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -438,7 +421,6 @@ exports.AddBookmark = AddBookmark;
   \*******************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -537,7 +519,6 @@ exports.AddCartAddition = AddCartAddition;
   \*****************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -636,7 +617,6 @@ exports.AddDetailView = AddDetailView;
   \**************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -740,7 +720,6 @@ exports.AddPurchase = AddPurchase;
   \************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -832,7 +811,6 @@ exports.AddRating = AddRating;
   \*******************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -927,7 +905,6 @@ exports.Batch = Batch;
   \**************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -1063,7 +1040,6 @@ exports.CompositeRecommendation = CompositeRecommendation;
   \*************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -1137,7 +1113,6 @@ exports.MergeUsers = MergeUsers;
   \*****************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -1305,7 +1280,6 @@ exports.RecommendItemSegmentsToItemSegment = RecommendItemSegmentsToItemSegment;
   \*********************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -1473,7 +1447,6 @@ exports.RecommendItemSegmentsToItem = RecommendItemSegmentsToItem;
   \*********************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -1626,7 +1599,6 @@ exports.RecommendItemSegmentsToUser = RecommendItemSegmentsToUser;
   \*********************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -1876,7 +1848,6 @@ exports.RecommendItemsToItemSegment = RecommendItemsToItemSegment;
   \*************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -2136,7 +2107,6 @@ exports.RecommendItemsToItem = RecommendItemsToItem;
   \*************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -2374,7 +2344,6 @@ exports.RecommendItemsToUser = RecommendItemsToUser;
   \******************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -2450,7 +2419,6 @@ exports.RecommendNextItemSegments = RecommendNextItemSegments;
   \**********************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -2526,7 +2494,6 @@ exports.RecommendNextItems = RecommendNextItems;
   \*********************************/
 /***/ ((__unused_webpack_module, exports) => {
 
-"use strict";
 
 
 /**
@@ -2563,7 +2530,6 @@ exports.Request = Request;
   \**********************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -2718,7 +2684,6 @@ exports.SearchItemSegments = SearchItemSegments;
   \**************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -2940,7 +2905,6 @@ exports.SearchItems = SearchItems;
   \******************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /*
  This file is auto-generated, do not edit
 */
@@ -3074,37 +3038,36 @@ exports.SetViewPortion = SetViewPortion;
 
 /***/ })
 
-/******/ 	});
+/******/ });
 /************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
+/******/ // The module cache
+/******/ var __webpack_module_cache__ = {};
+/******/ 
+/******/ // The require function
+/******/ function __webpack_require__(moduleId) {
+/******/ 	// Check if module is in cache
+/******/ 	var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 	if (cachedModule !== undefined) {
+/******/ 		return cachedModule.exports;
 /******/ 	}
-/******/ 	
+/******/ 	// Create a new module (and put it into the cache)
+/******/ 	var module = __webpack_module_cache__[moduleId] = {
+/******/ 		// no module.id needed
+/******/ 		// no module.loaded needed
+/******/ 		exports: {}
+/******/ 	};
+/******/ 
+/******/ 	// Execute the module function
+/******/ 	__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 
+/******/ 	// Return the exports of the module
+/******/ 	return module.exports;
+/******/ }
+/******/ 
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-"use strict";
 var exports = __webpack_exports__;
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -3140,8 +3103,29 @@ exports.SearchItemSegments = __webpack_require__(/*! ./requests/search-item-segm
 exports.Batch = __webpack_require__(/*! ./requests/batch */ "./src/requests/batch.js").Batch;
 })();
 
-/******/ 	return __webpack_exports__;
-/******/ })()
-;
-});
-//# sourceMappingURL=recombee-api-client.js.map
+var __webpack_exports__AddBookmark = __webpack_exports__.AddBookmark;
+var __webpack_exports__AddCartAddition = __webpack_exports__.AddCartAddition;
+var __webpack_exports__AddDetailView = __webpack_exports__.AddDetailView;
+var __webpack_exports__AddPurchase = __webpack_exports__.AddPurchase;
+var __webpack_exports__AddRating = __webpack_exports__.AddRating;
+var __webpack_exports__ApiClient = __webpack_exports__.ApiClient;
+var __webpack_exports__ApiError = __webpack_exports__.ApiError;
+var __webpack_exports__Batch = __webpack_exports__.Batch;
+var __webpack_exports__CompositeRecommendation = __webpack_exports__.CompositeRecommendation;
+var __webpack_exports__MergeUsers = __webpack_exports__.MergeUsers;
+var __webpack_exports__RecommendItemSegmentsToItem = __webpack_exports__.RecommendItemSegmentsToItem;
+var __webpack_exports__RecommendItemSegmentsToItemSegment = __webpack_exports__.RecommendItemSegmentsToItemSegment;
+var __webpack_exports__RecommendItemSegmentsToUser = __webpack_exports__.RecommendItemSegmentsToUser;
+var __webpack_exports__RecommendItemsToItem = __webpack_exports__.RecommendItemsToItem;
+var __webpack_exports__RecommendItemsToItemSegment = __webpack_exports__.RecommendItemsToItemSegment;
+var __webpack_exports__RecommendItemsToUser = __webpack_exports__.RecommendItemsToUser;
+var __webpack_exports__RecommendNextItemSegments = __webpack_exports__.RecommendNextItemSegments;
+var __webpack_exports__RecommendNextItems = __webpack_exports__.RecommendNextItems;
+var __webpack_exports__ResponseError = __webpack_exports__.ResponseError;
+var __webpack_exports__SearchItemSegments = __webpack_exports__.SearchItemSegments;
+var __webpack_exports__SearchItems = __webpack_exports__.SearchItems;
+var __webpack_exports__SetViewPortion = __webpack_exports__.SetViewPortion;
+var __webpack_exports__TimeoutError = __webpack_exports__.TimeoutError;
+export { __webpack_exports__AddBookmark as AddBookmark, __webpack_exports__AddCartAddition as AddCartAddition, __webpack_exports__AddDetailView as AddDetailView, __webpack_exports__AddPurchase as AddPurchase, __webpack_exports__AddRating as AddRating, __webpack_exports__ApiClient as ApiClient, __webpack_exports__ApiError as ApiError, __webpack_exports__Batch as Batch, __webpack_exports__CompositeRecommendation as CompositeRecommendation, __webpack_exports__MergeUsers as MergeUsers, __webpack_exports__RecommendItemSegmentsToItem as RecommendItemSegmentsToItem, __webpack_exports__RecommendItemSegmentsToItemSegment as RecommendItemSegmentsToItemSegment, __webpack_exports__RecommendItemSegmentsToUser as RecommendItemSegmentsToUser, __webpack_exports__RecommendItemsToItem as RecommendItemsToItem, __webpack_exports__RecommendItemsToItemSegment as RecommendItemsToItemSegment, __webpack_exports__RecommendItemsToUser as RecommendItemsToUser, __webpack_exports__RecommendNextItemSegments as RecommendNextItemSegments, __webpack_exports__RecommendNextItems as RecommendNextItems, __webpack_exports__ResponseError as ResponseError, __webpack_exports__SearchItemSegments as SearchItemSegments, __webpack_exports__SearchItems as SearchItems, __webpack_exports__SetViewPortion as SetViewPortion, __webpack_exports__TimeoutError as TimeoutError };
+
+//# sourceMappingURL=recombee-api-client.mjs.map
