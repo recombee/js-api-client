@@ -327,6 +327,44 @@ exports.TimeoutError = TimeoutError;
 
 /***/ }),
 
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+/*
+ This file is auto-generated, do not edit
+*/
+
+
+
+exports.ApiClient = __webpack_require__(/*! ./api-client */ "./src/api-client.js").ApiClient;
+exports.ApiError = __webpack_require__(/*! ./errors/api-error */ "./src/errors/api-error.js").ApiError;
+exports.ResponseError = __webpack_require__(/*! ./errors/response-error */ "./src/errors/response-error.js").ResponseError;
+exports.TimeoutError = __webpack_require__(/*! ./errors/timeout-error */ "./src/errors/timeout-error.js").TimeoutError;
+exports.MergeUsers = __webpack_require__(/*! ./requests/merge-users */ "./src/requests/merge-users.js").MergeUsers;
+exports.AddDetailView = __webpack_require__(/*! ./requests/add-detail-view */ "./src/requests/add-detail-view.js").AddDetailView;
+exports.AddPurchase = __webpack_require__(/*! ./requests/add-purchase */ "./src/requests/add-purchase.js").AddPurchase;
+exports.AddRating = __webpack_require__(/*! ./requests/add-rating */ "./src/requests/add-rating.js").AddRating;
+exports.AddCartAddition = __webpack_require__(/*! ./requests/add-cart-addition */ "./src/requests/add-cart-addition.js").AddCartAddition;
+exports.AddBookmark = __webpack_require__(/*! ./requests/add-bookmark */ "./src/requests/add-bookmark.js").AddBookmark;
+exports.SetViewPortion = __webpack_require__(/*! ./requests/set-view-portion */ "./src/requests/set-view-portion.js").SetViewPortion;
+exports.RecommendItemsToUser = __webpack_require__(/*! ./requests/recommend-items-to-user */ "./src/requests/recommend-items-to-user.js").RecommendItemsToUser;
+exports.RecommendItemsToItem = __webpack_require__(/*! ./requests/recommend-items-to-item */ "./src/requests/recommend-items-to-item.js").RecommendItemsToItem;
+exports.RecommendItemsToItemSegment = __webpack_require__(/*! ./requests/recommend-items-to-item-segment */ "./src/requests/recommend-items-to-item-segment.js").RecommendItemsToItemSegment;
+exports.RecommendNextItems = __webpack_require__(/*! ./requests/recommend-next-items */ "./src/requests/recommend-next-items.js").RecommendNextItems;
+exports.RecommendItemSegmentsToUser = __webpack_require__(/*! ./requests/recommend-item-segments-to-user */ "./src/requests/recommend-item-segments-to-user.js").RecommendItemSegmentsToUser;
+exports.RecommendItemSegmentsToItem = __webpack_require__(/*! ./requests/recommend-item-segments-to-item */ "./src/requests/recommend-item-segments-to-item.js").RecommendItemSegmentsToItem;
+exports.RecommendItemSegmentsToItemSegment = __webpack_require__(/*! ./requests/recommend-item-segments-to-item-segment */ "./src/requests/recommend-item-segments-to-item-segment.js").RecommendItemSegmentsToItemSegment;
+exports.RecommendNextItemSegments = __webpack_require__(/*! ./requests/recommend-next-item-segments */ "./src/requests/recommend-next-item-segments.js").RecommendNextItemSegments;
+exports.CompositeRecommendation = __webpack_require__(/*! ./requests/composite-recommendation */ "./src/requests/composite-recommendation.js").CompositeRecommendation;
+exports.SearchItems = __webpack_require__(/*! ./requests/search-items */ "./src/requests/search-items.js").SearchItems;
+exports.SearchItemSegments = __webpack_require__(/*! ./requests/search-item-segments */ "./src/requests/search-item-segments.js").SearchItemSegments;
+exports.Batch = __webpack_require__(/*! ./requests/batch */ "./src/requests/batch.js").Batch;
+
+/***/ }),
+
 /***/ "./src/requests/add-bookmark.js":
 /*!**************************************!*\
   !*** ./src/requests/add-bookmark.js ***!
@@ -2366,18 +2404,18 @@ function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf 
 var rqs = __webpack_require__(/*! ./request */ "./src/requests/request.js");
 
 /**
- * Returns Item segments that shall be shown to a user as next recommendations when the user e.g. scrolls the page down (*infinite scroll*) or goes to the next page.
- * It accepts `recommId` of a base recommendation request (e.g., request from the first page) and the number of segments that shall be returned (`count`).
+ * Returns [Item Segments](https://docs.recombee.com/segmentations) to be shown as the next recommendations when a user scrolls (e.g., within a carousel or feed of Item Segments such as brands, artists, topics, or categories).
+ * The request requires the `recommId` of a base recommendation request and the number of Segments to return (`count`).
  * The base request can be one of:
  *   - [Recommend Item Segments to Item](https://docs.recombee.com/api#recommend-item-segments-to-item)
  *   - [Recommend Item Segments to User](https://docs.recombee.com/api#recommend-item-segments-to-user)
  *   - [Recommend Item Segments to Item Segment](https://docs.recombee.com/api#recommend-item-segments-to-item-segment)
  *   - [Search Item Segments](https://docs.recombee.com/api#search-item-segments)
- * All the other parameters are inherited from the base request.
- * *Recommend next Item segments* can be called many times for a single `recommId` and each call returns different (previously not recommended) segments.
- * The number of *Recommend next Item segments* calls performed so far is returned in the `numberNextRecommsCalls` field.
- * *Recommend next Item segments* can be requested up to 30 minutes after the base request or a previous *Recommend next Item segments* call.
- * For billing purposes, each call to *Recommend next Item segments* is counted as a separate recommendation request.
+ * All other parameters are inherited from the base request associated with the provided `recommId`.
+ * This endpoint can be called multiple times for a single `recommId`. Each call returns different Item Segments that have not been recommended in previous calls.
+ * The number of calls made so far is returned in the `numberNextRecommsCalls` field.
+ * Requests can be made up to 30 minutes after the base request or the most recent Recommend Next Item Segments call.
+ * For billing purposes, each call to this endpoint is counted as a separate recommendation request.
  */
 var RecommendNextItemSegments = /*#__PURE__*/function (_rqs$Request) {
   /**
@@ -3065,42 +3103,105 @@ exports.SetViewPortion = SetViewPortion;
 /******/ }
 /******/ 
 /************************************************************************/
+/******/ /* webpack/runtime/create fake namespace object */
+/******/ (() => {
+/******/ 	var getProto = Object.getPrototypeOf ? (obj) => (Object.getPrototypeOf(obj)) : (obj) => (obj.__proto__);
+/******/ 	var leafPrototypes;
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 16: return value when it's Promise-like
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = this(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if(typeof value === 'object' && value) {
+/******/ 			if((mode & 4) && value.__esModule) return value;
+/******/ 			if((mode & 16) && typeof value.then === 'function') return value;
+/******/ 		}
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		var def = {};
+/******/ 		leafPrototypes = leafPrototypes || [null, getProto({}), getProto([]), getProto(getProto)];
+/******/ 		for(var current = mode & 2 && value; typeof current == 'object' && !~leafPrototypes.indexOf(current); current = getProto(current)) {
+/******/ 			Object.getOwnPropertyNames(current).forEach((key) => (def[key] = () => (value[key])));
+/******/ 		}
+/******/ 		def['default'] = () => (value);
+/******/ 		__webpack_require__.d(ns, def);
+/******/ 		return ns;
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/define property getters */
+/******/ (() => {
+/******/ 	// define getter functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 			}
+/******/ 		}
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ (() => {
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/make namespace object */
+/******/ (() => {
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = (exports) => {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/ })();
+/******/ 
+/************************************************************************/
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-var exports = __webpack_exports__;
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/*
- This file is auto-generated, do not edit
-*/
+/*!***********************!*\
+  !*** ./src/index.mjs ***!
+  \***********************/
+var _index_js__WEBPACK_IMPORTED_MODULE_0___namespace_cache;
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AddBookmark: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.AddBookmark),
+/* harmony export */   AddCartAddition: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.AddCartAddition),
+/* harmony export */   AddDetailView: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.AddDetailView),
+/* harmony export */   AddPurchase: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.AddPurchase),
+/* harmony export */   AddRating: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.AddRating),
+/* harmony export */   ApiClient: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.ApiClient),
+/* harmony export */   ApiError: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.ApiError),
+/* harmony export */   Batch: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.Batch),
+/* harmony export */   CompositeRecommendation: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.CompositeRecommendation),
+/* harmony export */   MergeUsers: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.MergeUsers),
+/* harmony export */   RecommendItemSegmentsToItem: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.RecommendItemSegmentsToItem),
+/* harmony export */   RecommendItemSegmentsToItemSegment: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.RecommendItemSegmentsToItemSegment),
+/* harmony export */   RecommendItemSegmentsToUser: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.RecommendItemSegmentsToUser),
+/* harmony export */   RecommendItemsToItem: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.RecommendItemsToItem),
+/* harmony export */   RecommendItemsToItemSegment: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.RecommendItemsToItemSegment),
+/* harmony export */   RecommendItemsToUser: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.RecommendItemsToUser),
+/* harmony export */   RecommendNextItemSegments: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.RecommendNextItemSegments),
+/* harmony export */   RecommendNextItems: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.RecommendNextItems),
+/* harmony export */   ResponseError: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.ResponseError),
+/* harmony export */   SearchItemSegments: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.SearchItemSegments),
+/* harmony export */   SearchItems: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.SearchItems),
+/* harmony export */   SetViewPortion: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.SetViewPortion),
+/* harmony export */   TimeoutError: () => (/* reexport safe */ _index_js__WEBPACK_IMPORTED_MODULE_0__.TimeoutError),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.js */ "./src/index.js");
 
 
 
-exports.ApiClient = __webpack_require__(/*! ./api-client */ "./src/api-client.js").ApiClient;
-exports.ApiError = __webpack_require__(/*! ./errors/api-error */ "./src/errors/api-error.js").ApiError;
-exports.ResponseError = __webpack_require__(/*! ./errors/response-error */ "./src/errors/response-error.js").ResponseError;
-exports.TimeoutError = __webpack_require__(/*! ./errors/timeout-error */ "./src/errors/timeout-error.js").TimeoutError;
-exports.MergeUsers = __webpack_require__(/*! ./requests/merge-users */ "./src/requests/merge-users.js").MergeUsers;
-exports.AddDetailView = __webpack_require__(/*! ./requests/add-detail-view */ "./src/requests/add-detail-view.js").AddDetailView;
-exports.AddPurchase = __webpack_require__(/*! ./requests/add-purchase */ "./src/requests/add-purchase.js").AddPurchase;
-exports.AddRating = __webpack_require__(/*! ./requests/add-rating */ "./src/requests/add-rating.js").AddRating;
-exports.AddCartAddition = __webpack_require__(/*! ./requests/add-cart-addition */ "./src/requests/add-cart-addition.js").AddCartAddition;
-exports.AddBookmark = __webpack_require__(/*! ./requests/add-bookmark */ "./src/requests/add-bookmark.js").AddBookmark;
-exports.SetViewPortion = __webpack_require__(/*! ./requests/set-view-portion */ "./src/requests/set-view-portion.js").SetViewPortion;
-exports.RecommendItemsToUser = __webpack_require__(/*! ./requests/recommend-items-to-user */ "./src/requests/recommend-items-to-user.js").RecommendItemsToUser;
-exports.RecommendItemsToItem = __webpack_require__(/*! ./requests/recommend-items-to-item */ "./src/requests/recommend-items-to-item.js").RecommendItemsToItem;
-exports.RecommendItemsToItemSegment = __webpack_require__(/*! ./requests/recommend-items-to-item-segment */ "./src/requests/recommend-items-to-item-segment.js").RecommendItemsToItemSegment;
-exports.RecommendNextItems = __webpack_require__(/*! ./requests/recommend-next-items */ "./src/requests/recommend-next-items.js").RecommendNextItems;
-exports.RecommendItemSegmentsToUser = __webpack_require__(/*! ./requests/recommend-item-segments-to-user */ "./src/requests/recommend-item-segments-to-user.js").RecommendItemSegmentsToUser;
-exports.RecommendItemSegmentsToItem = __webpack_require__(/*! ./requests/recommend-item-segments-to-item */ "./src/requests/recommend-item-segments-to-item.js").RecommendItemSegmentsToItem;
-exports.RecommendItemSegmentsToItemSegment = __webpack_require__(/*! ./requests/recommend-item-segments-to-item-segment */ "./src/requests/recommend-item-segments-to-item-segment.js").RecommendItemSegmentsToItemSegment;
-exports.RecommendNextItemSegments = __webpack_require__(/*! ./requests/recommend-next-item-segments */ "./src/requests/recommend-next-item-segments.js").RecommendNextItemSegments;
-exports.CompositeRecommendation = __webpack_require__(/*! ./requests/composite-recommendation */ "./src/requests/composite-recommendation.js").CompositeRecommendation;
-exports.SearchItems = __webpack_require__(/*! ./requests/search-items */ "./src/requests/search-items.js").SearchItems;
-exports.SearchItemSegments = __webpack_require__(/*! ./requests/search-item-segments */ "./src/requests/search-item-segments.js").SearchItemSegments;
-exports.Batch = __webpack_require__(/*! ./requests/batch */ "./src/requests/batch.js").Batch;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/*#__PURE__*/ (_index_js__WEBPACK_IMPORTED_MODULE_0___namespace_cache || (_index_js__WEBPACK_IMPORTED_MODULE_0___namespace_cache = __webpack_require__.t(_index_js__WEBPACK_IMPORTED_MODULE_0__, 2))));
+
 })();
 
 var __webpack_exports__AddBookmark = __webpack_exports__.AddBookmark;
@@ -3126,6 +3227,7 @@ var __webpack_exports__SearchItemSegments = __webpack_exports__.SearchItemSegmen
 var __webpack_exports__SearchItems = __webpack_exports__.SearchItems;
 var __webpack_exports__SetViewPortion = __webpack_exports__.SetViewPortion;
 var __webpack_exports__TimeoutError = __webpack_exports__.TimeoutError;
-export { __webpack_exports__AddBookmark as AddBookmark, __webpack_exports__AddCartAddition as AddCartAddition, __webpack_exports__AddDetailView as AddDetailView, __webpack_exports__AddPurchase as AddPurchase, __webpack_exports__AddRating as AddRating, __webpack_exports__ApiClient as ApiClient, __webpack_exports__ApiError as ApiError, __webpack_exports__Batch as Batch, __webpack_exports__CompositeRecommendation as CompositeRecommendation, __webpack_exports__MergeUsers as MergeUsers, __webpack_exports__RecommendItemSegmentsToItem as RecommendItemSegmentsToItem, __webpack_exports__RecommendItemSegmentsToItemSegment as RecommendItemSegmentsToItemSegment, __webpack_exports__RecommendItemSegmentsToUser as RecommendItemSegmentsToUser, __webpack_exports__RecommendItemsToItem as RecommendItemsToItem, __webpack_exports__RecommendItemsToItemSegment as RecommendItemsToItemSegment, __webpack_exports__RecommendItemsToUser as RecommendItemsToUser, __webpack_exports__RecommendNextItemSegments as RecommendNextItemSegments, __webpack_exports__RecommendNextItems as RecommendNextItems, __webpack_exports__ResponseError as ResponseError, __webpack_exports__SearchItemSegments as SearchItemSegments, __webpack_exports__SearchItems as SearchItems, __webpack_exports__SetViewPortion as SetViewPortion, __webpack_exports__TimeoutError as TimeoutError };
+var __webpack_exports__default = __webpack_exports__["default"];
+export { __webpack_exports__AddBookmark as AddBookmark, __webpack_exports__AddCartAddition as AddCartAddition, __webpack_exports__AddDetailView as AddDetailView, __webpack_exports__AddPurchase as AddPurchase, __webpack_exports__AddRating as AddRating, __webpack_exports__ApiClient as ApiClient, __webpack_exports__ApiError as ApiError, __webpack_exports__Batch as Batch, __webpack_exports__CompositeRecommendation as CompositeRecommendation, __webpack_exports__MergeUsers as MergeUsers, __webpack_exports__RecommendItemSegmentsToItem as RecommendItemSegmentsToItem, __webpack_exports__RecommendItemSegmentsToItemSegment as RecommendItemSegmentsToItemSegment, __webpack_exports__RecommendItemSegmentsToUser as RecommendItemSegmentsToUser, __webpack_exports__RecommendItemsToItem as RecommendItemsToItem, __webpack_exports__RecommendItemsToItemSegment as RecommendItemsToItemSegment, __webpack_exports__RecommendItemsToUser as RecommendItemsToUser, __webpack_exports__RecommendNextItemSegments as RecommendNextItemSegments, __webpack_exports__RecommendNextItems as RecommendNextItems, __webpack_exports__ResponseError as ResponseError, __webpack_exports__SearchItemSegments as SearchItemSegments, __webpack_exports__SearchItems as SearchItems, __webpack_exports__SetViewPortion as SetViewPortion, __webpack_exports__TimeoutError as TimeoutError, __webpack_exports__default as default };
 
 //# sourceMappingURL=recombee-api-client.mjs.map

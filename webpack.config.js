@@ -4,6 +4,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const commonConfig = {
   entry: './src/index.js', // Adjust this path if needed
   output: {
+    globalObject: 'globalThis',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
@@ -67,6 +68,7 @@ const nonMinimizedConfig = {
 
 const esmBaseConfig = {
   ...commonConfig,
+  entry: './src/index.mjs',
   output: {
     ...commonConfig.output,
     library: {

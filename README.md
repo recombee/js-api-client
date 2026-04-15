@@ -34,7 +34,7 @@ There are two ways to include the library in your project:
 You can add the following `<script>` tag into your HTML file:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/recombee-js-api-client@6.2.0/dist/recombee-api-client.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/recombee-js-api-client@6.2.1/dist/recombee-api-client.min.js"></script>
 ```
 
 After this script is included, you can access the client using the global `recombee` object (also available as `window.recombee`).
@@ -43,7 +43,7 @@ An ESM build is also available:
 
 ```html
 <script type="module">
-  import * as recombee from 'https://cdn.jsdelivr.net/npm/recombee-js-api-client@6.2.0/dist/recombee-api-client.min.mjs';
+  import recombee from 'https://cdn.jsdelivr.net/npm/recombee-js-api-client@6.2.1/dist/recombee-api-client.min.mjs';
 </script>
 ```
 
